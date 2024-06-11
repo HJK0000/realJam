@@ -10,4 +10,9 @@ public class ExController {
 	public String root() {
 		return "index";
 	}
+	
+	@RequestMapping("/test")
+	public String testP() {
+		return "test";
+	}
 }
