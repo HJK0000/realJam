@@ -1,12 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.7.1.js"
+	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+	crossorigin="anonymous"></script>
 </head>
 <body>
 	<h1>인덱스 페이지임</h1>
-	<hr>
-	<a href="/user/usermain">유저메인페이지</a>
+
+	<input type="submit" value="기업 마이페이로 이동" onclick="myPage(event)">
+
+	<script>
+		function myPage(event) {
+
+			event.preventDefault();
+			alert("submit......");
+
+			$.ajax({
+				type : "GET",
+				url : "http://localhost:9002/com/getCompanyInfo",
+				success : function(data) {
+
+					console.log(data);
+					
+					let queryString = `?cname=${encodeURIComponent(data.cname)}&ceo=${encodeURIComponent(data.ceo)}&caddr=${encodeURIComponent(data.caddr)}&cnum=${encodeURIComponent(data.cnum)}&employees=${encodeURIComponent(data.employees)}&logo=${encodeURIComponent(data.logo)}&major=${encodeURIComponent(data.major)}&sector=${encodeURIComponent(data.sector)}&size=${encodeURIComponent(data.size)}&yrSales=${encodeURIComponent(data.yrSales)}`;
+					window.location.href = `http://localhost:8094/com/myPage${queryString}`;
+
+				},
+				error : function(){
+					
+					console.log("에러 발생....");
+				}
+
+			});
+
+		}
+	</script>
+
 </body>
 </html>

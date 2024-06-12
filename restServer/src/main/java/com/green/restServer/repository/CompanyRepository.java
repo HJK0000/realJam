@@ -7,4 +7,7 @@ import com.green.restServer.entity.Company;
 
 public interface CompanyRepository extends JpaRepository<Company, String>{
 
+	public Company findByUsernameAndPassword(String username, String password);
+
 }
+

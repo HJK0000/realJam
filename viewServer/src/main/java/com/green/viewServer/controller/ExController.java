@@ -11,8 +11,5 @@ public class ExController {
 		return "usermain";
 	}
 	
-	@RequestMapping("/test")
-	public String testP() {
-		return "test";
-	}
+
 }
