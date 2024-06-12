@@ -8,7 +8,7 @@ public class ExController {
 	
 	@RequestMapping("/")
 	public String root() {
-		return "index";
+		return "usermain";
 	}
 	
 	@RequestMapping("/test")
