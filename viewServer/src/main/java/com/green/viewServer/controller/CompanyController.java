@@ -1,7 +1,11 @@
 package com.green.viewServer.controller;
 
+import java.util.Map;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -36,5 +40,25 @@ public class CompanyController {
 		model.addAttribute("yrSales", yrSales);
 
 		return "company/cMyPage";
+	}
+	
+	@PostMapping("/comUpdate")
+	public String comUpdate(@RequestBody Map<String, Object> params, Model model) {
+		System.out.println("comUpdate 매서드.................");
+        model.addAttribute("username", params.get("username"));
+        model.addAttribute("cname", params.get("cname"));
+        model.addAttribute("ceo", params.get("ceo"));
+        model.addAttribute("caddr", params.get("caddr"));
+        model.addAttribute("cnum", params.get("cnum"));
+        model.addAttribute("employees", params.get("employees"));
+        model.addAttribute("logo", params.get("logo"));
+        model.addAttribute("major", params.get("major"));
+        model.addAttribute("sector", params.get("sector"));
+        model.addAttribute("size", params.get("size"));
+        model.addAttribute("yrSales", params.get("yrSales"));
+		
+        return "company/comUpdate";
+		
+		
 	}
 }
