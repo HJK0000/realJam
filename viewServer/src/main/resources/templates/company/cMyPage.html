@@ -40,25 +40,39 @@
 				</tr>
 			</tbody>
 		</table>
-		<input type="submit" value="기업 정보 수정하기"> 
+		<input type="submit" value="기업 정보 수정하기" onclick="updateComp(event)"> 
 	<script>
 		// cMyPage에서 쿼리 파라미터를 읽는 예제
-		function getQueryParams() {
-			let params = {};
-			let queryString = window.location.search.substring(1);
-			let vars = queryString.split("&");
-			for (let i = 0; i < vars.length; i++) {
-				let pair = vars[i].split("=");
-				params[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
-			}
-			return params;
-		}
+		function updateComp(event){
+			
+			event.preventDefault();
+			alert("기업 정소 수정페이지로 이동!");
+			
+			$.ajax({
+			
+				type : "GET",
+				url : "http://localhost:9002/com/getCompanyInfo",
+				success : function(data) {
 
-		// 예제: 페이지 로드 시 쿼리 파라미터를 콘솔에 출력
-		$(document).ready(function() {
-			let params = getQueryParams();
-			console.log(params);
-		});
+					console.log(data);
+					
+					let queryString = `?username=${encodeURIComponent(data.username)}&cname=${encodeURIComponent(data.cname)}&ceo=${encodeURIComponent(data.ceo)}&caddr=${encodeURIComponent(data.caddr)}&cnum=${encodeURIComponent(data.cnum)}&employees=${encodeURIComponent(data.employees)}&logo=${encodeURIComponent(data.logo)}&major=${encodeURIComponent(data.major)}&sector=${encodeURIComponent(data.sector)}&size=${encodeURIComponent(data.size)}&yrSales=${encodeURIComponent(data.yrSales)}`;
+					window.location.href = `http://localhost:8094/com/myPage${queryString}`;
+
+				},
+				error : function(){
+					
+					console.log("에러 발생....");
+				}
+
+			});
+			
+			
+			
+			
+			
+			
+		}
 	</script>
 </body>
 </html>

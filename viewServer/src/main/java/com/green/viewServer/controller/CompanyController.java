@@ -9,6 +9,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/com")
 public class CompanyController {
 
+	@RequestMapping("/")
+	public String index() {
+		
+		// 인덱스 페이지가 로그인 페이지 대체
+		
+		return "index";
+	}
+	
+	
 	@RequestMapping("/myPage")
 	public String myPage(@RequestParam("cname") String cname, @RequestParam("ceo") String ceo, @RequestParam("caddr") String caddr,
 			@RequestParam("cnum") String cnum, @RequestParam("employees") int employees, @RequestParam("logo") String logo,
