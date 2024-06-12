@@ -1,5 +1,6 @@
 package com.green.restServer.config;
 
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -23,7 +24,4 @@ public class SecurityConfig { // 설정용 클래스
 		
 		
 		return http.build(); // 이렇게 해주면 security가 기본으로 제공하는 loginForm 안가고 통과가능
-
-	}
-
 }
