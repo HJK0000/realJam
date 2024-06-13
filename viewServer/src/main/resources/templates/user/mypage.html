@@ -8,21 +8,79 @@
 <body>
 <h1>마이페이지</h1>
 <hr>
-<p th:value="${username}"></p>
+<p id="username" th:text="${username}"></p>
+<p id="uname"></p>
+<p id="birth_date"></p>
+<p id="email"></p>
+<p id="gender"></p>
+<p id="tel"></p>
+<p id="uaddr"></p>
 
-
+<div id="school">
+	<span>학력사항</span>
+	<button onclick="goRegFormPage()">학력입력</button>
+	<button onclick="goModiFormPage()">학력수정</button>
+	<br>
+	<ul id="schoolList">
+		
+	</ul>
+</div>
 <script>
-	$(document).ready(function(){
+	
+		$(document).ready(function(){
 		
-		const userData = JSON.parse(sessionStorage.getItem('userData'));
+		const username = $("#username").text().trim();
 		
-		if(userData) {
-			$('body').append('<p>Username: ${userData.username}</p>');
-			$('body').append('<p>Name: ${userData.uname}</p>');
-		}else{
-			$('body').append('<p>유저 정보없음</p>');
-		}
+		$.ajax({
+			url: 'http://localhost:9002/user/mypage/' + username,
+			method: 'GET',
+			success: function(response){
+				localStorage.setItem('userData', JSON.stringify(response));
+				
+				$('#uname').text('name: ' + response.uname);
+				$('#birth_date').text('생년월일: ' + response.birthDate);
+				$('#email').text('이메일: ' + response.email);
+				$('#gender').text('성별: ' + (response.gender === '1' ? '남자' : '여자'));
+				$('#tel').text('전화번호: ' + response.tel);
+				$('#uaddr').text('주소: ' + response.uaddr);
+			},
+			error: function(error){
+				console.error("Error: ", error);
+			}
+		});
+		
+		$.ajax({
+			url:"http://localhost:9002/user/grad/" + username,
+			method: "GET",
+			success: function(response){
+				const schoolList = $("#schoolList");
+				schoolList.empty();
+				response.forEach(function(school){
+					const listItem = `
+						<li>
+							<p class="eduName">학교명: ${school.eduName}</p>
+							<p class="sStatus">상태: ${school.sStatus}</p>
+							<p class="accDate">입학일: ${school.accDate}</p>
+							<p class="gradDate">졸업일: ${school.gradDate}</p>
+							<p class="major">전공: ${school.major}</p>
+							<p class="score">학교명: ${school.score}</p>
+						</li>
+					`;
+					schoolList.append(listItem);
+				});
+			},
+			error: function(error){
+				console.error("Error: ", error);
+			}
+		});
 	});
+	
+	//style.display = "none" or "block"
+	
+	function goRegFormPage(){
+		window.location.href= '/user/regForm';
+	} 
+	
 </script>
 </body>
 </html>

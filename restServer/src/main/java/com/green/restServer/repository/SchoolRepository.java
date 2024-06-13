@@ -6,6 +6,6 @@ import com.green.restServer.entity.School;
 
 
 
-public interface SchoolRespository extends JpaRepository<School, Long>{
+public interface SchoolRepository extends JpaRepository<School, Long>{
 
 }

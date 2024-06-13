@@ -12,12 +12,17 @@ public class UserController {
 	@RequestMapping("/mypage")
 	public String mypage(@RequestParam("username")String username,Model model) {
 		model.addAttribute("username", username);
-		return "/user/mypage";
+		return "user/mypage";
 	}
 	
 	
 	@RequestMapping("/resumeForm")
 	public String usermain() {
 		return "user/resumeForm";
+	}
+	
+	@RequestMapping("/regForm")
+	public String aFrom() {
+		return "user/regForm";
 	}
 }
