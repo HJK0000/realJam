@@ -134,6 +134,9 @@ public class JobAd extends BaseEntity{
 	@Column(name = "empTel", nullable = false, length = 20)
 	private String empTel;
 	
+	// 우대사항
+	@Column(name = "preference", nullable = true)
+	private String preference;
 	
 	public List<String> getJobContList() {
 	    try {
