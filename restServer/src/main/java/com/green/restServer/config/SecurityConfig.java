@@ -3,17 +3,32 @@ package com.green.restServer.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.green.restServer.jwt.LoginFilter;
 
 @Configuration
 @EnableWebSecurity // security에 대한 설정을 할때 import 해준다.
 public class SecurityConfig { // 설정용 클래스
 	
+	private final AuthenticationConfiguration authenticationConfiguration;
 	
+	public SecurityConfig(AuthenticationConfiguration authenticationConfiguration) {
+		this.authenticationConfiguration = authenticationConfiguration;
+	}
+	
+	@Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+
+        return configuration.getAuthenticationManager();
+    }
 	
 	
 	@Bean
@@ -36,6 +51,9 @@ public class SecurityConfig { // 설정용 클래스
 				.anyRequest().permitAll()
 				
 				);
+		
+		http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil), UsernamePasswordAuthenticationFilter.class);
+	
 		
 		//세션 설정 : Stateless
 		
