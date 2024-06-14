@@ -2,10 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<meta charset="UTF-8">
-	<title>Insert title here</title>
-	<script src="https://code.jquery.com/jquery-3.7.1.js"
-		integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.7.1.js"
+	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+	crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -30,7 +31,8 @@
 		<tbody>
 			<tr>
 				<td th:text="${cname}"></td>
-				<td><img th:src="@{/images/하이브 로고.png}" alt="기업로고" width="400" height="200"></td>
+				<td><img th:src="@{/images/하이브 로고.png}" alt="기업로고" width="400"
+					height="200"></td>
 				<td th:text="${ceo}"></td>
 				<td th:text="${caddr}"></td>
 				<td th:text="${employees}"></td>
@@ -43,23 +45,37 @@
 	</table>
 	<input type="submit" value="기업 정보 수정하기" onclick="updateComp(event)">
 	<script>
+	
+		let username = localStorage.getItem('username');
+
+		console.log(username);
+		
 		function updateComp(event) {
 
 			event.preventDefault();
 			alert("기업 정보 수정페이지로 이동!");
 
-			$.ajax({
-				type: "GET",
-				url: "http://localhost:9002/com/getCompanyInfo",
-				success: function (data) {
-					console.log("데이터 조회 성공:", data);
-					 window.location.href = 'http://localhost:8094/com/toCompanyUpdate';
-				},
-				error: function (xhr, status, error) {
-					console.log("에러 발생:", error);
-					// 에러 발생시 처리할 내용을 추가할 수 있습니다.
-				}
-			});
+			$
+					.ajax({
+						type : "GET",
+						url : "http://localhost:9002/com/getCompanyInfo",
+						headers : {
+
+							"Username" : username
+						},
+						
+						success : function(data) {
+							
+							console.log("데이터 조회 성공:", data);
+							
+							window.location.href = 'http://localhost:8094/com/toCompanyUpdate';
+						
+						},
+						error : function(xhr, status, error) {
+							console.log("에러 발생:", error);
+							// 에러 발생시 처리할 내용을 추가할 수 있습니다.
+						}
+					});
 		}
 	</script>
 </body>

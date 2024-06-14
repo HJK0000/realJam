@@ -20,6 +20,7 @@ import com.green.restServer.dto.CompanyResponseDto;
 import com.green.restServer.entity.Company;
 import com.green.restServer.repository.CompanyRepository;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 
@@ -39,11 +40,11 @@ public class CompanyRestController {
 	@GetMapping("/getCompanyInfo")
 	public ResponseEntity<?> getCompanyInfo(@RequestHeader("Username") String username, Model model, HttpServletResponse response)throws IOException {
 
-        //username = "com1"; // 세션에서 얻어오는 것처럼
-        
+        System.out.println(username);
         Company company = companyRepository.findById(username).orElseThrow(NullPointerException::new);
 
         System.out.println("getCompanyInfo..........."); 
+        System.out.println("조회한 company" + company);
         return ResponseEntity.status(HttpStatus.OK).body(company);
     }
 	
