@@ -11,30 +11,64 @@
 <body>
 	<h1>기업 정보 수정 페이지</h1>
 	<hr>
-	
-	<form>
-		<li>기업아이디</li><input type="text" id="username" name="username" th:value="${username}" readonly=true /><br>
-		<li>기업비밀번호</li><input type="text" name="password" th:value="${password}"><br>
-		<li>기업명</li><input type="text" name="cname" th:value="${cname}"><br>
-		<li>기업로고</li><input type="text" name="logo" th:value="${logo}"><br>
-		
-		<li>대표자명</li><input type="text" name="ceo" th:value="${ceo}"><br>
-		<li>사업자번호</li><input type="text" name="cnum" th:value="${cnum}"><br>
-		<li>기업주소</li><input type="text" name="caddr" th:value="${caddr}"><br>
-		<li>사원수</li><input type="text" name="employees" th:value="${employees}"><br>
-		<li>기업홈페이지</li><input type="text" name="url" th:value="${url}"><br>
-		<li>기업규모</li><input type="text" name="size" th:value="${size}"><br>
-		<li>주요사업</li><input type="text" name="major" th:value="${major}"><br>
-		<li>연매출액</li><input type="text" name="yrSales" th:value="${yrSales}">만원<br>
-		<li>업종</li><input type="text" name="sector" th:value="${sector}"><br>
-		<input type="submit" value="저장하기"><input type="submit" value="뒤로가기">
+
+	<form id="edit-company-form">
+		<li>기업아이디</li> <input type="text" id="username" name="username"
+			th:value="${username}" readonly=true /><br>
+		<li>기업비밀번호</li> <input type="text" name="password"
+			th:value="${password}"><br>
+		<li>기업명</li> <input type="text" name="cname" th:value="${cname}"><br>
+		<li>기업로고</li> <input type="text" name="logo" th:value="${logo}"><br>
+
+		<li>대표자명</li> <input type="text" name="ceo" th:value="${ceo}"><br>
+		<li>사업자번호</li> <input type="text" name="cnum" th:value="${cnum}"><br>
+		<li>기업주소</li> <input type="text" name="caddr" th:value="${caddr}"><br>
+		<li>사원수</li> <input type="text" name="employees"
+			th:value="${employees}"><br>
+		<li>기업홈페이지</li> <input type="text" name="url" th:value="${url}"><br>
+		<li>기업규모</li> <input type="text" name="size" th:value="${size}"><br>
+		<li>주요사업</li> <input type="text" name="major" th:value="${major}"><br>
+		<li>연매출액</li> <input type="text" name="yrSales" th:value="${yrSales}">만원<br>
+		<li>업종</li> <input type="text" name="sector" th:value="${sector}"><br>
+		<input type="submit" value="저장하기"><input type="submit"
+			value="뒤로가기">
 	</form>
 	<div id="error_result"></div>
-	
-	
-	
+
+
+
 	<script language='javascript'>
   		document.getElementById("username").style.background = "#e5e5e5";
-  </script>
+
+		document.getElementById('edit-company-form').addEventListener('submit', function(event) {
+			event.preventDefault();
+		
+			const formData = new FormData(this);
+			const formObject = {};
+			formData.forEach((value, key) => {
+				formObject[key] = value;
+			});
+		
+			fetch('http://localhost:9002/com/comUpdate', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(formObject)
+			})
+			.then(response => response.json())
+			.then(data => {
+				if (data.success) {
+					alert('저장되었습니다.');
+					window.location.href = '/company/list';
+				} else {
+					document.getElementById('error_result').textContent = data.message;
+				}
+			})
+			.catch(error => {
+				document.getElementById('error_result').textContent = '에러가 발생했습니다: ' + error.message;
+			});
+		});
+</script>
 </body>
 </html>

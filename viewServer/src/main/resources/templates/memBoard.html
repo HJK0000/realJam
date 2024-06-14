@@ -48,6 +48,7 @@
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
+                    'username' : sessionUsername // 헤더에 username 추가
                 },
                 body: JSON.stringify(formData)
             })

@@ -36,7 +36,7 @@ public class BoardController {
 		System.out.println(username);
 		
 		User userResult = userRepository.findByUsername(username);
-
+		// 인가
 		if (userResult == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("일치하는 사용자 정보가 없어서 게시글 저장 불가합니다.");
 		}

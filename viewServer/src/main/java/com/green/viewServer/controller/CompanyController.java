@@ -39,7 +39,7 @@ public class CompanyController {
 		model.addAttribute("size", size);
 		model.addAttribute("yrSales", yrSales);
 
-		return "company/cMyPage";
+		return "company/comMypage";
 	}
 	
 //	@PostMapping("/comUpdate")

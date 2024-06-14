@@ -9,10 +9,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.green.restServer.dto.CompanyDto;
 import com.green.restServer.entity.Company;
 import com.green.restServer.repository.CompanyRepository;
 
@@ -43,5 +44,31 @@ public class CompanyRestController {
         return ResponseEntity.status(HttpStatus.OK).body(company);
     }
 	
+	@PostMapping("/comUpdate")
+	public ResponseEntity<?> comUpdate(@RequestBody CompanyDto companyDto, HttpServletResponse response) throws IOException {
+
+        System.out.println("comUpdate..........."); 
+        
+		Company company = new Company();
+		
+		company.setPassword(companyDto.getPassword());
+		company.setCname(companyDto.getCname());
+		company.setLogo(companyDto.getLogo());
+		company.setCeo(companyDto.getCeo());
+		company.setCnum(companyDto.getCnum());
+		company.setCaddr(companyDto.getCaddr());
+		company.setEmployees(companyDto.getEmployees());
+		company.setUrl(companyDto.getUrl());
+		company.setSize(companyDto.getSize());
+		company.setMajor(companyDto.getMajor());
+		company.setYrSales(companyDto.getYrSales());
+		company.setSector(companyDto.getSector());
+		
+		companyRepository.save(company);
+
+		
+		
+        return ResponseEntity.status(HttpStatus.OK).body(company);
+    }
 
 }
