@@ -48,19 +48,10 @@ public class School extends BaseEntity{
 	@Column(name = "score", precision = 3, scale = 2)
 	private BigDecimal score;
 
-	@Column(name = "sstatus", nullable = false)
-	private String sstatus;
+	@Column(name = "sStatus", nullable = false)
+	private String schoolNow;
 	
 	
-	public School(String eduName, String sstatus, LocalDate accDate, LocalDate gradDate, String major, BigDecimal score,User user, Resume resume) {
-		this.eduName = eduName;
-        this.sstatus = sstatus;
-        this.accDate = accDate;
-        this.gradDate = gradDate;
-        this.major = major;
-        this.score = score;
-        this.user = user;
-	}
 	
 	
 	public void update(School newSchool) {
@@ -69,7 +60,7 @@ public class School extends BaseEntity{
 	    this.eduName = newSchool.getEduName();
 	    this.major = newSchool.getMajor();
 	    this.score = newSchool.getScore();
-	    this.sstatus = newSchool.getSstatus();
+	    //this.sStatus = newSchool.getSStatus();
 	    // 필요에 따라 다른 필드도 업데이트
 	}
 }

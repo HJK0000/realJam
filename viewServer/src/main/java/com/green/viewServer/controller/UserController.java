@@ -25,4 +25,9 @@ public class UserController {
 	public String aFrom() {
 		return "user/regForm";
 	}
+	
+	@RequestMapping("/schoolModiForm")
+	public String schoolModiForm() {
+		return "user/schoolModiForm";
+	}
 }

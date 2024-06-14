@@ -56,10 +56,19 @@ public class UserRestController {
 		}
 		System.out.println("user정보: " + user);
 		System.out.println("school정보: " + schools);
+		
 		for(School school : schools) {
 			school.setUser(user);
+			System.out.println("저장되는 school정보: " + school);
 			schoolRepo.save(school);
 		}
+	}
+	
+	@GetMapping("/grad/{username}")
+	public List<School> getSchool(@PathVariable("username") String username){
+		List<School> schoolList = schoolRepo.findByUsername(username);
+		
+		return schoolList;
 	}
 	
 	
