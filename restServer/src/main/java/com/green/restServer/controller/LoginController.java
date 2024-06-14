@@ -5,20 +5,21 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.green.restServer.entity.User;
+import com.green.restServer.dto.UserDto;
 import com.green.restServer.repository.UserRepository;
+import com.green.restServer.service.JoinService;
 
 @RestController
 @CrossOrigin("*")
 public class LoginController {
 
 	@Autowired
-	UserRepository userRepository;
+	JoinService joinservice;
 	
 	@PostMapping("/user")
-	public String joinUser(User user) {
+	public String joinUser(UserDto userDto) {
 		
-		userRepository.save(user);
+		joinservice.joinProcess(userDto);
 		
 		return "ok";
 	}

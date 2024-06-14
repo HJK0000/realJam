@@ -11,19 +11,37 @@
 	<h1>인덱스 페이지임</h1>
 
 	<input type="submit" value="기업 마이페이지로 이동" onclick="myPage(event)">
-
-	<script>
+	<a href="/loginForm">로그인 폼으로 이동</a>
+	<script> 
+	
+		 document.addEventListener('DOMContentLoaded', (event) => {
+	         let username = "com1"; // 여기에 실제 username 값을 설정. 실제로는 session에서 가져오기.
+	         saveUsername(username);
+	  	 });
+		
 		function myPage(event) {
-
+			
+			
 			event.preventDefault();
 			alert("submit......");
 
+			// localstorage에서 username 가져오기 (지금은 세션에 없으니까 주석처리) 나중에 세션에서 가져오는 걸로 수정하기
+			// let username = localStorage.getItem('username');
+			
+			let username = "com1";
+			
 			$.ajax({
 				type : "GET",
 				url : "http://localhost:9002/com/getCompanyInfo",
+				headers: {
+					"Username" : username // 요청 헤더에 username추가
+				}, 
+				// data : { username : username }
 				success : function(data) {
 
 					console.log(data);
+					
+					localStorage.setItem('username', data.username);
 					
 					let queryString = `?cname=${encodeURIComponent(data.cname)}&ceo=${encodeURIComponent(data.ceo)}&caddr=${encodeURIComponent(data.caddr)}&cnum=${encodeURIComponent(data.cnum)}&employees=${encodeURIComponent(data.employees)}&logo=${encodeURIComponent(data.logo)}&major=${encodeURIComponent(data.major)}&sector=${encodeURIComponent(data.sector)}&size=${encodeURIComponent(data.size)}&yrSales=${encodeURIComponent(data.yrSales)}`;
 					window.location.href = `http://localhost:8094/com/myPage${queryString}`;

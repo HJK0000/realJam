@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<h1>회원 게시글 등록 폼</h1>
+	<hr>
+
+	<p id="username" th:text="'사용자: ' + ${session.username}"></p>
+    <p th:text="'환영합니다, ' + ${session.username} + '님!'"></p>
+
+    <div>
+        <form name="frm" id="postForm">
+            <input type="text" id="title" name="title" placeholder="Input title....."><br>
+            <input type="text" id="content" name="content" placeholder="Input content....."><br>
+            <input type="text" id="writer" name="writer" placeholder="Input writer....."><br>
+            <input type="submit" value="게시물 등록">
+        </form>
+    </div>
+
+    <script>
+	
+    	const sessionUsername = "[[${session.username}]]";
+        // 폼 제출 이벤트 리스너 추가
+        document.getElementById('postForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // 폼 기본 제출 동작 방지
+        
+            
+            // 폼 데이터 수집
+            //const formData = new FormData(this);
+            //formData.append('username', sessionUsername); // 사용자 이름 추가
+
+            
+             // 폼 데이터 수집
+            const formData = {
+                title: document.getElementById('title').value,
+                content: document.getElementById('content').value,
+                writer: document.getElementById('writer').value,
+                username: sessionUsername
+            };
+            
+            // 서버로 데이터 전송
+            
+            fetch('http://localhost:9002/board/memBoardReg', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'username' : sessionUsername // 헤더에 username 추가
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log(data);
+                // 서버 응답 처리 (예: 성공 메시지 표시 등)
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // 에러 처리
+            });
+        });
+    </script>
+</body>
+</html>

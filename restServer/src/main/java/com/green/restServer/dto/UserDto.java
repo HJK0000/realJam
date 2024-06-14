@@ -23,6 +23,6 @@ public class UserDto {
     
     private String uaddr;
 
-    private Long role;
+    private String role;
     
 }
