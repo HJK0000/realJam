@@ -11,6 +11,11 @@ public class Login {
 		
 	}
 	
+	@GetMapping("/joinForm")
+	public void join() {
+		
+	}
+	
 	@GetMapping("/newfile")
 	public void newfile() {
 		
