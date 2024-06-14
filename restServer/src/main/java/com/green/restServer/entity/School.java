@@ -30,10 +30,6 @@ public class School extends BaseEntity{
 	private Long sno;
 
 	@ManyToOne
-	@JoinColumn(name = "rno", referencedColumnName = "rno", nullable = false)
-	private Resume resume;
-
-	@ManyToOne
 	@JoinColumn(name = "user_username", referencedColumnName = "username", nullable = false)
 	private User user;
 
@@ -52,8 +48,10 @@ public class School extends BaseEntity{
 	@Column(name = "score", precision = 3, scale = 2)
 	private BigDecimal score;
 
-	@Column(name = "sstatus", nullable = false)
-	private String sstatus;
+	@Column(name = "sStatus", nullable = false)
+	private String schoolNow;
+	
+	
 	
 	
 	public void update(School newSchool) {
@@ -62,7 +60,7 @@ public class School extends BaseEntity{
 	    this.eduName = newSchool.getEduName();
 	    this.major = newSchool.getMajor();
 	    this.score = newSchool.getScore();
-	    this.sstatus = newSchool.getSstatus();
+	    //this.sStatus = newSchool.getSStatus();
 	    // 필요에 따라 다른 필드도 업데이트
 	}
 }

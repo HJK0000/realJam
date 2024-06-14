@@ -8,19 +8,24 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.green.restServer.dto.UserDto;
 import com.green.restServer.entity.Resume;
+import com.green.restServer.entity.School;
 import com.green.restServer.entity.User;
 import com.green.restServer.repository.ResumeRepository;
+import com.green.restServer.repository.SchoolRepository;
 import com.green.restServer.repository.UserRepository;
 
 
 
 @RestController
-@CrossOrigin("*")
+@CrossOrigin("http://localhost:8094")
+@RequestMapping("/user")
 public class UserRestController {
 	
 	@Autowired
@@ -29,8 +34,11 @@ public class UserRestController {
 	@Autowired
 	UserRepository userRepo;
 	
+	@Autowired
+	SchoolRepository schoolRepo;
+	
 	@GetMapping("/mypage/{username}")
-	public User getMyPage(@RequestParam("username")String username) {
+	public User getMyPage(@PathVariable("username")String username) {
 		Optional<User> result= userRepo.findById(username);
 		
 		User u = result.get();
@@ -38,7 +46,30 @@ public class UserRestController {
 		return u;
 	}
 	
+	@PostMapping("/grad/{username}")
+	public void postSchool(@PathVariable("username") String username, @RequestBody List<School> schools) {
+		User user = userRepo.findByUserName(username);
+		
+		if(user == null) {
+			System.out.println("user정보 없음: " + user);
+			return;
+		}
+		System.out.println("user정보: " + user);
+		System.out.println("school정보: " + schools);
+		
+		for(School school : schools) {
+			school.setUser(user);
+			System.out.println("저장되는 school정보: " + school);
+			schoolRepo.save(school);
+		}
+	}
 	
+	@GetMapping("/grad/{username}")
+	public List<School> getSchool(@PathVariable("username") String username){
+		List<School> schoolList = schoolRepo.findByUsername(username);
+		
+		return schoolList;
+	}
 	
 	
 	
