@@ -38,10 +38,10 @@ public class JoinService {
 	
 	data.setUsername(username);
 	data.setRole("ROLE_MEMBER");
-	data.set
-	
-	
-	userRepository.save(data);
+//	data.set
+//	
+//	
+//	userRepository.save(data);
 	
 
 	}
