@@ -45,7 +45,7 @@ public class User extends BaseEntity{
     private String uaddr;
     
     @Column(name = "role")
-    private Long role;
+    private String role;
     
     public String getGenderString() {
         return gender.equals("1") ? "여성" : "남성";
