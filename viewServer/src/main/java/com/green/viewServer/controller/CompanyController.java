@@ -60,6 +60,8 @@ public class CompanyController {
 
 		String username = (String) session.getAttribute("username");
 		
+		System.out.println(username);
+		
 		Optional<Company> result = companyRepository.findById(username);
 
 		Company company = result.get();
