@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.green.restServer.dto.CompanyDto;
@@ -35,9 +37,9 @@ public class CompanyRestController {
 	}
 
 	@GetMapping("/getCompanyInfo")
-	public ResponseEntity<?> getCompanyInfo(Model model, HttpServletResponse response)throws IOException {
+	public ResponseEntity<?> getCompanyInfo(@RequestHeader("Username") String username, Model model, HttpServletResponse response)throws IOException {
 
-        String username = "com1"; // 세션에서 얻어오는 것처럼
+        //username = "com1"; // 세션에서 얻어오는 것처럼
         
         Company company = companyRepository.findById(username).orElseThrow(NullPointerException::new);
 
