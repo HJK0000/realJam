@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.green.restServer.dto.CompanyDto;
+import com.green.restServer.dto.CompanyResponseDto;
 import com.green.restServer.entity.Company;
 import com.green.restServer.repository.CompanyRepository;
 
@@ -51,6 +52,7 @@ public class CompanyRestController {
         
 		Company company = new Company();
 		
+		company.setUsername(companyDto.getUsername());
 		company.setPassword(companyDto.getPassword());
 		company.setCname(companyDto.getCname());
 		company.setLogo(companyDto.getLogo());
@@ -66,9 +68,9 @@ public class CompanyRestController {
 		
 		companyRepository.save(company);
 
+		CompanyResponseDto comResponse = new CompanyResponseDto(true, "기업정보가 수정되었습니다.", company);
 		
-		
-        return ResponseEntity.status(HttpStatus.OK).body(company);
+        return ResponseEntity.status(HttpStatus.OK).body(comResponse);
     }
 
 }

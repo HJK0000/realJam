@@ -1,7 +1,9 @@
 package com.green.viewServer.controller;
 
 import java.util.Map;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,10 +11,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.green.viewServer.entity.Company;
+import com.green.viewServer.repository.CompanyRepository;
+
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/com")
 public class CompanyController {
 
+	@Autowired
+	private CompanyRepository companyRepository;
+	
+	
 	@RequestMapping("/")
 	public String index() {
 		
@@ -41,6 +52,32 @@ public class CompanyController {
 
 		return "company/comMypage";
 	}
+	
+	
+	
+	@RequestMapping("/backToMyPage")
+	public String backToMyPage(Model model, HttpSession session) {
+
+		String username = (String) session.getAttribute("username");
+		
+		Optional<Company> result = companyRepository.findById(username);
+
+		Company company = result.get();
+		
+		model.addAttribute("cname", company.getCname());
+		model.addAttribute("ceo", company.getCeo());
+		model.addAttribute("caddr", company.getCaddr());
+		model.addAttribute("cnum", company.getCnum());
+		model.addAttribute("employees", company.getEmployees());
+		model.addAttribute("logo", company.getLogo());
+		model.addAttribute("major", company.getMajor());
+		model.addAttribute("sector", company.getSector());
+		model.addAttribute("size", company.getSize());
+		model.addAttribute("yrSales", company.getYrSales());
+		
+		return "company/comMypage";
+	}
+	
 	
 //	@PostMapping("/comUpdate")
 //	public String comUpdate(@RequestBody Map<String, Object> params, Model model) {

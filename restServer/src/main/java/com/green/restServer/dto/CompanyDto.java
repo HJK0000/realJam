@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class CompanyDto {
 
-	//private String username;
+	private String username;
 	private String password;
 	private String logo;
 	private String cname;

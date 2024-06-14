@@ -52,7 +52,7 @@ public class SecurityConfig { // 설정용 클래스
 				
 				);
 		
-		http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil), UsernamePasswordAuthenticationFilter.class);
+//		http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), 0jwtUtil), UsernamePasswordAuthenticationFilter.class);
 	
 		
 		//세션 설정 : Stateless

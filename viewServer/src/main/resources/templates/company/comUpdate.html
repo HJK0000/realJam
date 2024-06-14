@@ -30,8 +30,8 @@
 		<li>주요사업</li> <input type="text" name="major" th:value="${major}"><br>
 		<li>연매출액</li> <input type="text" name="yrSales" th:value="${yrSales}">만원<br>
 		<li>업종</li> <input type="text" name="sector" th:value="${sector}"><br>
-		<input type="submit" value="저장하기"><input type="submit"
-			value="뒤로가기">
+		<button type="submit" class="update">수정</button>
+		<button type="button" onclick="window.location.href = document.referrer;">취소</button>
 	</form>
 	<div id="error_result"></div>
 
@@ -59,8 +59,8 @@
 			.then(response => response.json())
 			.then(data => {
 				if (data.success) {
-					alert('저장되었습니다.');
-					window.location.href = '/company/list';
+					alert('기업정보가 수정되었습니다.');
+					window.location.href = '/com/backToMyPage';
 				} else {
 					document.getElementById('error_result').textContent = data.message;
 				}
