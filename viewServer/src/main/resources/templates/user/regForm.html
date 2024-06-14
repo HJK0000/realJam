@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+</head>
+<body>
+	<div id="school">
+	<input type="button" value="항목추가" id="addRowButton">
+	<table id="schoolTable" border="1">
+		<tr>
+			<td><input type="text" name="username" placeholder="아이디">
+		</tr>
+		<tr>
+			<td>학교명</td>
+			<td><input type="text" name="eduName" placeholder="학교명"></td>
+		</tr>
+		<tr>
+			<td>상태</td>
+			<td><input type="text" name="sStatus" placeholder="상태"></td>
+		</tr>
+		<tr>
+			<td>입학일</td>
+			<td><input type="text" name="accDate" placeholder="입학일"></td>
+		</tr>
+		<tr>
+			<td>졸업일</td>
+			<td><input type="text" name="gradDate" placeholder="졸업일"></td>
+		</tr>
+		<tr>
+			<td>전공</td>
+			<td><input type="text" name="major" placeholder="전공"></td>
+		</tr>
+		<tr>
+			<td>성적</td>
+			<td><input type="text" name="score" placeholder="성적"></td>
+		</tr>
+	</table>
+	<button onclick="regSchool()">학력저장</button>
+	</div>
+	
+	<script>
+	
+		const userDataString = localStorage.getItem("userData");
+		
+		const userData = JSON.parse(userDataString);
+		
+		const username = userData.username;
+		
+		document.querySelector('input[name="username"]').value = username;
+	
+		document.getElementById('addRowButton').addEventListener('click', function(){
+			
+			const newFormGroup = `
+				<tr>
+					<td><input type="hidden" name="username">
+				</tr>
+				<tr>
+					<td>학교명</td>
+					<td><input type="text" name="eduName" placeholder="학교명"></td>
+				</tr>
+				<tr>
+					<td>상태</td>
+					<td><input type="text" name="sStatus" placeholder="상태"></td>
+				</tr>
+				<tr>
+					<td>입학일</td>
+					<td><input type="text" name="accDate" placeholder="입학일"></td>
+				</tr>
+				<tr>
+					<td>졸업일</td>
+					<td><input type="text" name="gradDate" placeholder="졸업일"></td>
+				</tr>
+				<tr>
+					<td>전공</td>
+					<td><input type="text" name="major" placeholder="전공"></td>
+				</tr>
+				<tr>
+					<td>성적</td>
+					<td><input type="text" name="score" placeholder="성적"></td>
+				</tr>
+			`;
+			document.getElementById('schoolTable').insertAdjacentHTML('beforeend',newFormGroup);
+		});
+		
+		
+		
+		function regSchool(){
+			
+			const schoolData = [];
+			
+			
+			$('#schoolTable input').each(function(index, element){
+				const value = $(element).val();
+				console.log('regForm:${index} info: ', value);
+			});
+			const rows = $('#schoolTable tr');
+			const numRows = rows.length / 7;
+			
+			for(let i = 0; i < numRows; i++){
+				const eduName = rows.eq(i * 7 + 1).find('input[name="eduName"]').val();
+				const sStatus = rows.eq(i * 7 + 2).find('input[name="sStatus"]').val();
+				const accDate = rows.eq(i * 7 + 3).find('input[name="accDate"]').val();
+				const gradDate = rows.eq(i * 7 + 4).find('input[name="gradDate"]').val();
+				const major = rows.eq(i * 7 + 5).find('input[name="major"]').val();
+				const score = rows.eq(i * 7 + 6).find('input[name="score"]').val();
+				
+				if(username && eduName && sStatus && accDate && gradDate){
+					schoolData.push({
+						username: username,
+						eduName: eduName,
+						schoolNow: sStatus,
+						accDate: accDate,
+						gradDate: gradDate,
+						major: major,
+						score: score
+					});
+				}
+			}
+			
+			
+			
+			console.log("sending Data: ", JSON.stringify(schoolData));
+			
+			$.ajax({
+				url: 'http://localhost:9002/user/grad/' + username,
+				method: 'POST',
+				contentType: 'application/json',
+				data: JSON.stringify(schoolData),
+				success: function(response){
+					alert('데이터 등록완료');
+					window.location.href="/user/mypage?username=" + username;
+				},
+				error: function(xhr, status, error){
+					console.error('Error: ' + error);
+					alert('데이터 등록 중 오류발생');
+				}
+			});
+		}
+	
+	</script>
+</body>
+</html>

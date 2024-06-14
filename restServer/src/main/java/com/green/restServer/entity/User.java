@@ -29,7 +29,7 @@ public class User extends BaseEntity{
     @Column(name = "password", nullable = false)
     private String password;
     
-    @Column(name = "birthDate", nullable = false)
+    @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;
     
     @Column(name = "gender", nullable = false)
@@ -47,8 +47,17 @@ public class User extends BaseEntity{
     @Column(name = "role")
     private String role;
     
+    @Column(name = "new_name")
+	private String newname;
+	
+	@Column(name = "origin_name")
+	private String originname;
+	
+	@Column(name = "thumb_nail")
+	private String thumbNail;
+    
     public String getGenderString() {
-        return gender.equals("1") ? "여성" : "남성";
+        return gender.equals("1") ? "남성" : "여성";
     }
 
     public int getAge() {

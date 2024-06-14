@@ -22,6 +22,9 @@ public class JoinService {
 		String username = userDto.getUsername();
 		String password = userDto.getPassword();
 	
+
+		//Boolean isExist = userRepository.existsByUsername(username);
+
 		Boolean isExist = userRepository.existsByUsername(username);
 	
 	if(isExist) {
@@ -38,6 +41,7 @@ public class JoinService {
 	
 	userRepository.save(data);
 	
+
 	}
 	
 }
