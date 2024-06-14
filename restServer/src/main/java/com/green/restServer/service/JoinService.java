@@ -24,11 +24,6 @@ public class JoinService {
 		System.out.println(password);
 		
 		
-
-	
-
-		//Boolean isExist = userRepository.existsByUsername(username);
-
 		Boolean isExist = userRepository.existsByUsername(username);
 	
 		System.out.println(isExist);
