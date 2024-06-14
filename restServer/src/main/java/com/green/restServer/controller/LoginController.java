@@ -19,8 +19,30 @@ public class LoginController {
 	@PostMapping("/user")
 	public String joinUser(UserDto userDto) {
 		
+		System.out.println("인증");
+		
+		System.out.println(userDto);
+		
 		joinservice.joinProcess(userDto);
 		
+		
 		return "ok";
+	}
+	
+	@PostMapping("/com")
+	public String joinCom() {
+		
+		
+		
+		return "ok";
+	}
+	
+	
+	@PostMapping("/userlogin")
+	public String login() {
+		
+		
+		
+		return "";
 	}
 }

@@ -53,7 +53,7 @@
 			<input type="text" name="tel" placeholder=" 전화번호*"><br>
 			<input type="text" name="uaddr" placeholder=" 현 거주지*"><br>
 			<input type="file" name="originName"><br>
-			<input type="submit" value="가입하기">
+			<input type="submit" value="가입하기" onclick="submitForm(event)">
 		</form>
 	</div>
 	<div class="form-container" id="company-form">	
@@ -72,10 +72,53 @@
 			<input type="text" name="size" placeholder=" 기업규모*"><br>
 			<input type="text" name="major" placeholder=" 주요사업*"><br>
 			<input type="text" name="yrSales" placeholder=" 연매출액*"><br>
-			<input type="submit" value="가입하기">
+			<input type="submit" value="가입하기" onclick="submitForm2(event)">
 		</form>
 	</div>
 	<script>
+	
+	function submitForm(event){
+		event.preventDefault(); //submit버튼의 기본기능을 제한하겠다.
+		
+		var form = document.forms['regForm1'];
+		var formData = $(form).serialize();
+		
+		$.ajax({
+			type: "POST",
+			url: "http://localhost:9002/user",
+			contentType: "application/x-www-form-urlencoded",
+			data: formData,
+			dataType: "text", // 서버가 보내주는 데이터의 타입
+			success: function(data){
+				console.log(data);
+			},
+			error: function(){
+				console.log("에러 발생.....");
+			}
+		})
+	}
+	
+	function submitForm2(event){
+		event.preventDefault(); //submit버튼의 기본기능을 제한하겠다.
+		
+		var form = document.forms['regForm2'];
+		var formData = $(form).serialize();
+		
+		$.ajax({
+			type: "POST",
+			url: "http://localhost:9002/com",
+			contentType: "application/x-www-form-urlencoded",
+			data: formData,
+			dataType: "text", // 서버가 보내주는 데이터의 타입
+			success: function(data){
+				console.log(data);
+			},
+			error: function(){
+				console.log("에러 발생.....");
+			}
+		})
+	}
+	
     // jQuery로 탭 버튼 클릭 이벤트 설정
     $(document).ready(function() {
         // 기본적으로 유저 폼을 보이도록 설정

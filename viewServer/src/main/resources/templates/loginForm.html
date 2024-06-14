@@ -7,10 +7,42 @@
 </head>
 <body>
 	<div>
-		<form>
-			<input type="text" name="username" placeholder="아이디">
-			<input type="password" name="password" placeholder="비밀번호">
+		<form id="frm">
+			<input type="text" name="username" placeholder="아이디"><br>
+			<input type="password" name="password" placeholder="비밀번호"><br>
+			<input type="submit" value="로그인" onclick="submitForm(event)">
 		</form>
 	</div>
+	
+	<script>
+	function submitForm(event){
+		event.preventDefault(); //submit버튼의 기본기능을 제한하겠다.
+		alert("submit....");
+		
+		var form = document.forms['frm'];
+		var formData = $(form).serialize();
+		
+		$.ajax({
+			type: "POST",
+			url: "http://localhost:9002/login",
+			headers: {
+				"username" : username
+			},
+			contentType: "application/x-www-form-urlencoded",
+			data: formData,
+			dataType: "text", // 서버가 보내주는 데이터의 타입
+			success: function(data){
+				console.log(data);
+//				$("#demo").html(data);
+				location.href = "/noticeForm"
+			},
+			error: function(){
+				console.log("에러 발생.....");
+			}
+		})
+	}
+	
+	</script>
+	
 </body>
 </html>
