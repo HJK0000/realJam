@@ -11,7 +11,11 @@
 	<h1>인덱스 페이지임</h1>
 
 	<input type="submit" value="기업 마이페이지로 이동" onclick="myPage(event)">
+	<a href="/com/recruitmentList">채용공고 리스트로 이동</a>
+	
+	
 	<a href="/loginForm">로그인 폼으로 이동</a>
+	
 	<script> 
 	
 		 document.addEventListener('DOMContentLoaded', (event) => {
@@ -40,7 +44,7 @@
 
 					console.log(data);
 										
-					let queryString = `?cname=${encodeURIComponent(data.cname)}&ceo=${encodeURIComponent(data.ceo)}&caddr=${encodeURIComponent(data.caddr)}&cnum=${encodeURIComponent(data.cnum)}&employees=${encodeURIComponent(data.employees)}&logo=${encodeURIComponent(data.logo)}&major=${encodeURIComponent(data.major)}&sector=${encodeURIComponent(data.sector)}&size=${encodeURIComponent(data.size)}&yrSales=${encodeURIComponent(data.yrSales)}`;
+					let queryString = `?username=${encodeURIComponent(data.username)}&cname=${encodeURIComponent(data.cname)}&ceo=${encodeURIComponent(data.ceo)}&caddr=${encodeURIComponent(data.caddr)}&cnum=${encodeURIComponent(data.cnum)}&employees=${encodeURIComponent(data.employees)}&logo=${encodeURIComponent(data.logo)}&major=${encodeURIComponent(data.major)}&sector=${encodeURIComponent(data.sector)}&size=${encodeURIComponent(data.size)}&yrSales=${encodeURIComponent(data.yrSales)}`;
 					window.location.href = `http://localhost:8094/com/myPage${queryString}`;
 
 				},
