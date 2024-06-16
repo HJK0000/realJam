@@ -34,10 +34,10 @@ public class CompanyController {
 	
 	
 	@RequestMapping("/myPage")
-	public String myPage(@RequestParam("cname") String cname, @RequestParam("ceo") String ceo, @RequestParam("caddr") String caddr,
+	public String myPage(@RequestParam("username") String username, @RequestParam("cname") String cname, @RequestParam("ceo") String ceo, @RequestParam("caddr") String caddr,
 			@RequestParam("cnum") String cnum, @RequestParam("employees") int employees, @RequestParam("logo") String logo,
 			@RequestParam("major") String major, @RequestParam("sector") String sector, @RequestParam("size") String size,
-			@RequestParam("yrSales") String yrSales, Model model) {
+			@RequestParam("yrSales") String yrSales, Model model, HttpSession session) {
 
 		model.addAttribute("cname", cname);
 		model.addAttribute("ceo", ceo);
@@ -50,15 +50,41 @@ public class CompanyController {
 		model.addAttribute("size", size);
 		model.addAttribute("yrSales", yrSales);
 
+		session.setAttribute("username", username);
+		
 		return "company/comMypage";
 	}
 	
+
 	
+	
+	@PostMapping("/comUpdate")
+	public String comUpdate(@RequestBody Map<String, Object> params, Model model) {
+		System.out.println("comUpdate 매서드.................");
+        model.addAttribute("username", params.get("username"));
+        model.addAttribute("cname", params.get("cname"));
+        model.addAttribute("ceo", params.get("ceo"));
+        model.addAttribute("caddr", params.get("caddr"));
+        model.addAttribute("cnum", params.get("cnum"));
+        model.addAttribute("employees", params.get("employees"));
+        model.addAttribute("logo", params.get("logo"));
+        model.addAttribute("major", params.get("major"));
+        model.addAttribute("sector", params.get("sector"));
+        model.addAttribute("size", params.get("size"));
+        model.addAttribute("yrSales", params.get("yrSales"));
+		
+        return "company/comUpdate";
+		
+		
+	}
+
 	
 	@RequestMapping("/backToMyPage")
-	public String backToMyPage(Model model, HttpSession session) {
-
-		String username = (String) session.getAttribute("username");
+	public String backToMyPage(@RequestParam("username") String username, @RequestParam("cname") String cname, @RequestParam("ceo") String ceo, @RequestParam("caddr") String caddr,
+			@RequestParam("cnum") String cnum, @RequestParam("employees") int employees, @RequestParam("logo") String logo,
+			@RequestParam("major") String major, @RequestParam("sector") String sector, @RequestParam("size") String size,
+			@RequestParam("yrSales") String yrSales, Model model, HttpSession session) {
+		
 		
 		System.out.println(username);
 		
@@ -81,28 +107,10 @@ public class CompanyController {
 	}
 	
 	
-	@PostMapping("/comUpdate")
-	public String comUpdate(@RequestBody Map<String, Object> params, Model model) {
-		System.out.println("comUpdate 매서드.................");
-        model.addAttribute("username", params.get("username"));
-        model.addAttribute("cname", params.get("cname"));
-        model.addAttribute("ceo", params.get("ceo"));
-        model.addAttribute("caddr", params.get("caddr"));
-        model.addAttribute("cnum", params.get("cnum"));
-        model.addAttribute("employees", params.get("employees"));
-        model.addAttribute("logo", params.get("logo"));
-        model.addAttribute("major", params.get("major"));
-        model.addAttribute("sector", params.get("sector"));
-        model.addAttribute("size", params.get("size"));
-        model.addAttribute("yrSales", params.get("yrSales"));
-		
-        return "company/comUpdate";
-		
-		
-	}
-	
 	@RequestMapping("/toCompanyUpdate")
 	public String toCompnayUpdate() {
+		
+		System.out.println("toCompanyUpdate................");
 		
 		return "company/comUpdate";
 		
@@ -111,10 +119,10 @@ public class CompanyController {
 	
 
 
-	@RequestMapping("/recruit")
-	public String recruit() {
+	@RequestMapping("/recruitmentList")
+	public String recruitmentList() {
 		
-		return "company/recruitment";
+		return "company/comRecruitment";
 		
 	}
 }

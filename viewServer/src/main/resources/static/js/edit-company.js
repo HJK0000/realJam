@@ -7,12 +7,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	// REST API 서버의 엔드포인트 URL
 	const apiUrl = 'http://localhost:9002/com/getCompanyInfo';
-
+	const username = localStorage.getItem('username'); 
+	
+	console.log(username);
 	// Ajax get 요청
 	$.ajax({
 
 		url: apiUrl,
 		type: 'GET',
+		headers: {
+					"Username" : username // 요청 헤더에 username추가
+		}, 
 		success: function(response) {
 			const obj = response;
 			$("input[name='username'] ").val(obj.username);
