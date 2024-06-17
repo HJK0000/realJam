@@ -9,7 +9,7 @@ import com.green.restServer.dto.UserDto;
 import com.green.restServer.service.JoinService;
 
 @RestController
-public class UserController {
+public class JoinController {
 
 	@Autowired
 	JoinService joinservice;

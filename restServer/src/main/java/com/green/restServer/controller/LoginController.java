@@ -3,27 +3,29 @@ package com.green.restServer.controller;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.green.restServer.entity.User;
+import com.green.restServer.repository.CompanyRepository;
 import com.green.restServer.repository.UserRepository;
 
 import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
-@CrossOrigin("*")
 public class LoginController {
 
 	@Autowired
 	UserRepository userRepository;
 	
+	@Autowired
+	CompanyRepository companyRepository; 
+	
 	@PostMapping("/userLogin")
 	public LoginResponse userlogin(User user, HttpServletResponse response) {
 		
 		Optional<User> result = userRepository.findById(user.getUsername());
-			
+		
 		
 		if(result.isPresent()) {
 			
@@ -69,7 +71,7 @@ public class LoginController {
 		}
 	}
 	
-	@PostMapping("/comlogin")
+	@PostMapping("/comLogin")
 	public String comLogin() {
 		
 		return "";
