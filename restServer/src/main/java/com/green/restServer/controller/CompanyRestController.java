@@ -49,10 +49,10 @@ public class CompanyRestController {
 	}
 
 	@GetMapping("/getCompanyInfo")
-	public ResponseEntity<?> getCompanyInfo(@RequestHeader("Username") String username, HttpServletResponse response)
+	public ResponseEntity<?> getCompanyInfo(@RequestHeader("username") String username, HttpServletResponse response)
 			throws IOException {
 
-		System.out.println(username);
+		System.out.println("Received Username: " + username);
 		Company company = companyRepository.findById(username).orElseThrow(NullPointerException::new);
 
 		System.out.println("getCompanyInfo...........");
@@ -93,27 +93,27 @@ public class CompanyRestController {
 		return ResponseEntity.status(HttpStatus.OK).body(comResponse);
 	}
 
-//	@GetMapping("/getRecruitTitle")
-//	public ResponseEntity<?> getRecruitTitle(@RequestHeader("Username") String username, HttpServletResponse response)throws IOException {
-//		
-//		System.out.println(username);
-//		
-//		List<JobAd> result =  jobAdRepository.findByCompanyUsername(username);
-//		
-//		System.out.println("jobAdList..........." + result);
-//		
-//		if(result.isEmpty()) {
-//			
-//			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 기업에서 작성한 채용공고를 찾을 수 없습니다.");
-//			)
-//		}
-//		List<JobAdDto> jobAdDtos = result.stream()
-//									.map(jobAd -> new JobAdDto(jobAd))	
-//									.collect(Collectors.toList());
-//		
-//		System.out.println("jobAdDto..............." + jobAdDtos);
-//		
-//		 return ResponseEntity.ok(jobAdDtos);
-//	}
+	@GetMapping("/getRecruitTitle")
+	public ResponseEntity<?> getRecruitTitle(@RequestHeader("Username") String username, HttpServletResponse response)throws IOException {
+		
+		System.out.println(username);
+		
+		List<JobAd> result =  jobAdRepository.findByCompanyUsername(username);
+		
+		System.out.println("jobAdList..........." + result);
+		
+		if(result.isEmpty()) {
+			
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 기업에서 작성한 채용공고를 찾을 수 없습니다.");
+			
+		}
+		List<JobAdDto> jobAdDtos = result.stream()
+									.map(jobAd -> new JobAdDto(jobAd))	
+									.collect(Collectors.toList());
+		
+		System.out.println("jobAdDto..............." + jobAdDtos);
+		
+		 return ResponseEntity.ok(jobAdDtos);
+	}
 
 }
