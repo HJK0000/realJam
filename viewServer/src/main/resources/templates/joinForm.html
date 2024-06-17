@@ -52,7 +52,8 @@
 			<input type="text" name="email" placeholder=" 이메일*"><br>
 			<input type="text" name="tel" placeholder=" 전화번호*"><br>
 			<input type="text" name="uaddr" placeholder=" 현 거주지*"><br>
-			<input type="file" name="originName"><br>
+			<input type="file" name="originName" id="image"><br>
+			<label for="image" style="background-color: #007bff; color: white; padding: 8px 12px; cursor: pointer; border-radius: 4px;">사진 선택</label>
 			<input type="submit" value="가입하기" onclick="submitForm(event)">
 		</form>
 	</div>
@@ -67,11 +68,13 @@
 			<input type="text" name="cnum" placeholder=" 사업자번호*"><br>
 			<input type="text" name="caddr" placeholder=" 기업주소*"><br>
 			<input type="text" name="sector" placeholder=" 업종*"><br>
-			<input type="text" name="employee" placeholder=" 사원수*"><br>
+			<input type="text" name="employees" placeholder=" 사원수*"><br>
 			<input type="text" name="url" placeholder=" 회사홈페이지url*"><br>
 			<input type="text" name="size" placeholder=" 기업규모*"><br>
 			<input type="text" name="major" placeholder=" 주요사업*"><br>
 			<input type="text" name="yrSales" placeholder=" 연매출액*"><br>
+			<input type="file" name="logo" id="logo" style="width: 0; height: 0; opacity: 0;">
+			<label for="logo" style="background-color: #007bff; color: white; padding: 8px 12px; cursor: pointer; border-radius: 4px;">로고 이미지 선택</label>
 			<input type="submit" value="가입하기" onclick="submitForm2(event)">
 		</form>
 	</div>
@@ -101,14 +104,14 @@
 	function submitForm2(event){
 		event.preventDefault(); //submit버튼의 기본기능을 제한하겠다.
 		
-		var form = document.forms['regForm2'];
-		var formData = $(form).serialize();
+		var form2 = document.forms['regForm2'];
+		var formData2 = $(form2).serialize();
 		
 		$.ajax({
 			type: "POST",
 			url: "http://localhost:9002/com",
 			contentType: "application/x-www-form-urlencoded",
-			data: formData,
+			data: formData2,
 			dataType: "text", // 서버가 보내주는 데이터의 타입
 			success: function(data){
 				console.log(data);
