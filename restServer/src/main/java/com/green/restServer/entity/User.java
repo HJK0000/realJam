@@ -44,7 +44,7 @@ public class User extends BaseEntity{
     @Column(name = "uaddr", nullable = false)
     private String uaddr;
     
-    @Column(name = "role")
+    @Column(name = "role", nullable = false, length = 255)
     private String role;
     
     @Column(name = "new_name")
