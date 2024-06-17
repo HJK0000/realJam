@@ -68,6 +68,7 @@
 			data: formData,
 			dataType: "text", // 서버가 보내주는 데이터의 타입
 			success: function(data, status, xhr){
+				
 				console.log(data);
 //				$("#demo").html(data);
 				let username = xhr.getResponseHeader("username");

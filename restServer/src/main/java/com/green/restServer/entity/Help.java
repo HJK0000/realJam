@@ -4,8 +4,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Data;
 
 @Entity
+@Data
 public class Help extends BaseEntity{
 
 	@Id
@@ -15,4 +17,8 @@ public class Help extends BaseEntity{
 	private String title;
 	private String content;
 	
+	public void update(Help help) {
+		this.title = help.getTitle();
+		this.content = help.getContent();
+	}
 }

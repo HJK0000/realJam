@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+</head>
+<body>
+	<div>
+		 <form id="frm">
+		 	<input type="text" name="title" th:value="${title}"><br>
+		 	<input type="text" name="content" th:value="${content}"><br>
+		 	<input type="submit" value="등록" onclick="submitForm(event)">
+		 	<input type="button" value="삭제" onclick="deleteHelp(hnum)">
+		 </form>
+	 </div>
+	 
+	 <script>
+
+	function deleteHelp(hnum) {
+		if(confirm("정말 삭제하시겠습니까?")) {
+			$.ajax({
+				type: "DELETE",
+				url: "http://localhost:9002/help/" + hnum,
+				success: function(response){
+					alert("삭제 완료");
+					location.reload(); // 삭제 후 페이지 새로고침
+				},
+				error: function(){
+					console.log("삭제 에러 발생.....");
+				}
+			});
+		}
+	}
+    </script>
+</body>
+</html>
