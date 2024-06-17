@@ -32,7 +32,7 @@ public class JobAdDto {
 	private String needskill;
 	private String rcptMthd;
 	private String region;
-	private String WkdWkhCnt;
+	private String wkdWkhCnt;
 	private String retirepay;
 	private String etcWelfare;
 	private String attachFileUrl;
@@ -62,7 +62,7 @@ public class JobAdDto {
 		this.needskill = jobAd.getNeedskill();
 		this.rcptMthd = jobAd.getRcptMthd();
 		this.region = jobAd.getRegion();
-		this.WkdWkhCnt = jobAd.getWkdWkhCnt();
+		this.wkdWkhCnt = jobAd.getWkdWkhCnt();
 		this.retirepay = jobAd.getRetirepay();
 		this.etcWelfare = jobAd.getEtcWelfare();
 		this.attachFileUrl = jobAd.getAttachFileUrl();

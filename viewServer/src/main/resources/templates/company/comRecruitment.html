@@ -20,26 +20,25 @@ textarea {
 	<input type="submit" value="우리회사채용공고리스트" onclick="jobList()">
 	<input type="submit" value="채용공고 등록" onclick="jobReg()">
 
-
-
-
 	<div class="container" id="jobList">
 
 
 		<h1>우리회사 채용공고</h1>
 		<input type="button" value="채용공고작성" onclick="jobReg()">
-		<table border="1">
-			<thead>
-				<tr>
-					<th>공고제목</th>
-					<th>수정버튼</th>
-					<th>삭제버튼</th>
-				</tr>
-			</thead>
-			<tbody id="jobTableBody">
+		<div id="jobTableMessage">
+			<table border="1">
+				<thead>
+					<tr>
+						<th>공고제목</th>
+						<th>수정버튼</th>
+						<th>삭제버튼</th>
+					</tr>
+				</thead>
+				<tbody id="jobTableBody">
 
-			</tbody>
-		</table>
+				</tbody>
+			</table>
+		</div>
 	</div>
 
 
@@ -49,7 +48,7 @@ textarea {
 		<h1>채용공고 등록</h1>
 		<hr>
 
-		<form name="frm">
+		<form name="frm" id="frm">
 			<div class="form-group">
 				<label for="wantedTitle">공고제목</label> <input type="text"
 					id="wantedTitle" name="wantedTitle" width=200 />
@@ -103,7 +102,8 @@ textarea {
 			</div>
 			<div class="form-group" id="jobContContainer">
 				<label for="jobCont">직무내용</label>
-				<textarea type="text" class="jobContInput" name="jobCont">
+				<textarea type="text" class="jobContInput" name="jobCont"
+					id="jobCont">
 			</textarea>
 			</div>
 			<div class="form-group">
@@ -117,8 +117,7 @@ textarea {
 				</select>
 			</div>
 			<div class="form-group">
-				<label for="region1">근무 지역</label> <select id="region1"
-					name="region1">
+				<label for="region">근무 지역</label> <select id="region" name="region">
 					<option value="">선택</option>
 					<option value="서울특별시">서울특별시</option>
 					<option value="부산광역시">부산광역시</option>
@@ -132,8 +131,8 @@ textarea {
 				</select>
 			</div>
 			<div class="form-group">
-				<label for="minEdubglcd">학력 제한</label> <select id="minEdubglcd"
-					name="minEdubglcd">
+				<label for="educondition">학력 제한</label> <select id="educondition"
+					name="educondition">
 
 					<option value="">선택</option>
 					<option value="학력무관">학력무관</option>
@@ -174,8 +173,8 @@ textarea {
 			<br>
 
 			<div class="form-group">
-				<label for="workingTime">근무 시간:</label> <select id="workingTime"
-					name="workingTime">
+				<label for="wkdWkhCnt">근무 시간:</label> <select id="wkdWkhCnt"
+					name="wkdWkhCnt">
 					<option value="09:00~18:00">09:00~18:00</option>
 					<option value="09:30~18:30">09:30~18:30</option>
 					<option value="10:00~19:00">10:00~19:00</option>
@@ -206,54 +205,239 @@ textarea {
 				<label for="mltsvcExcHope">병역특례채용희망</label> <input type="checkbox"
 					id="mltsvcExcHope" name="mltsvcExcHope">
 			</div>
-			<div class="form-group">
+			<!-- 		<div class="form-group">
 				<label for="keywordSearch">키워드 검색:</label> <input type="text"
 					id="keywordSearch" onkeyup="filterKeywords()"> <br> <label
 					for="srchKeywordNm">채용공고 관련 키워드:</label> <select id="keywordSelect"
 					onchange="addKeyword()">
 				</select>
 				<div id="selectedKeywords"></div>
+			</div>  -->
+			<div class="form-group">
+				<label for="empName">담당자명</label> <input type="text" id="empName"
+					name="empName">
 			</div>
 			<div class="form-group">
-				<label for="empName">담당자명</label>
-				<input type="text" id="empName" name="empName">
+				<label for="empTel">연락처</label> <input type="text" id="empTel"
+					name="empTel">
 			</div>
 			<div class="form-group">
-				<label for="empTel">연락처</label>
-				<input type="text" id="empTel" name="empTel">	
+				<label for="empEmail">이메일</label> <input type="text" id="empEmail"
+					name="empEmail">
 			</div>
+
 			<div class="form-group">
-				<label for="empEmail">이메일</label>
-				<input type="text" id="empEmail" name="empEmail">
+				<label for="receiptCloseDt">접수마감일</label> <input type="date"
+					id="receiptCloseDt" name="receiptCloseDt" required>
 			</div>
-			
-			<div class="form-group">
-				<label for="receiptCloseDt">접수마감일</label>
-				<input type="date" id="receiptCloseDt" name="receiptCloseDt" required>
-			</div>
-			
+
 			<input type="submit" value="등록하기">
-			<input type="button" value="뒤로가기">
+			<button type="button" value="뒤로가기"
+				onclick="window.location.href = document.referrer;">뒤로가기</button>
 		</form>
 
 
 	</div>
 
+	<div class="container" id="jobUpdate">
+
+		<!--style="display: none;"-->
+		<h1>채용공고 수정</h1>
+		<hr>
+
+		<form name="frm2" id="frm2">
+			<div class="form-group">
+				<label for="wantedTitle">공고제목</label> <input type="text"
+					id="wantedTitle2" name="wantedTitle" width=200 />
+			</div>
+			<div class="form-group">
+				<label for="sector1">모집업종</label> <select id="sector12"
+					name="sector1">
+					<option value="">선택</option>
+					<option value="서비스업">서비스업</option>
+					<option value="제조·화학">제조·화학</option>
+					<option value="IT·웹·통신">IT·웹·통신</option>
+					<option value="은행·금융업">은행·금융업</option>
+					<option value="미디어·디자인">미디어·디자인</option>
+					<option value="교육업">교육업</option>
+					<option value="의료·제약·복지">의료·제약·복지</option>
+					<option value="판매·유통">판매·유통</option>
+					<option value="건설업">건설업</option>
+					<option value="기관·협회">기관·협회</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="position1">모집직무</label> <select id="position12"
+					name="position1">
+					<option value="">선택</option>
+					<option value="기획전략">기획전략</option>
+					<option value="마케팅·홍보·조사">마케팅·홍보·조사</option>
+					<option value="회계·세무·재무">회계·세무·재무</option>
+					<option value="인사·노무·HRD">인사·노무·HRD</option>
+					<option value="총무·법무·사무">총무·법무·사무</option>
+					<option value="IT개발·데이터">IT개발·데이터</option>
+					<option value="디자인">디자인</option>
+					<option value="영업·판매·무역">영업·판매·무역</option>
+					<option value="고객상담·TM">고객상담·TM</option>
+					<option value="구매·자재·물류">구매·자재·물류</option>
+					<option value="상품기획·MD">상품기획·MD</option>
+					<option value="운전·운송·배송">운전·운송·배송</option>
+					<option value="서비스">서비스</option>
+					<option value="생산">생산</option>
+					<option value="건설·건축">건설·건축</option>
+					<option value="의료">의료</option>
+					<option value="연구·R&D">연구·R&D</option>
+					<option value="교육">교육</option>
+					<option value="미디어·문화·스포츠">미디어·문화·스포츠</option>
+					<option value="금융·보험">금융·보험</option>
+					<option value="공공·복지">공공·복지</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="collectPsncnt">모집 인원</label> <input type="number"
+					id="collectPsncnt2" name="collectPsncnt">명
+			</div>
+			<div class="form-group" id="jobContContainer">
+				<label for="jobCont">직무내용</label>
+				<textarea type="text" class="jobContInput" id="jobCont2"
+					name="jobCont">
+			</textarea>
+			</div>
+			<div class="form-group">
+				<label for="empTpNm">고용형태</label> <select id="empTpNm2"
+					name="empTpNm">
+					<option value="">선택</option>
+					<option value="정규직">정규직</option>
+					<option value="비정규직">비정규직</option>
+					<option value="계약직">계약직</option>
+					<option value="파견직">파견직</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="region">근무 지역</label> <select id="region2" name="region">
+					<option value="">선택</option>
+					<option value="서울특별시">서울특별시</option>
+					<option value="부산광역시">부산광역시</option>
+					<option value="인천광역시">인천광역시</option>
+					<option value="대전광역시">대전광역시</option>
+					<option value="대구광역시">대구광역시</option>
+					<option value="울산광역시">울산광역시</option>
+					<option value="광주광역시">광주광역시</option>
+					<option value="세종특별자치시">세종특별자치시</option>
+					<option value="제주특별자치도">제주특별자치도</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="educondition">학력 제한</label> <select id="educondition2"
+					name="educondition">
+
+					<option value="">선택</option>
+					<option value="학력무관">학력무관</option>
+					<option value="고등학교졸업">고등학교졸업</option>
+					<option value="대학졸업(2,3년)">대학졸업(2,3년)</option>
+					<option value="대학교졸업(4년)">대학교졸업(4년)</option>
+					<option value="석사졸업">석사졸업</option>
+					<option value="박사졸업">박사졸업</option>
+					<option value="고등학교졸업이상">고등학교졸업이상</option>
+					<option value="대학졸업(2,3년)이상">대학졸업(2,3년)이상</option>
+					<option value="대학교졸업(4년)이상">대학교졸업(4년)이상</option>
+					<option value="석사졸업이상">석사졸업이상</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="yofExperiences">경력 제한</label> <select
+					id="yofExperiences2" name="yofExperiences">
+					<option value="신입">신입</option>
+					<option value="경력">경력</option>
+					<option value="경력무관">경력무관</option>
+				</select>
+			</div>
+			<div class="form-group" id="needskillContainer">
+				<label for="needskill">필요 스킬
+					<button type="button"
+						onclick="addInput('needskillContainer', 'needskillInput')">추가</button>
+				</label> <input type="text" id="needskill2" class="needskillInput"
+					name="needskill">
+			</div>
+			<div class="form-group">
+				<p>
+					<strong>접수방법</strong>
+				</p>
+				<label for="option1">취업잼잼 이력서 지원</label> <input type="radio"
+					id="option1" name="rcptMthd2" value="취업잼잼이력서지원"> <label
+					for="option2">홈페이지 방문 지원</label> <input type="radio" id="option2"
+					name="rcptMthd2" value="홈페이지방문지원">
+			</div>
+			<br>
+
+			<div class="form-group">
+				<label for="wkdWkhCnt">근무 시간:</label> <select id="wkdWkhCnt2"
+					name="wkdWkhCnt">
+					<option value="09:00~18:00">09:00~18:00</option>
+					<option value="09:30~18:30">09:30~18:30</option>
+					<option value="10:00~19:00">10:00~19:00</option>
+					<option value="10:30~19:30">10:30~19:30</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="salTpCd">급여조건</label> <select id="salTpCd2"
+					name="salTpCd">
+					<option value="연봉">연봉</option>
+					<option value="월급">월급</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="sale">급여액</label> <input type="number" id="sale2"
+					name="sale" placeholder="급여 입력">만원
+			</div>
+			<div class="form-group">
+				<label for="retirepay">퇴직금 여부</label> <input type="checkbox"
+					id="retirepay2" name="retirepay">
+			</div>
+			<div class="form-group">
+				<label for="etcWelfare">기타복리후생</label>
+				<textarea rows="5" cols="50" id="etcWelfare2" name="etcWelfare"
+					placeholder="내용을 입력해주세요."></textarea>
+			</div>
+			<div class="form-group">
+				<label for="mltsvcExcHope">병역특례채용희망</label> <input type="checkbox"
+					id="mltsvcExcHope2" name="mltsvcExcHope">
+			</div>
+			<!-- 		<div class="form-group">
+				<label for="keywordSearch">키워드 검색:</label> <input type="text"
+					id="keywordSearch" onkeyup="filterKeywords()"> <br> <label
+					for="srchKeywordNm">채용공고 관련 키워드:</label> <select id="keywordSelect"
+					onchange="addKeyword()">
+				</select>
+				<div id="selectedKeywords"></div>
+			</div>  -->
+			<div class="form-group">
+				<label for="empName">담당자명</label> <input type="text" id="empName2"
+					name="empName">
+			</div>
+			<div class="form-group">
+				<label for="empTel">연락처</label> <input type="text" id="empTel2"
+					name="empTel">
+			</div>
+			<div class="form-group">
+				<label for="empEmail">이메일</label> <input type="text" id="empEmail2"
+					name="empEmail">
+			</div>
+
+			<div class="form-group">
+				<label for="receiptCloseDt">접수마감일</label> <input type="date"
+					id="receiptCloseDt2" name="receiptCloseDt" required>
+			</div>
+
+			<input type="submit" value="수정하기">
+			<button type="button" value="뒤로가기"
+				onclick="window.location.href = document.referrer;">뒤로가기</button>
+		</form>
 
 
-	<script>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	</div>
+
+	<script language='javascript'>
 		function jobList() {
 			document.querySelectorAll('.container').forEach(function(div) {
 				div.style.display = 'none';
@@ -266,17 +450,105 @@ textarea {
 				div.style.display = 'none';
 			});
 			document.querySelector("#jobReg").style.display = "block";
-		
+
 		}
 		
+		document.getElementById('frm').addEventListener('submit', function(event) {
+			event.preventDefault();
+			
+			
+			const formData = new FormData(this);
+			const formObject = {};
+			formData.forEach((value, key) => {
+				console.log("value = " + value);
+				console.log("key = " + key);
+				formObject[key] = value;	
+			});
+			console.log("formObject = " + JSON.stringify(formObject));
+			let username = localStorage.getItem('username');
+			
+			fetch('http://localhost:9002/com/jobAdRegist', {
+				method : 'POST',
+				headers : {
+					'Content-Type' : 'application/json',
+					'Username' : username
+				
+				},
+				
+				body : JSON.stringify(formObject)
+							
+			})
+			
+			.then(response => response.json())
+			.then(data => {
+				if(data.success){
+					
+					alert(data.message);
+					
+					// 바디에 담겨져 온 company 정보
+					
+					const company = data.company;
+					const queryParams = new URLSearchParams({
+						
+						username : company.username
+						
+					}).toString();
+					
+				}
+				console.log(data);
+				// Add any additional actions to be performed on successful response.
+			})
+			.catch(error => {
+				console.error('Error:', error);
+				// Add any additional actions to be performed on error response.
+			});
+		});
 		
-		
-		
+		document.getElementById('frm2').addEventListener('submit', function(event){
+			event.preventDefault();
+			
+			const formData = new FormData(this);
+			const formObject = {};
+			formData.forEach((value, key) => {
+				console.log("value = " + value);
+				console.log("key = " + key);
+				formObject[key] = value;
+				
+			});
+			
+			console.log("formObject = " +  JSON.stringify(formObject));
+			let username = localStorage.getItem('username');
+			
+			fetch('http://localhost:9002/com/jobAdUpdate', {
+				method : 'PUT',
+				headers : {
+					'Content-Type' : 'application/json',
+					'Username' : username
+					
+				},
+				
+				body : JSON.stringify(formObject)
+			})
+			
+			.then(response => response.json())
+			.then(data => {
+				if(data.message){
+					alert(data.message);
+				}
+					// 바디에 담겨져 온 정보
+					// 이 페이지에서 객체정보가 필요한가? 
+					// no - > 데이터를 굳이 받아올 필요는 없겠다.
+					
+					
+				// Optional: 페이지 새로고침 또는 UI 업데이트
+		        location.reload();
+			})
+			.catch(error => {
+				console.log('채용공고를 수정하던 도중에 에러가 발생했습니다', error);
+			});
+		}
+
 	</script>
-
-
-
-
 
 </body>
 </html>
