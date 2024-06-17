@@ -1,25 +1,21 @@
-package com.green.restServer.controller;
+package com.green.restServer.service;
 
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
 
 import com.green.restServer.entity.User;
 import com.green.restServer.repository.UserRepository;
 
 import jakarta.servlet.http.HttpServletResponse;
 
-@RestController
-@CrossOrigin("*")
-public class LoginController {
+@Service
+public class LoginService {
 
 	@Autowired
 	UserRepository userRepository;
 	
-	@PostMapping("/userLogin")
 	public LoginResponse userlogin(User user, HttpServletResponse response) {
 		
 		Optional<User> result = userRepository.findById(user.getUsername());
@@ -68,11 +64,4 @@ public class LoginController {
 			return role;
 		}
 	}
-	
-	@PostMapping("/comlogin")
-	public String comLogin() {
-		
-		return "";
-	}
-	
 }
