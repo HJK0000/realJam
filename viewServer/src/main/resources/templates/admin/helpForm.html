@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+</head>
+<body>
+	 <div>
+		 <form id="frm">
+		 	<input type="text" name="title">
+		 	<input type="text" name="content">
+		 	<input type="submit" value="등록">
+		 </form>
+	 </div>
+	 
+	 <script>
+		function submitForm(event){
+			event.preventDefault(); //submit버튼의 기본기능을 제한하겠다.
+			alert("submit....");
+			
+			var form = document.forms['frm'];
+			var formData = $(form).serialize();
+			
+			$.ajax({
+				type: "POST",
+				url: "http://localhost:9002/member",
+				contentType: "application/x-www-form-urlencoded",
+				data: formData,
+				dataType: "text", // 서버가 보내주는 데이터의 타입
+				success: function(data){
+					console.log(data);
+					$("#demo").html(data);
+				},
+				error: function(){
+					console.log("에러 발생.....");
+				}
+			})
+		}
+	</script>
+</body>
+</html>
