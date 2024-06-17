@@ -33,12 +33,16 @@
 
 			let username = localStorage.getItem('username');
 				
+			console.log("username = " + username);
+			
 			$.ajax({
 				type : "GET",
 				url : "http://localhost:9002/com/getCompanyInfo",
+				
 				headers: {
-					"Username" : username // 요청 헤더에 username추가
+					"username" : username // 요청 헤더에 username추가
 				}, 
+				
 				// data : { username : username }
 				success : function(data) {
 

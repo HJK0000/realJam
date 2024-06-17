@@ -27,7 +27,7 @@ textarea {
 
 
 		<h1>우리회사 채용공고</h1>
-		<input type="submit" value="채용공고작성">
+		<input type="button" value="채용공고작성" onclick="jobReg()">
 		<table border="1">
 			<thead>
 				<tr>
@@ -37,14 +37,9 @@ textarea {
 				</tr>
 			</thead>
 			<tbody id="jobTableBody">
-					<td id="title" name="title"></td>
-					<td id=""><button type="submit" class="update">수정하기</button></td>
-					<td><button type="submit" class="delete">삭제하기</button></td>
+
 			</tbody>
-
-
 		</table>
-
 	</div>
 
 
@@ -122,13 +117,123 @@ textarea {
 				</select>
 			</div>
 			<div class="form-group">
-			<label for="region1">근무 지역</label>
-			<select id="region1" name="region1">
-				
-			
-			</select>
-				
+				<label for="region1">근무 지역</label> <select id="region1"
+					name="region1">
+					<option value="">선택</option>
+					<option value="서울특별시">서울특별시</option>
+					<option value="부산광역시">부산광역시</option>
+					<option value="인천광역시">인천광역시</option>
+					<option value="대전광역시">대전광역시</option>
+					<option value="대구광역시">대구광역시</option>
+					<option value="울산광역시">울산광역시</option>
+					<option value="광주광역시">광주광역시</option>
+					<option value="세종특별자치시">세종특별자치시</option>
+					<option value="제주특별자치도">제주특별자치도</option>
+				</select>
 			</div>
+			<div class="form-group">
+				<label for="minEdubglcd">학력 제한</label> <select id="minEdubglcd"
+					name="minEdubglcd">
+
+					<option value="">선택</option>
+					<option value="학력무관">학력무관</option>
+					<option value="고등학교졸업">고등학교졸업</option>
+					<option value="대학졸업(2,3년)">대학졸업(2,3년)</option>
+					<option value="대학교졸업(4년)">대학교졸업(4년)</option>
+					<option value="석사졸업">석사졸업</option>
+					<option value="박사졸업">박사졸업</option>
+					<option value="고등학교졸업이상">고등학교졸업이상</option>
+					<option value="대학졸업(2,3년)이상">대학졸업(2,3년)이상</option>
+					<option value="대학교졸업(4년)이상">대학교졸업(4년)이상</option>
+					<option value="석사졸업이상">석사졸업이상</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="yofExperiences">경력 제한</label> <select
+					id="yofExperiences" name="yofExperiences">
+					<option value="신입">신입</option>
+					<option value="경력">경력</option>
+					<option value="경력무관">경력무관</option>
+				</select>
+			</div>
+			<div class="form-group" id="needskillContainer">
+				<label for="needskill">필요 스킬
+					<button type="button"
+						onclick="addInput('needskillContainer', 'needskillInput')">추가</button>
+				</label> <input type="text" class="needskillInput" name="needskill">
+			</div>
+			<div class="form-group">
+				<p>
+					<strong>접수방법</strong>
+				</p>
+				<label for="option1">취업잼잼 이력서 지원</label> <input type="radio"
+					id="option1" name="rcptMthd" value="취업잼잼이력서지원"> <label
+					for="option2">홈페이지 방문 지원</label> <input type="radio" id="option2"
+					name="rcptMthd" value="홈페이지방문지원">
+			</div>
+			<br>
+
+			<div class="form-group">
+				<label for="workingTime">근무 시간:</label> <select id="workingTime"
+					name="workingTime">
+					<option value="09:00~18:00">09:00~18:00</option>
+					<option value="09:30~18:30">09:30~18:30</option>
+					<option value="10:00~19:00">10:00~19:00</option>
+					<option value="10:30~19:30">10:30~19:30</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="salTpCd">급여조건</label> <select id="salTpCd"
+					name="salTpCd">
+					<option value="연봉">연봉</option>
+					<option value="월급">월급</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="sale">급여액</label> <input type="number" id="sale"
+					name="sale" placeholder="급여 입력">만원
+			</div>
+			<div class="form-group">
+				<label for="retirepay">퇴직금 여부</label> <input type="checkbox"
+					id="retirepay" name="retirepay">
+			</div>
+			<div class="form-group">
+				<label for="etcWelfare">기타복리후생</label>
+				<textarea rows="5" cols="50" id="etcWelfare" name="etcWelfare"
+					placeholder="내용을 입력해주세요."></textarea>
+			</div>
+			<div class="form-group">
+				<label for="mltsvcExcHope">병역특례채용희망</label> <input type="checkbox"
+					id="mltsvcExcHope" name="mltsvcExcHope">
+			</div>
+			<div class="form-group">
+				<label for="keywordSearch">키워드 검색:</label> <input type="text"
+					id="keywordSearch" onkeyup="filterKeywords()"> <br> <label
+					for="srchKeywordNm">채용공고 관련 키워드:</label> <select id="keywordSelect"
+					onchange="addKeyword()">
+				</select>
+				<div id="selectedKeywords"></div>
+			</div>
+			<div class="form-group">
+				<label for="empName">담당자명</label>
+				<input type="text" id="empName" name="empName">
+			</div>
+			<div class="form-group">
+				<label for="empTel">연락처</label>
+				<input type="text" id="empTel" name="empTel">	
+			</div>
+			<div class="form-group">
+				<label for="empEmail">이메일</label>
+				<input type="text" id="empEmail" name="empEmail">
+			</div>
+			
+			<div class="form-group">
+				<label for="receiptCloseDt">접수마감일</label>
+				<input type="date" id="receiptCloseDt" name="receiptCloseDt" required>
+			</div>
+			
+			<input type="submit" value="등록하기">
+			<input type="button" value="뒤로가기">
 		</form>
 
 
@@ -137,6 +242,18 @@ textarea {
 
 
 	<script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 		function jobList() {
 			document.querySelectorAll('.container').forEach(function(div) {
 				div.style.display = 'none';
@@ -150,38 +267,11 @@ textarea {
 			});
 			document.querySelector("#jobReg").style.display = "block";
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		}
 		
-	    function updateRegion2Options() {
-	        const region1Select = document.getElementById('region1');
-	        const region2Select = document.getElementById('region2');
-	        const selectedRegion1 = region1Select.value;
-
-	        // region2 옵션 초기화
-	        region2Select.innerHTML = '<option value="">선택</option>';
-
-	        // region1에 해당하는 region2 옵션 추가
-	        if (selectedRegion1) {
-	            const districts = allRegions[selectedRegion1];
-	            districts.forEach(district => {
-	                const option = document.createElement('option');
-	                option.value = district;
-	                option.text = district;
-	                region2Select.add(option);
-	            });
-	        }
-	    }
+		
+		
+		
 	</script>
 
 
