@@ -95,8 +95,8 @@ public class JobAd extends BaseEntity{
 	private String region;
 	
 	//근무시간
-	@Column(name = "WkdWkhCnt", nullable = false, length = 50)
-	private String WkdWkhCnt;
+	@Column(name = "wkdWkhCnt", nullable = true, length = 50)
+	private String wkdWkhCnt;
 	
 	//퇴직금
 	@Column(name = "retirepay", length = 30)
@@ -138,63 +138,63 @@ public class JobAd extends BaseEntity{
 	@Column(name = "preference", nullable = true)
 	private String preference;
 	
-	public List<String> getJobContList() {
-	    try {
-	        return new ObjectMapper().readValue(jobCont, new TypeReference<List<String>>() {});
-	    } catch (JsonProcessingException e) {
-	        log.error("Error parsing jobCont JSON: {}", e.getMessage());
-	        return Collections.emptyList(); // or throw an exception
-	    }
-	}
-
-	public List<String> getNeedskillList() {
-	    try {
-	        return new ObjectMapper().readValue(needskill, new TypeReference<List<String>>() {});
-	    } catch (JsonProcessingException e) {
-	        log.error("Error parsing needskill JSON: {}", e.getMessage());
-	        return Collections.emptyList(); // or throw an exception
-	    }
-	}
-
-	public List<String> getSrchKeywordNmList() {
-	    try {
-	        return new ObjectMapper().readValue(srchKeywordNm, new TypeReference<List<String>>() {});
-	    } catch (JsonProcessingException e) {
-	        log.error("Error parsing srchKeywordNm JSON: {}", e.getMessage());
-	        return Collections.emptyList(); // or throw an exception
-	    }
-	}
-	
-	public List<Integer> getWkdWkhCntList2() {
-	    try {
-	        Map<String, String> wkdWkhCntMap = new ObjectMapper().readValue(WkdWkhCnt, new TypeReference<Map<String, String>>() {});
-	        List<Integer> wkdWkhCntList = new ArrayList<>();
-	        String[] startTimeParts = wkdWkhCntMap.get("근무시작시간").split(":");
-	        String[] endTimeParts = wkdWkhCntMap.get("근무종료시간").split(":");
-
-	        // 0 제거 로직 추가
-	        wkdWkhCntList.add(Integer.parseInt(startTimeParts[0].replaceFirst("^0+(?!$)", ""))); // 시 (0 제거)
-	        wkdWkhCntList.add(Integer.parseInt(startTimeParts[1].replaceFirst("^0+(?!$)", ""))); // 분 (0 제거)
-	        wkdWkhCntList.add(Integer.parseInt(endTimeParts[0].replaceFirst("^0+(?!$)", "")));   // 시 (0 제거)
-	        wkdWkhCntList.add(Integer.parseInt(endTimeParts[1].replaceFirst("^0+(?!$)", "")));   // 분 (0 제거)
-
-	        return wkdWkhCntList;
-	    } catch (JsonProcessingException e) {
-	        log.error("Error parsing WkdWkhCnt JSON: {}", e.getMessage());
-	        return Collections.emptyList();
-	    }
-	}
-	
-	public List<String> getWkdWkhCntList() {
-	    try {
-	        Map<String, String> wkdWkhCntMap = new ObjectMapper().readValue(WkdWkhCnt, new TypeReference<Map<String, String>>() {});
-	        List<String> wkdWkhCntList = new ArrayList<>();
-	        wkdWkhCntList.add(wkdWkhCntMap.get("근무시작시간").replace(":", "시 ") + "분 ~ ");
-	        wkdWkhCntList.add(wkdWkhCntMap.get("근무종료시간").replace(":", "시 ") + "분");
-	        return wkdWkhCntList;
-	    } catch (JsonProcessingException e) {
-	        log.error("Error parsing WkdWkhCnt JSON: {}", e.getMessage());
-	        return Collections.emptyList();
-	    }
-	}
+//	public List<String> getJobContList() {
+//	    try {
+//	        return new ObjectMapper().readValue(jobCont, new TypeReference<List<String>>() {});
+//	    } catch (JsonProcessingException e) {
+//	        log.error("Error parsing jobCont JSON: {}", e.getMessage());
+//	        return Collections.emptyList(); // or throw an exception
+//	    }
+//	}
+//
+//	public List<String> getNeedskillList() {
+//	    try {
+//	        return new ObjectMapper().readValue(needskill, new TypeReference<List<String>>() {});
+//	    } catch (JsonProcessingException e) {
+//	        log.error("Error parsing needskill JSON: {}", e.getMessage());
+//	        return Collections.emptyList(); // or throw an exception
+//	    }
+//	}
+//
+//	public List<String> getSrchKeywordNmList() {
+//	    try {
+//	        return new ObjectMapper().readValue(srchKeywordNm, new TypeReference<List<String>>() {});
+//	    } catch (JsonProcessingException e) {
+//	        log.error("Error parsing srchKeywordNm JSON: {}", e.getMessage());
+//	        return Collections.emptyList(); // or throw an exception
+//	    }
+//	}
+//	
+//	public List<Integer> getWkdWkhCntList2() {
+//	    try {
+//	        Map<String, String> wkdWkhCntMap = new ObjectMapper().readValue(WkdWkhCnt, new TypeReference<Map<String, String>>() {});
+//	        List<Integer> wkdWkhCntList = new ArrayList<>();
+//	        String[] startTimeParts = wkdWkhCntMap.get("근무시작시간").split(":");
+//	        String[] endTimeParts = wkdWkhCntMap.get("근무종료시간").split(":");
+//
+//	        // 0 제거 로직 추가
+//	        wkdWkhCntList.add(Integer.parseInt(startTimeParts[0].replaceFirst("^0+(?!$)", ""))); // 시 (0 제거)
+//	        wkdWkhCntList.add(Integer.parseInt(startTimeParts[1].replaceFirst("^0+(?!$)", ""))); // 분 (0 제거)
+//	        wkdWkhCntList.add(Integer.parseInt(endTimeParts[0].replaceFirst("^0+(?!$)", "")));   // 시 (0 제거)
+//	        wkdWkhCntList.add(Integer.parseInt(endTimeParts[1].replaceFirst("^0+(?!$)", "")));   // 분 (0 제거)
+//
+//	        return wkdWkhCntList;
+//	    } catch (JsonProcessingException e) {
+//	        log.error("Error parsing WkdWkhCnt JSON: {}", e.getMessage());
+//	        return Collections.emptyList();
+//	    }
+//	}
+//	
+//	public List<String> getWkdWkhCntList() {
+//	    try {
+//	        Map<String, String> wkdWkhCntMap = new ObjectMapper().readValue(WkdWkhCnt, new TypeReference<Map<String, String>>() {});
+//	        List<String> wkdWkhCntList = new ArrayList<>();
+//	        wkdWkhCntList.add(wkdWkhCntMap.get("근무시작시간").replace(":", "시 ") + "분 ~ ");
+//	        wkdWkhCntList.add(wkdWkhCntMap.get("근무종료시간").replace(":", "시 ") + "분");
+//	        return wkdWkhCntList;
+//	    } catch (JsonProcessingException e) {
+//	        log.error("Error parsing WkdWkhCnt JSON: {}", e.getMessage());
+//	        return Collections.emptyList();
+//	    }
+//	}
 }
