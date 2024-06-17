@@ -18,5 +18,5 @@ public class CompanyDto {
     private String size;
     private String major;
     private String yrSales;
-
+    private String crole;
 }

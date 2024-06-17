@@ -14,7 +14,7 @@ public class AdminController {
 	}
 	
 	
-	@GetMapping("/help")
+	@GetMapping("/helpDetail")
 	public String getHelpDetail() {
 		
 		return "";
