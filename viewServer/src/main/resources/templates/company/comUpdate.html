@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
 <head>
+<link rel="stylesheet" th:href="@{/css/header.css}">
+<link rel="stylesheet" th:href="@{/css/sidebar.css}">
 <meta charset="UTF-8">
 <title>기업 수정 페이지</title>
 <script src="https://code.jquery.com/jquery-3.7.1.js"
@@ -9,9 +11,16 @@
 <script src="/js/edit-company.js" defer></script>
 </head>
 <body>
-	<h1>기업 정보 수정 페이지</h1>
-	<hr>
+<header>
+	<div th:replace="~{/fragments/comHeader.html}"></div>
+</header>
 
+<div id=container>
+
+<div th:include="~{/fragments/comsidebar.html}"></div>
+
+	<div>
+	
 	<form id="edit-company-form">
 		<li>기업아이디</li> <input type="text" id="username" name="username"
 			th:value="${username}" readonly=true /><br>
@@ -34,8 +43,10 @@
 		<button type="button" onclick="window.location.href = document.referrer;">취소</button>
 	</form>
 	<div id="error_result"></div>
+	
+	</div>
 
-
+</div>
 
 	<script language='javascript'>
   		document.getElementById("username").style.background = "#e5e5e5";
