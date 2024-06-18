@@ -15,12 +15,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.green.restServer.dto.OfferListDto;
 import com.green.restServer.dto.UserDto;
 import com.green.restServer.entity.Company;
+import com.green.restServer.entity.OfferList;
 import com.green.restServer.entity.Resume;
 import com.green.restServer.entity.Resume2;
 import com.green.restServer.entity.School;
 import com.green.restServer.entity.User;
+import com.green.restServer.repository.CompanyRepository;
+import com.green.restServer.repository.OfferListRepository;
 import com.green.restServer.repository.Resume2Repository;
 import com.green.restServer.repository.ResumeRepository;
 import com.green.restServer.repository.SchoolRepository;
@@ -145,12 +149,72 @@ public class UserRestController {
 		resume2Repo.delete(resume2);
 	}
 	
+	@Autowired
+	CompanyRepository companyRepo;
+	
 	@GetMapping("/position/{username}")
-	public void positionPage(@PathVariable("username") String username) {
+	public List<Company> positionPage(@PathVariable("username") String username) {
 		
 		String hopeSector = resume2Repo.findSectorByUsernameAndDef(username, "예");
 		
 		System.out.println("희망업종:" + hopeSector);
 		
+		List<Company> list = companyRepo.findBySectors(hopeSector);
+		System.out.println(list);
+		
+		return list;
 	}
+	
+	@Autowired
+	OfferListRepository offerListRepo;
+	
+	@GetMapping("/offerlist/{username}")
+	public List<OfferList> UserPositionPage(@PathVariable("username") String username){
+		
+		List<OfferList> list= offerListRepo.findAllByUsername(username);
+		
+		return list;
+	}
+	
+	
+	@GetMapping("/offerlist/{ono}/{username}")
+	public OfferList offerDetailPage(@PathVariable("ono")Long ono, @PathVariable("username") String username) {
+		Optional<OfferList> result = offerListRepo.findById(ono);
+		
+		OfferList offerlist = result.get();
+		System.out.println(offerlist);
+		
+		return offerlist;
+	}
+	
+	@PutMapping("/offerlist")
+	public void offerAccept(@RequestBody OfferListDto offerlistDto) {
+		String user = offerlistDto.getUser();
+		System.out.println("user정보: " + user);
+		String companyid = offerlistDto.getCompany();
+		System.out.println(companyid);
+		
+		System.out.println(offerlistDto.getCopName());
+		
+		User u = new User();
+		u.setUsername(user);
+		
+		Company company = new Company();
+		company.setUsername(companyid);
+		
+		OfferList offerlist = new OfferList();
+		
+		offerlist.setOno(offerlistDto.getOno());
+		offerlist.setUser(u);
+		offerlist.setCompany(company);
+		offerlist.setTitle(offerlistDto.getTitle());
+		offerlist.setContent(offerlistDto.getContent());
+		offerlist.setStatus(offerlistDto.getStatus());
+		offerlist.setAccept(offerlistDto.getAccept());
+		offerlist.setCopName(offerlistDto.getCopName());
+		
+		offerListRepo.save(offerlist);
+		
+	}
+	
 }

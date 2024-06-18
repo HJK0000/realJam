@@ -32,7 +32,7 @@
 						</li>
 						<li>
 							<label for="rtitle">이력서 제목</label>
-							<span class="rtitle">${list.rtitle}</span>
+							<a href="#" onclick="goResumeDetail(${list.rno})">${list.rtitle}</a>
 						</li>
 						<li>
 							<label for="modify">수정</label>
@@ -54,6 +54,10 @@
 	
 	window.modifyResume = function modifyResume(rno){
 		window.location.href = "/user/modifyPage?rno=" + rno;
+	};
+	
+	window.goResumeDetail = function goResumeDetail(rno){
+		window.location.href= "/user/resumeDetail?rno=" + rno;
 	};
 	
 	window.deleteResume = function deleteResume(rno){

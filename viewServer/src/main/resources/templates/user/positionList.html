@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+</head>
+<body>
+<h2>포지션 매치(업종별)</h2>
+<div>
+	<ul id="cplist">
+		
+	</ul>
+</div>
+<script>
+	const username = "aaaa";
+
+	$(document).ready(function(){
+		$.ajax({
+			url: "http://localhost:9002/user/position/" + username,
+			method: "GET",
+			success: function(response){
+				console.log("success: ", response);
+				const cplist = $("#cplist")
+				cplist.empty();
+				response.forEach(function(list){
+					const listItem = `
+						
+						<li>
+							<label for="cname">회사명: </label>
+							<span class="cname">${list.cname}</span>
+						</li>
+						<li>
+							<label for="caddr">회사위치: </label>
+							<span class="caddr">${list.caddr}</span>
+						</li>
+						<li>
+							<label for="sector">업종: </label>
+							<span class="sector">${list.sector}</span> 
+						</li>
+					`;
+					cplist.append(listItem);
+				});
+			},
+			error: function(error){
+				console.log("Error: ", error);
+			}
+		})
+	});
+	
+</script>
+
+</body>
+</html>

@@ -15,9 +15,13 @@ public class UserController {
 		return "user/mypage";
 	}
 	
+	@RequestMapping("/usermain")
+	public String usermain() {
+		return "usermain";
+	}
 	
 	@RequestMapping("/resumeForm")
-	public String usermain() {
+	public String resumeForm() {
 		return "user/resumeForm";
 	}
 	
@@ -26,14 +30,16 @@ public class UserController {
 		return "user/regForm";
 	}
 	
-	@RequestMapping("/schoolModiForm")
-	public String schoolModiForm() {
-		return "user/schoolModiForm";
-	}
 	
 	@RequestMapping("/resumeList")
 	public String resumeList(@RequestParam("username")String username) {
 		return "user/resumeList";
+	}
+	
+	@RequestMapping("/resumeDetail")
+	public String resumeDetail(@RequestParam("rno")String rno,Model model) {
+		model.addAttribute("rno", rno);
+		return "user/resumeDetail";
 	}
 	
 	@RequestMapping("/modifyPage")
@@ -46,5 +52,11 @@ public class UserController {
 	@RequestMapping("/positionUserList")
 	public String posiotionUserList() {
 		return "user/positionUserList";
+	}
+	
+	@RequestMapping("/offerDetailPage")
+	public String offerDetailPage(@RequestParam("ono")String ono,Model model) {
+		model.addAttribute("ono", ono);
+		return "user/offerDetailPage";
 	}
 }
