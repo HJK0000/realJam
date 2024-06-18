@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+</head>
+<body>
+<h1>이력서 수정 페이지</h1>
+<hr>
+<div id="resume2">
+	<form id="frm" name="frm">
+		<ul id="formList">
+			
+			<li>
+				<p id="uname"></p>
+			</li>
+			<li>
+				<p id="gender"></p>
+			</li>
+			<li>
+				<p id="birth_date"></p>
+			</li>
+			<li>
+				<p id="email"></p>
+			</li>
+			<li>
+				<p id="tel"></p>
+			</li>
+			<li>
+				<p id="uaddr"></p>
+			</li>
+			<li>
+				<label for="portfolioUrl">포트폴리오</label>
+				<input type="file" id="portfolioUrl" name="portfolioUrl">
+			</li>
+			
+			<hr><!-- 희망근무조건 -->
+			<h3>희망근무조건</h3>
+			<li>
+				<label for="region1">희망근무지1</label>
+				<input type="text" id="region1" name="region1">
+			</li>
+			<li>
+				<label for="region2">희망근무지2</label>
+				<input type="text" id="region2" name="region2">
+			</li>
+			<li>
+				<label for="region3">희망근무지3</label>
+				<input type="text" id="region3" name="region3">
+			</li>
+			<li>
+				<label for="sectors">희망업종</label>
+				<input type="text" id="sectors" name="sectors">
+			</li>
+			<li>
+				<label for="job">희망직무</label>
+				<input type="text" id="job" name="job">
+			</li>
+			
+			<hr><!-- 경력사항 -->
+			<h3>경력사항</h3>
+			<li>
+				<label for="startDate">입사일</label>
+				<input type="text" id="startDate" name="startDate">
+			</li>
+			<li>
+				<label for="endDate">퇴사일</label>
+				<input type="text" id="endDate" name="endDate">
+			</li>
+			<li>
+				<label for="cName">회사명</label>
+				<input type="text" id="cName" name="cName">
+			</li>
+			
+			<li>
+				<label for="rank">직급</label>
+				<input type="text" id="rank" name="rank">
+			</li>
+			<li>
+				<label for="status">상태</label>
+				<input type="text" id="status" name="status">
+			</li>
+			<li>
+				<label for="type">업종</label>
+				<input type="text" id="type" name="type">
+			</li>
+			<li>
+				<label for="position">직무</label>
+				<input type="text" id="position" name="position">
+			</li>
+			<li>
+				<label for="work">업무내용</label>
+				<input type="text" id="work" name="work">
+			</li>
+			
+			<hr><!-- 학력사항 -->
+			<h3>학력사항</h3>
+			<input type="button" value="학력추가" id="addRowButton">
+			<ul id="educationList">
+				<li>
+					<label for="accDate">입학일</label>
+					<input type="text" id="accDate" name="accDate">
+				</li>
+				<li>
+					<label for="gradDate">졸업일</label>
+					<input type="text" id="gradDate" name="gradDate">
+				</li>
+				<li>
+					<label for="eduName">학교명</label>
+					<input type="text" id="eduName" name="eduName">
+				</li>
+				<li>
+					<label for="major">전공</label>
+					<input type="text" id="major" name="major">
+				</li>
+				<li>
+					<label for="score">학점</label>
+					<input type="text" id="score" name="score">
+				</li>
+				<li>
+					<label for="schoolNow">학적상태</label>
+					<input type="text" id="schoolNow" name="schoolNow">
+				</li>
+			</ul>
+			
+			<!-- hr -->
+			
+			<h3>자격증</h3>
+			<input type="button" value="자격증추가" id="addlicenseButton">
+			<ul id="certificateList">
+				<li>
+					<label for="licensename">자격증명</label>
+					<input type="text" id="licensename" name="licensename">
+				</li>
+				<li>
+					<label for="given">발급기관</label>
+					<input type="text" id="given" name="given">
+				</li>
+				<li>
+					<label for="getDate">취득일</label>
+					<input type="text" id="getDate" name="getDate">
+				</li>
+			</ul>
+			
+			<h3>보유능력</h3>
+			<input type="button" value="보유능력추가" id="addOaButton">
+			<ul id="oaList">
+				<li>
+					<label for="oaType">능력명</label>
+					<input type="text" id="oaType" name="oaType">
+				</li>
+				<li>
+					<label for="content">내용</label>
+					<input type="text" id="content" name="content">
+				</li>
+			</ul>
+			
+			<h3>사회활동</h3>
+			<input type="button" value="활동 추가" id="addExButton">
+			<ul id="exList">
+				<li>
+					<label for="startDay">시작일</label>
+					<input type="date" id="startDay" name="startDay">
+				</li>
+				<li>
+					<label for="endDay">종료일</label>
+					<input type="date" id="endDay" name="endDay">
+				</li>
+				<li>
+					<label for="org">참여기관</label>
+					<input type="text" id="org" name="org">
+				</li>
+				<li>
+					<lable for="econtent">활동내용</lable>
+					<textarea name="econtent" id="econtent"></textarea>
+				</li>
+			</ul>
+			
+			<hr>
+			<li>
+				<label for="rtitle">이력서제목</label>
+				<input type="text" id="rtitle" name="rtitle">
+			</li>
+			<li>
+				<label for="selfinfo">자기소개서</label>
+				<textarea id="selfinfo" name="selfinfo"></textarea>
+			</li>
+			
+			<li>
+				<label for="def">대표이력서 설정</label>
+				<input type="text" id="def" name="def">
+			</li>
+			<li>
+				<label for="disclo">대표이력서 설정</label>
+				<input type="text" id="disclo" name="disclo">
+			</li>
+			
+		</ul>
+		<input type="hidden" name="rno" id="rno">
+	<input type="button" onclick="regResume()" value="이력서저장">
+	</form>
+</div>
+
+<script>
+const rno = "[[${rno}]]";
+const username = "aaaa";
+//학력항목 추가
+document.getElementById('addRowButton').addEventListener('click',function(){
+	if (!hasAddedRow){
+		const formList = document.getElementById('educationList');
+		
+		const newItems = `
+		<hr>
+		<li>
+			<label for="accDate2">입학일</label>
+			<input type="text" id="accDate2" name="accDate2">
+		</li>
+		<li>
+			<label for="gradDate2">졸업일</label>
+			<input type="text" id="gradDate2" name="gradDate2">
+		</li>
+		<li>
+			<label for="eduName2">학교명</label>
+			<input type="text" id="eduName2" name="eduName2">
+		</li>
+		<li>
+			<label for="major2">전공</label>
+			<input type="text" id="major2" name="major2">
+		</li>
+		<li>
+			<label for="score2">학점</label>
+			<input type="text" id="score2" name="score2">
+		</li>
+		<li>
+			<label for="schoolNow2">학적상태</label>
+			<input type="text" id="schoolNow2" name="schoolNow2">
+		</li>
+		
+		<hr>
+		`;
+		
+		//새로운 항목들 리스트에 추가 
+		formList.insertAdjacentHTML('beforeend',newItems);
+		
+		//새로운 항목들 추가했음을 표시
+		hasAddedRow = true;
+	}else {
+		alert('학력은 최근 2개까지만 입력가능합니다.');
+	}
+});
+
+/*
+let certificateCount = 1;
+//자격증 항목 추가
+document.getElementById('addlicenseButton').addEventListener("click",function(){
+	if(certificateCount < 6){
+		const certificateList = document.getElementById('certificateList');
+		
+		const newCertificateItems = `
+		<hr>
+		<li>
+			<label for="lname${certificateCount + 1}">자격증명</label>
+			<input type="text" id="lname${certificateCount + 1}" name="lname${certificateCount + 1}">
+		</li>
+		<li>
+			<label for="lorg${certificateCount + 1}">발급기관</label>
+			<input type="text" id="lorg${certificateCount + 1}" name="lorg${certificateCount + 1}">
+		</li>
+		<li>
+			<label for="getDate${certificateCount + 1}">취득일</label>
+			<input type="text" id="getDate${certificateCount + 1}" name="getDate${certificateCount + 1}">
+		</li>
+		
+		`;
+		
+		certificateList.insertAdjacentHTML('beforeend', newCertificateItems);
+		certificateCount++;
+	}else{
+		alert('자격증은 최대 6개까지 입력 가능합니다.');
+	}
+});
+
+//보유능력항목 추가
+let oaCount = 1;
+document.getElementById('addOaButton').addEventListener('click', function(){
+	if(oaCount < 3){
+		const oaList = document.getElementById('oaList');
+		
+		const newOaItems = `
+		<hr>
+		<li>
+			<label for="oaType${oaCount + 1}">능력명</label>
+			<input type="text" id="oaType${oaCount + 1}" name="oaType${oaCount + 1}">
+		</li>
+		<li>
+			<label for="content${oaCount + 1}">내용</label>
+			<input type="text" id="content${oaCount + 1}" name="content${oaCount + 1}">
+		</li>
+		`;
+		
+		oaList.insertAdjacentHTML('beforeend',newOaItems);
+		oaCount++;
+	}else{
+		alert('보유능력은 최대 3개까지 입력 가능합니다.')
+	}
+});
+*/
+
+
+$(document).ready(function(){
+	$.ajax({
+		url:"http://localhost:9002/user/mypage/" + username,
+		method:"GET",
+		success: function(response){
+			$('#uname').text("이름: " + response.uname);
+			$('#birth_date').text('생년월일: ' + response.birthDate);
+			$('#email').text('이메일: ' + response.email);
+			$('#gender').text('성별: ' + (response.gender === '1' ? '남자' : '여자'));
+			$('#tel').text('전화번호: ' + response.tel);
+			$('#uaddr').text('주소: ' + response.uaddr);
+		},
+		error: function(error){
+			console.log("Error:", error);
+		}
+	});
+	
+	
+	
+	$.ajax({
+		url:"http://localhost:9002/user/resume/" + username + "/" + rno,
+		method: "GET",
+		success: function(response){
+			
+			//희망근무
+			$("#region1").val(response.region1 || '');
+            $("#region2").val(response.region2 || '');
+            $("#region3").val(response.region3 || '');
+            $("#sectors").val(response.sectors || '');
+            $("#job").val(response.job || '');
+			
+			//경력사항 
+			$("#startDate").val(response.startDate || '');
+			$("#endDate").val(response.endDate || '');
+			$("#cName").val(response.cName || '');
+			$("#rank").val(response.rank || '');
+			$("#status").val(response.status || '');
+			$("#type").val(response.type || '');
+			$("#position").val(response.position || '');
+			$("#work").val(response.work || '');
+			
+			// 학력사항 설정
+            $("#accDate").val(response.accDate || '');
+            $("#gradDate").val(response.gradDate || '');
+            $("#eduName").val(response.eduName || '');
+            $("#major").val(response.major || '');
+            $("#score").val(response.score || '');
+            $("#schoolNow").val(response.schoolNow || '');
+
+            // 추가된 학력 사항 설정
+            $("#accDate2").val(response.accDate2 || '');
+            $("#gradDate2").val(response.gradDate2 || '');
+            $("#eduName2").val(response.eduName2 || '');
+            $("#major2").val(response.major2 || '');
+            $("#score2").val(response.score2 || '');
+            $("#schoolNow2").val(response.schoolNow2 || '');
+            
+            //자격증 사항 설정
+            $("#licensename").val(response.licensename || '');
+            $("#given").val(response.given || '');
+            $("#getDate").val(response.getDate || '');
+            
+            //보유능력 사항 설정
+            $("#oaType").val(response.oaType || '');
+            $("#content").val(response.content || '');
+            
+            //사회활동 사항 설정
+            $("#startDay").val(response.startDay || '');
+            $("#endDay").val(response.endDay || '');
+            $("#org").val(response.org || '');
+            $("#econtent").val(response.econtent || '');
+            
+            //자소서 설정
+            $("#rtitle").val(response.rtitle || '');
+            $("#selfinfo").val(response.selfinfo || '');
+            
+            $("#def").val(response.def || '');
+            $("#disclo").val(response.disclo || '');
+            
+		},
+		error: function(error){
+			console.log("Error: ", error);
+		}
+	});
+});
+
+function regResume(){
+	const username = "aaaa";
+	
+	
+	const uname = document.getElementById("uname") ? document.getElementById("uname").value : null;
+	const gender = document.getElementById("gender") ? document.getElementById("gender").value : null;
+	const birthDate = document.getElementById("birth_date") ? document.getElementById("birth_date").value : null;
+	const email = document.getElementById("email") ? document.getElementById("email").value : null;
+	const tel = document.getElementById("tel") ? document.getElementById("tel").value : null;
+	const uaddr = document.getElementById("uaddr") ? document.getElementById("uaddr").value : null;
+	
+	//희망근무
+	const region1 = document.getElementById("region1").value;
+	const region2 = document.getElementById("region2") ? document.getElementById("region2").value : null;
+	const region3 = document.getElementById("region3") ? document.getElementById("region3").value : null;
+	const sectors = document.getElementById("sectors") ? document.getElementById("sectors").value : null;
+	const job = document.getElementById("job") ? document.getElementById("job").value : null;
+	
+	//경력사항
+	const startDate = document.getElementById("startDate") ? document.getElementById("startDate").value : null;
+	const endDate = document.getElementById("endDate") ? document.getElementById("endDate").value: null;
+	const cName = document.getElementById("cName") ? document.getElementById("cName").value : null;
+	const rank = document.getElementById("rank") ? document.getElementById("rank").value : null;
+	const status = document.getElementById("status") ? document.getElementById("status").value : null;
+	const type = document.getElementById("type") ? document.getElementById("type").value : null;
+	const position = document.getElementById("position") ? document.getElementById("position").value : null;
+	const work = document.getElementById("work") ? document.getElementById("work").value : null;
+	
+	//학력사항
+	const accDate = document.getElementById("accDate") ? document.getElementById("accDate").value : null;
+	const gradDate = document.getElementById("gradDate") ? document.getElementById("gradDate").value : null;
+	const eduName = document.getElementById("eduName") ? document.getElementById("eduName").value : null;
+	const major = document.getElementById("major") ? document.getElementById("major").value : null;
+	const score = document.getElementById("score") ? document.getElementById("score").value : null;
+	const schoolNow = document.getElementById("schoolNow") ? document.getElementById("schoolNow").value : null;
+	
+	const accDate2 = document.getElementById("accDate2") ? document.getElementById("accDate2").value : null;
+	const gradDate2 = document.getElementById("gradDate2") ? document.getElementById("gradDate2").value : null;
+	const eduName2 = document.getElementById("eduName2") ? document.getElementById("eduName2").value : null;
+	const major2 = document.getElementById("major2") ? document.getElementById("major2").value : null;
+	const score2 = document.getElementById("score2") ? document.getElementById("score2").value : null;
+	const schoolNow2 = document.getElementById("schoolNow2") ? document.getElementById("schoolNow2").value : null;
+	
+	//자격증
+	const licensename = document.getElementById("licensename") ? document.getElementById("licensename").value : null;
+    const given = document.getElementById("given") ? document.getElementById("given").value : null;
+    const getDate = document.getElementById("getDate") ? document.getElementById("getDate").value : null;
+    
+  	//보유능력
+	const oaType = document.getElementById("oaType") ? document.getElementById("oaType").value : null;
+	const content = document.getElementById("content") ? document.getElementById("content").value : null;
+	
+	//사회활동
+	const startDay = document.getElementById("startDay") ? document.getElementById("startDay").value : null;
+	const endDay = document.getElementById("endDay") ? document.getElementById("endDay").value : null;
+	const org = document.getElementById("org") ? document.getElementById("org").value : null;
+	const econtent = document.getElementById("econtent") ? document.getElementById("econtent").value : null;
+	
+	const rtitle = document.getElementById("rtitle") ? document.getElementById("rtitle").value : null;
+	const selfinfo = document.getElementById("selfinfo") ? document.getElementById("selfinfo").value : null;
+	
+	const def = document.getElementById("def") ? document.getElementById("def").value : null;
+	const disclo = document.getElementById("disclo") ? document.getElementById("disclo").value : null;
+	
+	const resumeData = {
+			rno: rno,
+			username: username,
+			uname: uname,
+			gender: gender,
+			birthDate: birthDate,
+			email: email,
+			tel: tel,
+			uaddr: uaddr,
+			region1: region1,
+			region2: region2,
+			region3: region3,
+			sectors: sectors,
+			job: job,
+			startDate: startDate,
+			endDate: endDate,
+			c_name: cName,
+			rank: rank,
+			status: status,
+			type: type,
+			position: position,
+			work: work,
+			accDate: accDate,
+			gradDate: gradDate,
+			eduName: eduName,
+			major: major,
+			score: score,
+			schoolNow: schoolNow,
+			accDate2: accDate2,
+			gradDate2: gradDate2,
+			eduName2: eduName2,
+			major2: major2,
+			score2: score2,
+			schoolNow2: schoolNow2,
+			licensename: licensename,
+			given: given,
+			getDate: getDate,
+			oaType: oaType,
+			content: content,
+			startDay: startDay,
+			endDay: endDay,
+			org: org,
+			econtent: econtent,
+			rtitle: rtitle,
+			selfinfo: selfinfo,
+			def: def,
+			disclo: disclo
+	};
+	
+	$.ajax({
+		url:"http://localhost:9002/user/resume",
+		method: "PUT",
+		contentType: "application/json",
+		data: JSON.stringify(resumeData),
+		success: function(response){
+			console.log("success: ", response);
+			alert("이력서 변경 성공");
+			
+		},
+		error: function(error){
+			console.log("Error: ", error);
+		}
+	});
+}
+
+</script>
+
+</body>
+</html>

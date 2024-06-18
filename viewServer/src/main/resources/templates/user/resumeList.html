@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+</head>
+<body>
+<h2>이력서 목록</h2>
+<hr>
+	<div>
+		<ul id="rlist">
+			
+		</ul>
+	</div>
+</body>
+<script>
+	$(document).ready(function(){
+		const username = "aaaa"
+		
+		$.ajax({
+			url: "http://localhost:9002/user/resumeList/" + username,
+			method: "GET",
+			success: function(response){
+				const rlist = $("#rlist");
+				rlist.empty();
+				response.forEach(function(list){
+					const listItem = `
+						<li>
+							<label for="rnum">번호</label>
+							<span class="rnum">${list.rno}</span>
+						</li>
+						<li>
+							<label for="rtitle">이력서 제목</label>
+							<span class="rtitle">${list.rtitle}</span>
+						</li>
+						<li>
+							<label for="modify">수정</label>
+							<a href="#" onclick="modifyResume(${list.rno})">수정하기</a> 
+						</li>
+						<li>
+							<label for="delete">삭제</label>
+							<input type="button" onclick="deleteResume(${list.rno})" value="삭제하기">
+						</li>
+					`;
+					rlist.append(listItem);
+				});
+			},
+			error: function(error){
+				console.log("Error: ", error);
+			}
+		});
+	});
+	
+	window.modifyResume = function modifyResume(rno){
+		window.location.href = "/user/modifyPage?rno=" + rno;
+	};
+	
+	window.deleteResume = function deleteResume(rno){
+		if(confirm("이 이력서를 삭제하시겠습니까?")){
+			console.log("삭제할 rnum: ", rno);
+			
+			$.ajax({
+				url: "http://localhost:9002/user/resume/" + rno,
+				method: "DELETE",
+				success: function(response){
+					alert("삭제되었습니다.");
+					location.reload();
+					
+				},
+				error: function(error){
+					console.log("Error:", error);
+					alert("오류발생");
+				}
+			});
+		}
+	}
+</script>
+</html>
