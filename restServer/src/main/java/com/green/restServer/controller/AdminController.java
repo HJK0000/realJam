@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -52,16 +53,15 @@ public class AdminController {
 	}
 	
 	@PutMapping("/{hnum}")
-	public ResponseEntity<Help> putHelp(@PathVariable("hnum") Long hnum, Help help) {
+	public ResponseEntity<Help> updateHelp(@PathVariable("hnum") Long hnum, @RequestBody Help help) {
 		
-		Help persistHelp = helpService.findHelpById(hnum);
+		System.out.println("실행");
 		
-		persistHelp.update(help);
-	        
-		Help savedHelp = helpService.save(persistHelp);
+		Help updatedHelp = helpService.updateHelp(hnum, help);
 		
-        return new ResponseEntity<>(savedHelp, HttpStatus.OK);
-	   
+		System.out.println(updatedHelp);
+		
+        return ResponseEntity.ok(updatedHelp);
 	}
 
 	@DeleteMapping("/{hnum}")

@@ -4,41 +4,46 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
 </head>
 <body>
-	 <div>
-		 <form id="frm">
-		 	<input type="text" name="title" placeholder="도움말 제목"><br>
-		 	<input type="text" name="content" placeholder="도움말 내용"><br>
-		 	<input type="submit" value="등록" onclick="submitForm(event)">
-		 </form>
-	 </div>
+	<header>
+		<div th:replace="~{/fragments/adminNav.html :: fragment-nav}"></div>
+	</header>
+        
+	<div class="container">
+		<form id="frm">
+			<input type="text" name="title" placeholder="도움말 제목"><br>
+			<input type="text" name="content" placeholder="도움말 내용"><br>
+			<input type="submit" value="등록" onclick="submitForm(event)">
+		</form>
+	</div>
 	 
-	 <script>
-		function submitForm(event){
-			event.preventDefault(); //submit버튼의 기본기능을 제한하겠다.
-			
-			
-			var form = document.forms['frm'];
-			var formData = $(form).serialize();
-			
-			$.ajax({
-				type: "POST",
-				url: "http://localhost:9002/help",
-				contentType: "application/x-www-form-urlencoded",
-				data: formData,
-				dataType: "text", // 서버가 보내주는 데이터의 타입
-				success: function(data){
-					console.log(data);
-					alert("등록완료!");
-//					$("#demo").html(data);
-					location.href = "/admin/helpList"
-				},
-				error: function(){
-					console.log("에러 발생.....");
-				}
-			})
-		}
+	<script>
+	function submitForm(event){
+		event.preventDefault(); //submit버튼의 기본기능을 제한하겠다.
+		
+		
+		var form = document.forms['frm'];
+		var formData = $(form).serialize();
+		
+		$.ajax({
+			type: "POST",
+			url: "http://localhost:9002/help",
+			contentType: "application/x-www-form-urlencoded",
+			data: formData,
+			dataType: "text", // 서버가 보내주는 데이터의 타입
+			success: function(data){
+				console.log(data);
+				alert("등록완료!");
+				$("#demo").html(data);
+				location.href = "/admin/helpList"
+			},
+			error: function(){
+				console.log("에러 발생.....");
+			}
+		})
+	}
 	</script>
 </body>
 </html>

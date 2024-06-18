@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/static/styles.css">
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+</head>
+<body>
+	<header class="header">
+	        <div class="header-left">
+	            <h1>고객센터</h1>
+	        </div>
+	        <div class="header-center">
+	            <h2>Jam Jam</h2>
+	            <p>관리자 센터</p>
+	        </div>
+	        <div class="header-right">
+	            <img src="/static/images/profile-icon.png" alt="Profile Icon" class="profile-icon">
+	            <div class="menu-toggle" id="menuToggle">
+	                <div class="bar"></div>
+	                <div class="bar"></div>
+	                <div class="bar"></div>
+	            </div>
+	        </div>
+	</header>
+
+<div th:fragment="fragment-nav" class="dropdown-menu" id="dropdownMenu">
+	<ul>
+		<li><a href="#profile">프로필</a></li>
+		<li><a href="#settings">설정</a></li>
+		<li><a href="#logout">로그아웃</a></li>
+	</ul>
+</div>
+<script>
+	$(document).ready(function() {
+	    $('#menuToggle').click(function() {
+	        $('#dropdownMenu').toggle();
+	    });
+	});
+</script>
+
+</body>
+</html>
