@@ -11,6 +11,7 @@
 			<tr>
 				<th>제목</th>
 				<th>내용</th>
+				<th>등록</th>
 				<th>수정</th>
 				<th>삭제</th>
 			</tr>
@@ -42,6 +43,7 @@
 			var row = "<tr>" +
 			"<td><a href='helpDetail?hnum=" + help.hnum + "'>" + help.title + "</a></td>" +
 			"<td>" + help.content + "</td>" +
+			"<td><a href='helpForm'>등록</a></td>" +
 			"<td><a href='helpUpdate?hnum=" + help.hnum + "'>수정</a></td>" +
 			"<td><a href='#' onclick='deleteHelp(" + help.hnum + ")'>삭제</a></td>" +
 			"</tr>";
