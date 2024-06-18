@@ -13,7 +13,7 @@ public class AdminController {
 		
 	}
 	
-	@GetMapping("/dashBoard")
+	@GetMapping("/admin/dashBoard")
 	public void dashBoard() {
 		
 	}
@@ -40,4 +40,8 @@ public class AdminController {
 		
 	}
 	
+	@GetMapping("/test")
+	public void test() {
+		
+	}
 }
