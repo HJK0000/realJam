@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+<link rel="stylesheet" type="text/css" th:href="@{/css/header.css}">
+</head>
+
+<header th:fragment="header">
+    <div class="logo">
+        <a href="#" th:href="@{/}">JAMJAM</a>
+    </div>
+    <nav class="main-nav">
+        <a href="#" th:href="@{/recruit}">채용공고 관리</a>
+        <a href="#" th:href="@{/apply}">입사지원 관리</a>
+        <a href="#" th:href="@{/talent}">인재관리</a>
+        <div class="search-bar">
+            <input type="text" placeholder="검색">
+            <button type="submit">검색</button>
+        </div>
+    </nav>
+    <div class="user-profile">
+        <div class="profile-dropdown"> <button class="profile-button"> <span th:text="${userName}">홍길동님</span>
+                <i class="arrow down"></i>
+            </button>
+            <div class="profile-dropdown-content"> <a href="#">기업 정보 수정</a>
+                <a href="#">마이페이지</a>
+                <a href="#">평점/리뷰 조회</a>
+                <a href="#" th:href="@{/logout}">로그아웃</a>
+            </div>
+        </div>
+    </div>
+</header>
+</html>
