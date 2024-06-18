@@ -30,4 +30,21 @@ public class UserController {
 	public String schoolModiForm() {
 		return "user/schoolModiForm";
 	}
+	
+	@RequestMapping("/resumeList")
+	public String resumeList(@RequestParam("username")String username) {
+		return "user/resumeList";
+	}
+	
+	@RequestMapping("/modifyPage")
+	public String modifyPage(@RequestParam("rno")String rno, Model model) {
+		model.addAttribute("rno", rno);
+		
+		return "user/modifyPage";
+	}
+	
+	@RequestMapping("/positionUserList")
+	public String posiotionUserList() {
+		return "user/positionUserList";
+	}
 }
