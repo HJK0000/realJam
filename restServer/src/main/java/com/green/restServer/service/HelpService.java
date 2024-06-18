@@ -40,4 +40,10 @@ public class HelpService {
 		return savedHelp;
 	}
 	
+	public Help updateHelp(Long hnum, Help help) {
+        Help existingHelp = helpRepository.findById(hnum).orElseThrow();
+        existingHelp.update(help);
+        return helpRepository.save(existingHelp);
+    }
+	
 }

@@ -1,37 +1,94 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-</head>
-<body>
-	<div>
-		 <form id="frm">
-		 	<input type="text" name="title" th:value="${title}"><br>
-		 	<input type="text" name="content" th:value="${content}"><br>
-		 	<input type="submit" value="등록" onclick="submitForm(event)">
-		 	<input type="button" value="삭제" onclick="deleteHelp(hnum)">
-		 </form>
-	 </div>
-	 
-	 <script>
-
-	function deleteHelp(hnum) {
-		if(confirm("정말 삭제하시겠습니까?")) {
+	<!DOCTYPE html>
+	<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+	</head>
+	<body>
+		<div>
+			 <form id="frm">
+			 	<input type="text" name="title" id="helpTitle"><br>
+			 	<input type="text" name="content" id="helpContent"><br>
+			 	<input type="submit" value="등록" onclick="submitForm(event)">
+			 	<input type="button" value="삭제" onclick="deleteHelp(hnum)">
+			 </form>
+		 </div>
+		 
+		 <script>
+		 
+		 $(document).ready(function() {
+			 const hnum = getQueryParam();
+	         
+	         $.ajax({
+					type: "GET",
+					url: `http://localhost:9002/help/${hnum}`,
+					dataType: "json", // 서버가 보내주는 데이터의 타입
+					success: function(data){
+						console.log(data);
+						
+						$("#helpTitle").val(data.title);
+						$("#helpContent").val(data.content);
+						
+					},
+					error: function(){
+						console.log("에러 발생.....");
+					}
+				})
+	     });
+		 
+		 function submitForm(event){
+			event.preventDefault(); //submit버튼의 기본기능을 제한하겠다.
+			
+			const hnum = getQueryParam(); 
+			
+			var form = document.forms['frm'];
+			var formData = $(form).serialize();
+			var data1=JSON.stringify({
+					"title" : $('#helpTitle').val(),
+					"content" :$('#helpContent').val()
+			});
+			
 			$.ajax({
-				type: "DELETE",
+				type: "PUT",
 				url: "http://localhost:9002/help/" + hnum,
-				success: function(response){
-					alert("삭제 완료");
-					location.reload(); // 삭제 후 페이지 새로고침
+				contentType: "application/json",
+				data: data1,
+				success: function(data){
+					console.log(data);
+					alert("수정완료!");
+	//				$("#demo").html(data);
+					location.href = "/admin/helpList"
 				},
 				error: function(){
-					console.log("삭제 에러 발생.....");
+					console.log("에러 발생.....");
 				}
-			});
+			})
 		}
-	}
-    </script>
-</body>
-</html>
+		 
+		function getQueryParam() {
+		    const urlParams = new URLSearchParams(window.location.search);
+		    return urlParams.get("hnum");
+		    
+		}
+		 
+		
+		function deleteHelp(hnum) {
+			var hnum = $('#hnum').val();
+			if(confirm("정말 삭제하시겠습니까?")) {
+				$.ajax({
+					type: "DELETE",
+					url: "http://localhost:9002/help/" + hnum,
+					success: function(response){
+						alert("삭제 완료");
+						location.reload(); // 삭제 후 페이지 새로고침
+					},
+					error: function(){
+						console.log("삭제 에러 발생.....");
+					}
+				});
+			}
+		}
+	    </script>
+	</body>
+	</html>
