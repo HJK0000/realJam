@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+</head>
+<body>
+<h2>포지션제안 상세페이지</h2>
+<hr>
+<div id="offerContaner">
+	<h3 id="offertitle"></h3>
+	<div id="offer">
+		<input type="hidden" id="company" name="company">
+		(<span id="offerCompany"></span>)<br>
+		<textarea id="offerinfo" readonly></textarea>
+	</div>
+	<input type="button" onclick="acceptOffer()" value="수락">
+	<input type="button" onclick="" value="거절"> 
+</div>
+
+<script>
+var ono = "[[${ono}]]";
+var username = "aaaa";
+
+	$(document).ready(function(){
+		$.ajax({
+			url: "http://localhost:9002/user/offerlist/" + ono + "/" + username,
+			method: "GET",
+			success: function(response){
+				document.getElementById("offertitle").innerText = response.title;
+				document.getElementById("offerCompany").innerText = response.copName;
+				document.getElementById("offerinfo").value = response.content;
+				document.getElementById("company").value = response.company.username;
+				
+				console.log(response.company.username);
+			},
+			error: function(error){
+				console.log("Error: ", error);
+			}
+		});
+	});
+	
+	//요청 수락 >> 상태변경 1에서 2로 
+	function acceptOffer(){
+		const title = document.getElementById("offertitle").innerText;
+		const copName = document.getElementById("offerCompany").innerText;
+		const content = document.getElementById("offerinfo").value;
+		const companyId = document.getElementById("company").value;
+		
+		console.log(title);
+		console.log(copName);
+		console.log(content);
+		console.log(companyId);
+		
+		const offer = {
+				ono: ono,
+				accept: 1,
+				status: 1,
+				user: username,
+				copName: copName,
+				title: title,
+				content: content,
+				company: companyId
+				
+		};
+		
+		console.log(offer);
+		
+		
+		$.ajax({
+			url: "http://localhost:9002/user/offerlist",
+			method: "PUT",
+			contentType: "application/json",
+			data: JSON.stringify(offer),
+			success: function(response){
+				alert("제안을 수락했습니다.");
+				window.location.href= "/user/positionUserList";
+			},
+			error: function(error){
+				console.log("Error: ", error);
+			}
+		});
+		
+	}
+</script>
+</body>
+</html>
