@@ -244,8 +244,11 @@ textarea {
 		<!--style="display: none;"-->
 		<h1>채용공고 수정</h1>
 		<hr>
-
+	
 		<form name="frm2" id="frm2">
+			<div class="form-group">
+				<input type="hidden" name="jno" id="jno2">
+			</div>
 			<div class="form-group">
 				<label for="wantedTitle">공고제목</label> <input type="text"
 					id="wantedTitle2" name="wantedTitle" width=200 />
@@ -516,7 +519,9 @@ textarea {
 				
 			});
 			
+			
 			console.log("formObject = " +  JSON.stringify(formObject));
+			console.log(formObject.jno);
 			let username = localStorage.getItem('username');
 			
 			fetch('http://localhost:9002/com/jobAdUpdate', {
@@ -548,8 +553,6 @@ textarea {
 			
 			});
 		});
-		
 	</script>
-
 </body>
 </html>

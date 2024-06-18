@@ -126,6 +126,21 @@ public class CompanyController {
 		
 	}
 	
+	@RequestMapping("/jobDetail")
+	public String jobDetail(@RequestParam(name = "id") Long jobId, Model model) {
 
+		model.addAttribute("jno", jobId);
+		
+		return "company/comJobDetail";
+	}
+	
+	@RequestMapping("/positionList")
+	public String positionList() {
+		
+		
+		return "company/comPosition";
+		
+	}
+	
 	
 }

@@ -34,9 +34,12 @@ document.addEventListener('DOMContentLoaded', function() {
 			});
 	}
 
-
+	// 수정하기 버튼용 update 요청
 	function updateJobAd(jobAdId) {
-
+		
+		console.log(username);
+		console.log(jobAdId);
+		
 		fetch(apiUrl3 + '/' + jobAdId, {
 
 			method: 'GET',
@@ -64,6 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
 				console.log('Server response :', data);
 
 				// 가져온 데이터를 폼에 넣기
+				document.getElementById('jno2').value = data.jno;
 				document.getElementById('wantedTitle2').value = data.wantedTitle;
 				document.getElementById('sector12').value = data.sector1;
 				document.getElementById('position12').value = data.position1;
@@ -137,9 +141,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
 					// 공고 제목 셀
 					const titleCell = document.createElement('td');
-					titleCell.textContent = jobAd.wantedTitle; // jobAdDto의 title 속성
+					const titleLink = document.createElement('a');
+					titleLink.href = '#'; // 클릭 이벤트만 발생시키기 위해 '#' 설정
+					titleLink.textContent = jobAd.wantedTitle; // jobAdDto의 title 속성
+					titleCell.appendChild(titleLink); // titleLink를 titleCell에 추가
 					row.appendChild(titleCell);
 
+					
+					// 클릭 이벤트 리스너 추가
+					titleLink.addEventListener('click', () => {
+					
+						// jobAd.jno를 사용하여 /com/jobDetail 앤드포인트로 이동
+						window.location.href = '/com/jobDetail?id=' + jobAd.jno;
+						
+					});
 
 					// 수정 버튼 셀
 					const updateCell = document.createElement('td');
@@ -156,7 +171,6 @@ document.addEventListener('DOMContentLoaded', function() {
 						
 					})
 					
-					
 					// 삭제 버튼 셀
 					const deleteCell = document.createElement('td');
 					const deleteButton = document.createElement('button');
@@ -171,13 +185,12 @@ document.addEventListener('DOMContentLoaded', function() {
 						deleteJobAd(jobAd.jno); // Assuming jobAd has an 'id' property
 					});
 					
-					
-
 
 					deleteCell.appendChild(deleteButton);
 					row.appendChild(deleteCell);
 
-					tableBody.appendChild(row);
+					// 행을 테이블 본문에 추가
+					tableBody.appendChild(row); 
 
 
 

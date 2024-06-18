@@ -26,8 +26,10 @@ import com.green.restServer.dto.CompanyResponseDto;
 import com.green.restServer.dto.JobAdDto;
 import com.green.restServer.entity.Company;
 import com.green.restServer.entity.JobAd;
+import com.green.restServer.entity.Resume2;
 import com.green.restServer.repository.CompanyRepository;
 import com.green.restServer.repository.JobAdRepository;
+import com.green.restServer.repository.Resume2Repository;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -43,13 +45,17 @@ public class CompanyRestController {
 	@Autowired
 	private JobAdRepository jobAdRepository;
 
+	@Autowired
+	private Resume2Repository resume2Repository;
+	
 	public CompanyRestController() {
 	}
 
-	public CompanyRestController(CompanyRepository companyRepository, JobAdRepository jobAdRepository) {
+	public CompanyRestController(CompanyRepository companyRepository, JobAdRepository jobAdRepository, Resume2Repository resume2Repository) {
 
 		this.companyRepository = companyRepository;
 		this.jobAdRepository = jobAdRepository;
+		this.resume2Repository = resume2Repository;
 	}
 
 	@GetMapping("/getCompanyInfo")
@@ -190,6 +196,10 @@ public class CompanyRestController {
 	@GetMapping("/getRecruitForUpdate/{jobAdId}")
 	public ResponseEntity<?> getRecruitForUpdate(@PathVariable("jobAdId") Long jno, @RequestHeader("Username") String username) throws IOException {
 		
+		Company company = new Company();
+		
+		
+		
 		JobAd result = jobAdRepository.findById(jno).orElseThrow(NullPointerException::new);
 
 		
@@ -205,9 +215,15 @@ public class CompanyRestController {
 		System.out.println("jobAdUpdate...........");
 
 		System.out.println("헤더의 username : " + username);
+
+		Optional<Company> result = companyRepository.findById(username);	
+
+		Company company = result.get();
 		
 		JobAd jobAd = new JobAd();
 		
+		jobAd.setCompany(company);
+		jobAd.setJno(jobAdDto.getJno());
 		jobAd.setWantedTitle(jobAdDto.getWantedTitle());
 		jobAd.setSector1(jobAdDto.getSector1());
 		jobAd.setPosition1(jobAdDto.getPosition1());
@@ -239,6 +255,49 @@ public class CompanyRestController {
 		return ResponseEntity.status(HttpStatus.OK).body(responseBody);
 		
 	}
+	
+	@GetMapping("/getRecruitDetail/{jno}")
+	public ResponseEntity<?> getRecruitDetail(@PathVariable("jno") Long jno, HttpServletRequest request, HttpServletResponse response) throws IOException{
+
+		System.out.println("GetRecruitDetail................");
+	
+		Optional<JobAd> result = jobAdRepository.findById(jno);
+	
+		if(result.isEmpty()) {
+			
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 채용공고를 찾을 수 없습니다.");
+			
+			
+		}
+		
+		JobAd jobAd = result.get();		
+		
+		return ResponseEntity.ok(jobAd);
+	}
+	
+	@GetMapping("/getPositionList")
+	public ResponseEntity<?> getPositionList(@RequestHeader("Username") String username, HttpServletResponse response)throws IOException {
+		
+		System.out.println("Received Username: " + username);
+		Company company = companyRepository.findById(username).orElseThrow(NullPointerException::new);
+		
+		String sectors = company.getSector(); // 업종
+		
+		String def = "예";
+		
+		List<Resume2> result = resume2Repository.findAllBySectorsAndDef(sectors, def);
+		
+		for(Resume2 resume2 : result) {
+			
+			System.out.println(resume2);
+			System.out.println(resume2.getUser().getUname());
+		}
+		
+		return ResponseEntity.status(HttpStatus.OK).body(result);
+
+		
+	}
+
 	
 //	jobAdDto.setCompanyUsername(jobAd.getCompany().getUsername());
 //	jobAdDto.setSector1(jobAd.getSector1());
