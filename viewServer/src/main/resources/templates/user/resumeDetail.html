@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+</head>
+<body>
+<h2>이력서 상세페이지</h2>
+<hr>
+<div class="resume">
+	<div>
+		<span>이력서 제목</span>
+		<div class="text" id="title"></div>
+	</div>
+	<!-- 이력서 저장된 개인정보 -->
+	<div>
+		<span>개인 정보</span>
+		<div class="text" id="uname"></div>
+		<div class="text" id="tel"></div>
+		<div class="text" id="email"></div>
+		<div class="text" id="uaddr"></div>
+		<div class="text" id="gender"></div>
+		<div class="text" id="birthDay"></div>
+	</div>
+	<br>
+	<!-- 이력서 저장된 희망사항 -->
+	<div>
+		<span>희망근무사항</span>
+		<div class="text" id="region1"></div>
+		<div class="text" id="region2"></div>
+		<div class="text" id="region3"></div>
+		<div class="text" id="sectors"></div>
+		<div class="text" id="job"></div>
+	</div>
+	<br>
+	<!-- 이력서 저장된 경력사항 -->
+	<div>
+		<span>경력사항</span>
+		<div class="text" id="startDate"></div>
+		<div class="text" id="endDate"></div>
+		<div class="text" id="cName"></div>
+		<div class="text" id="rank"></div>
+		<div class="text" id="status"></div>
+		<div class="text" id="type"></div>
+		<div class="text" id="position"></div>
+		<div><textarea id="work"></textarea></div>
+	</div>
+	<br>
+	
+	<!-- 이력서 저장된 학력 -->
+	<div>
+		<span>학력</span>
+		<div class="text" id="eduName"></div>
+		<div class="text" id="accDate"></div>
+		<div class="text" id="gradDate"></div>
+		<div class="text" id="major"></div>
+		<div class="text" id="score"></div>
+		<div class="text" id="schoolNow"></div>
+	</div>
+	<br>
+	
+	<div>
+		<span>자격증</span>
+		<div class="text" id="licensename"></div>
+		<div class="text" id="given"></div>
+		<div class="text" id="getDate"></div>
+	</div>
+	<br>
+	
+	<div>
+		<span>보유능력</span>
+		<div class="text" id="oaType"></div>
+		<div class="text" id="content"></div>
+	</div>
+	<br>
+	
+	<div>
+		<span>사회활동</span>
+		<div class="text" id="startDay"></div>
+		<div class="text" id="endDay"></div>
+		<div class="text" id="org"></div>
+		<div><textarea id="econtent"></textarea></div>
+	</div>
+	<br>
+	
+	<div>
+		<span>이력서 제목</span><br>
+		<input type="text" name="rtitle" readonly><br>
+		<textarea id="selfinfo"></textarea>
+	</div>
+</div>
+
+<script>
+	const username = "aaaa";
+	const rno = "[[${rno}]]";
+
+	const uname = document.getElementById("uname");
+	const tel = document.getElementById("tel");
+	const email = document.getElementById("email");
+	const uaddr = document.getElementById("uaddr");
+	const gender = document.getElementById("gender");
+	const birthDay = document.getElementById("birthDay");
+	
+	//희망근무
+	const region1 = document.getElementById("region1");
+	const region2 = document.getElementById("region2");
+	const region3 = document.getElementById("region3");
+	const sectors = document.getElementById("sectors");
+	const job = document.getElementById("job");
+	
+	//경력사항
+	const startDate = document.getElementById("startDate");
+	const endDate = document.getElementById("endDate");
+	const cname = document.getElementById("cName");
+	const rank = document.getElementById("rank");
+	const status = document.getElementById("status");
+	const type = document.getElementById("type");
+	const position = document.getElementById("position");
+	const work = document.getElementById("work");
+	
+	//학력사항
+	const accDate = document.getElementById("accDate");
+	const gradDate = document.getElementById("gradDate");
+	const eduName = document.getElementById("eduName");
+	const major = document.getElementById("major");
+	const score = document.getElementById("score");
+	const schoolNow = document.getElementById("schoolNow");
+	
+	//자격증
+	const licensename = document.getElementById("licensename");
+	const given = document.getElementById("given");
+	const getDate = document.getElementById("getDate");
+	
+	//보유능력
+	const oaType = document.getElementById("oaType");
+	const content = document.getElementById("content");
+	
+	//사회활동 
+	const startDay = document.getElementById("startDay");
+	const endDay = document.getElementById("endDay");
+	const org = document.getElementById("org");
+	const econtent = document.getElementById("econtent");
+	
+	//자소서
+	const rtitle = document.querySelector("input[name='rtitle']");
+	const selfinfo = document.getElementById("selfinfo");
+	
+	$(document).ready(function(){
+		$.ajax({
+			url: "http://localhost:9002/user/resume/" + username + "/" + rno,
+			method: "GET",
+			success: function(response){
+				uname.innerText = "이름: " + response.user.uname;
+				tel.innerText = "전화번호: " + response.user.tel;
+				email.innerText = "이메일: " + response.user.email;
+				uaddr.innerText = "주소: " + response.user.uaddr;
+				gender.innerText = "성별: " + response.user.gender;
+				birthDay.innerText = "생년월일: " + response.user.birthDate;
+				
+				region1.innerText = "희망근무지1: " + response.region1;
+				region2.innerText = "희망근무지2: " + response.region2;
+				region3.innerText = "희망근무지3: " + response.region3;
+				sectors.innerText = "희망업종: " + response.sectors;
+				job.innerText = "희망직무: " + response.job;
+				
+				startDate.innerText = "입사일: " + response.startDate;
+				endDate.innerText = "퇴사일: " + response.endDate;
+				cName.innerText = "회사명: " + response.cName;
+				rank.innerText = "직급: " + response.rank;
+				status.innserText = "상태: " + response.status;
+				type.innserText = "업종: " + response.type;
+				position.innerText = "직무: " + response.position;
+				work.value = response.work;
+				
+				accDate.innerText = "입학날짜: " + response.accDate;
+				gradDate.innerText = "졸업일: " + response.gradDate;
+				eduName.innerText = "학교명: " + response.eduName;
+				major.innerText = "전공: " + response.major;
+				score.innerText = "학점: " + response.score; 
+				schoolNow.innerText = "학적상태: " + response.schoolNow;
+				
+				licensename.innerText = "자격증 명: " + response.licensename;
+				given.innerText = "발급처: " + response.given;
+				getDate.innerText = "취득일: " + response.getDate;
+				
+				oaType.innerText = "능력: " + response.oaType;
+				content.innerText = "내용: " + response.content;
+				
+				startDay.innerText = "시작일: " + response.startDay;
+				endDay.innerText = "종료일: " + response.endDay;
+				org.innerText = "참여기관: " + response.org;
+				econtent.value = response.econtent;
+				
+				rtitle.value = response.rtitle;
+				selfinfo.value = response.selfinfo;
+			},
+			error: function(error){
+				console.log("Error: ", error);
+			}
+		})
+	});
+	
+</script>
+
+</body>
+</html>
