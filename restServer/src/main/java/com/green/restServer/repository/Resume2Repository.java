@@ -19,4 +19,8 @@ public interface Resume2Repository extends JpaRepository<Resume2, Long>{
 	//구직자 희망업종 구하는 쿼리문
 	@Query(value="select sectors from resume2 where user_username= :user_username AND def= :def",nativeQuery=true)
 	public String findSectorByUsernameAndDef(@Param("user_username")String username, @Param("def")String def);
+
+	//희망업종
+	@Query(value="select * from resume2 where sectors= :sectors AND def= :def", nativeQuery = true)
+	public List<Resume2> findAllBySectorsAndDef(@Param("sectors")String sectors, @Param("def")String def);
 }

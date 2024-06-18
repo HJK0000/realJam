@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>채용공고 상세 페이지</title>
+<script src="https://code.jquery.com/jquery-3.7.1.js"
+	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+	crossorigin="anonymous"></script>
+</head>
+<body>
+
+	<h1>공고 상세보기 페이지</h1>
+	<hr>
+
+	<div class="job-content">
+		<div class="job-header">
+			<div>
+				<div id="cname" name="cname"></div>
+				<h2 id="wantedTitle" name="wantedTitle"></h2>
+				<div class="job-conditions">
+					<div>
+						<h3>지원 자격</h3>
+						<span><strong>지원 자격</strong></span>:<div id="yofExperiences" name="yofExperiences"></div>
+						<span><strong>학력</strong></span>:<div id="Educondition" name="Educondition"></div>
+					</div>
+					<div>
+					<h3>근무 조건</h3>
+					<span><strong>고용 형태</strong></span>:<div id="empTpNm" name="empTpNm"></div>
+					<p><strong>급여</strong>:<div id="sale" name="sale"></div></p>만원
+					<p><strong>지역</strong>:<div id="region" name="region"></div></p>
+					<p><strong>근무시간</strong>: <div id="wkdWkhCnt" name="wkdWkhCnt"></div></p>
+					</div>					
+				</div>
+			</div>
+			<div class="company-info">
+				<div>
+					<img id="companyLogo" src="" alt="회사 로고"> 
+				</div>
+				<div class="comsimpleinfo">
+					<h3>기업정보</h3> 
+					<div id="cname2" name="cname2"></div> 
+					<span><strong>산업(업종)</strong></span><div id="sector1" name="sector1"></div>
+					<span><strong>사원수 </strong></span><div id="employees" name="employees">명</div>
+					<span><strong>홈페이지</strong></span><div id="url" name="url"></div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="additionalInfo">
+			<h2>모집부문</h2>
+			<table border="1">
+				<thead>
+					<tr>
+						<th>모집부문</th>
+						<th>근무지역</th>
+						<th>근무내용</th>
+						<th>세부사항</th>
+						<th>모집인원</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td id="position1" name="position1"></td>
+						<td id="region1" name="region1"></td>
+						<td id="jobCont" name="jobCont"></td>
+						<td>
+							<div>
+								<strong>지원조건</strong><br>
+								<span>학력:</span><div id="Educondition2" name="Educondition2"></div><br>
+								<span>지원가능:</span><div id="yofExperiences2" name="yofExperiences2"></div>
+							</div><hr>
+							<div>
+								<strong>필요스킬</strong><br>
+								<div id="needskillList" name="needskillList">-</div>
+							</div>
+						</td>
+						<td id="collectPsncnt" name="collectPsncnt"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<hr>
+		<div class="etc-info">
+			<div>
+			<strong>인사 담당자</strong><div id="empName" name="empName"></div><strong>이메일</strong><div id="empEmail" name="empEmail"></div>
+			<strong>연락처</strong><div id="empTel" name="empTel"></div>
+			</div>
+		</div>
+		<div>
+			<h3>근무 환경</h3>
+			<span><strong>근무 지역</strong></span><div id="region2" name="region2"></div>
+			<span><strong>복리 후생</strong></span><div id="etcWelfare" name="etcWelfare"></div>
+		</div>
+		<div>
+			<h3>공고 마감일</h3>
+			<p><div id="receiptCloseDt" name="receiptCloseDt"></div></p>
+		</div>
+		<div>
+			<input type="submit" value="공고수정하기"> 
+			<input type="submit" value="공고 삭제하기">
+		</div>
+
+	</div>
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			// 채용공고 상세보기 페이지가 로드되면 이 함수가 바로 실행됨
+
+			// Rest Api 서버의 엔드포인트 URL
+
+			var jno = "[[${jno}]]"; // 모델에 있는 jno를 이렇게 받는다.
+
+			console.log(jno);
+			
+	
+
+			$.ajax({
+
+				url : 'http://localhost:9002/com/getRecruitDetail/' + jno,
+				type : 'GET',
+				success : function(data) {
+
+					console.log("데이터 조회 성공 :", data);
+					
+					$('#wantedTitle').text(data.wantedTitle);
+					$('#cname').text(data.company.cname);
+					$('#cname2').text(data.company.cname);
+					$('#yofExperiences').text(data.yofExperiences);
+					$('#Educondition').text(data.educondition);
+					$('#empTpNm').text(data.empTpNm);
+					$('#sale').text(data.sale);
+					$('#region').text(data.region);
+					$('#wkdWkhCnt').text(data.wkdWkhCnt);
+					
+					// 로고 이미지 설정
+					if (data.company.logo) {
+						$('#companyLogo').attr('src', '/images/' + data.company.logo);
+					}
+					
+					$('#sector1').text(data.sector1);
+					$('#employees').text(data.company.employees);
+					$('#url').text(data.company.url);
+					$('#position1').text(data.position1);	
+					$('#region1').text(data.region);	
+					$('#jobCont').text(data.jobCont);
+					$('#Educondition2').text(data.educondition);
+					$('#yofExperiences2').text(data.yofExperiences);
+					$('#collectPsncnt').text(data.collectPsncnt + "명");
+					$('#empName').text(data.empName);
+					$('#empEmail').text(data.empEmail);
+					$('#empTel').text(data.empTel);
+					$('#empTel').text(data.empTel);
+					$('#region2').text(data.region);
+					$('#etcWelfare').text(data.etcWelfare);	
+					$('#receiptCloseDt').text(data.receiptCloseDt);	
+
+				
+				},
+
+				error : function(xhr, status, error) {
+
+					console.log("에러 발생 :", error);
+
+					//에러 발생시 처리할 내용을 추가할 수 있습니다.	
+				}
+			});
+		});
+	</script>
+</body>
+</html>
