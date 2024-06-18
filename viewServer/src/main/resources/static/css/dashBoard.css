@@ -1,4 +1,6 @@
 @charset "UTF-8";
+
+/* 기본 스타일 */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -6,6 +8,7 @@ body {
     background-color: #f8f8f8;
 }
 
+/* 헤더 스타일 */
 header {
     display: flex;
     justify-content: space-between;
@@ -21,6 +24,7 @@ header {
     color: #b22222;
 }
 
+/* 통계 항목 스타일 */
 .stats {
     display: flex;
     justify-content: space-around;
@@ -38,6 +42,7 @@ header {
     color: #b22222;
 }
 
+/* 네비게이션 버튼 스타일 */
 .nav-buttons {
     display: flex;
     gap: 10px;
@@ -54,6 +59,54 @@ header {
 }
 
 .btn:hover {
+    background-color: #b22222;
+    color: #ffffff;
+}
+
+/* 차트 컨테이너 및 버튼 스타일 */
+.chart-container {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    position: relative;
+    width: 100%; /* 차트 컨테이너의 가로 길이 설정 */
+}
+
+#chartsize {
+    width: 600px;
+    height: 300px;
+    position: relative;
+    border: 1px solid #ddd;
+    background-color: #fff;
+}
+
+.chart-title {
+    font-size: 1.5em;
+    color: #b22222;
+    margin-top: 10px;
+    text-align: left;
+}
+
+/* 버튼 그룹 스타일 */
+.btn-group {
+    position: absolute;
+    top: 10px; /* 차트 상단에서의 위치 */
+    right: 10px; /* 차트 오른쪽 끝에서의 위치 */
+    display: flex;
+    gap: 5px;
+}
+
+.btn-group button {
+    background-color: #ffffff;
+    color: #b22222;
+    border: 2px solid #b22222;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 0.9em;
+    border-radius: 5px;
+}
+
+.btn-group button:hover {
     background-color: #b22222;
     color: #ffffff;
 }

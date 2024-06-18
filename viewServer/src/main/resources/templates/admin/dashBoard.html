@@ -2,15 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Header Example</title>
+    <title>Chart Example</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/dashBoard.css}">
+    <link rel="stylesheet" type="text/css" href="style.css"> <!-- 새로운 CSS 파일 참조 -->
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-	<style>
-		#chartsize {
-			width: 500px;
-		}
-	</style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -25,70 +21,118 @@
             <div class="stat-item">신규 이력서 수<br>43개</div>
         </nav>
         <div class="nav-buttons">
-            <button type="button" class="btn">도움말</button>
+            <button type="button" class="btn" onclick="location.href='helpList'">도움말</button>
             <button type="button" class="btn">답변</button>
             <button type="button" class="btn">로그아웃</button>
         </div>
     </header>
-	<div id="chartsize">
-  		<canvas id="myChart"></canvas>
-	</div>
 
+    <div class="chart-title">취업잼잼 방문수 변화량</div>
 
-<script>
-  const ctx = document.getElementById('myChart');
-  
-  new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-      datasets: [
-          {
-            label: 'Dataset 1', // 첫 번째 데이터셋 레이블
-            data: [12, 19, 3, 5, 2, 3],
-            borderWidth: 1,
-            borderColor: 'rgb(75, 192, 192)', // 첫 번째 데이터셋 색상
-            tension: 0
-          },
-          {
-            label: 'Dataset 2', // 두 번째 데이터셋 레이블
-            data: [2, 9, 13, 15, 12, 23], // 두 번째 데이터셋 값
-            borderWidth: 1,
-            borderColor: 'rgb(255, 99, 132)', // 두 번째 데이터셋 색상
-            tension: 0
-          }
-        ]
-    },
-    options: {
-    	animations: {
-    	      tension: {
-    	        duration: 1000,
-    	        easing: 'linear',
-    	        from: 1,
-    	        to: 0,
-    	        loop: true,
-    	        
-    	      }
-    	},
-    	plugins: {
-    	      tooltip: {
-    	        callbacks: {
-    	          // 툴팁 클릭 시 애니메이션 비활성화
-    	          label: function(context) {
-    	            context.dataset.tension = 0; // 곡선 효과 제거
-    	            context.chart.update(); // 차트 업데이트
-    	            return context.formattedValue; // 원래 값 반환
-    	          }
-    	        }
-    	      }
-    	    },
-      scales: {
-        y: {
-          beginAtZero: true
+    <div class="chart-container">
+        <div id="chartsize">
+            <canvas id="myChart"></canvas>
+            <div class="btn-group">
+                <button type="button" onclick="updateChart('3months')">3개월</button>
+                <button type="button" onclick="updateChart('1year')">1년</button>
+                <button type="button" onclick="updateChart('all')">전체</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('myChart').getContext('2d');
+        let chart;
+
+        // 데이터 배열 정의
+        const data3Months = {
+            labels: ['4월', '5월', '6월'],
+            datasets: [
+                {
+                    label: '방문수 변화량',
+                    data: [50, 80, 30],
+                    borderWidth: 2,
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.4
+                }
+            ]
+        };
+
+        const data1Year = {
+            labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            datasets: [
+                {
+                    label: '방문수 변화량',
+                    data: [40, 60, 80, 100, 120, 140, 160, 180, 200, 220, 240, 260],
+                    borderWidth: 2,
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.4
+                }
+            ]
+        };
+
+        const dataAll = {
+            labels: ['2019', '2020', '2021', '2022', '2023', '2024'],
+            datasets: [
+                {
+                    label: '방문수 변화량',
+                    data: [300, 400, 500, 600, 700, 800],
+                    borderWidth: 2,
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.4
+                }
+            ]
+        };
+
+        function createChart(data) {
+            if (chart) {
+                chart.destroy(); // 기존 차트 삭제
+            }
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: data,
+                options: {
+                    animations: {
+                        tension: {
+                            duration: 1000,
+                            easing: 'linear',
+                            from: 1,
+                            to: 0,
+                            loop: true,
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        },
+                        x: {
+                            suggestedMax: 10 // x축의 범위를 기존 데이터보다 높게 설정
+                        }
+                    }
+                }
+            });
         }
-      }
-    }
-  });
-</script>
-    </body>
+
+        function updateChart(period) {
+            let newData;
+            switch (period) {
+                case '3months':
+                    newData = data3Months;
+                    break;
+                case '1year':
+                    newData = data1Year;
+                    break;
+                case 'all':
+                    newData = dataAll;
+                    break;
+                default:
+                    newData = data1Year;
+            }
+            createChart(newData);
+        }
+
+        // 초기 차트 생성 (1년 데이터로 초기화)
+        createChart(data1Year);
+    </script>
+</body>
 </html>
