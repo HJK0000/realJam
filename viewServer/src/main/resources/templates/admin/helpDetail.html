@@ -3,9 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/dashBoard.css}">
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </head>
 <body>
+
+	<header>
+        <div class="logo">Jam Jam</div>
+        <nav class="stats">
+            <div class="stat-item" id="today">오늘 방문자<br><span th:text="${cnt}"></span>명</div>
+            <div class="stat-item">이 달 방문자<br>502명</div>
+            <div class="stat-item" id="all">총 방문자<br></div>
+            <div class="stat-item">신규 회원가입 수<br>28명</div>
+            <div class="stat-item">수익창출<br>광고비용 방문자 X 100원 매출액: 300원</div>
+            <div class="stat-item">신규 이력서 수<br>43개</div>
+        </nav>
+        <div class="nav-buttons">
+            <button type="button" class="btn" onclick="location.href='helpList'">도움말</button>
+            <button type="button" class="btn">답변</button>
+            <button type="button" class="btn" onclick="logout()">로그아웃</button>
+        </div>
+    </header>
+
 <h1>Detail</h1>
 
 	<h2 id="helpTitle"></h2>

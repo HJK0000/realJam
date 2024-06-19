@@ -17,7 +17,6 @@ public class AdminController {
 	List<Count> list = new ArrayList<>();
 	
 	
-	
 	@GetMapping("/serviceCenter")
 	public void center() {
 		

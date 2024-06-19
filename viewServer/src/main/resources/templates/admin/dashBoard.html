@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Chart Example</title>
+    <title>DashBoard</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/dashBoard.css}">
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -14,7 +14,7 @@
         <nav class="stats">
             <div class="stat-item" id="today">오늘 방문자<br><span th:text="${cnt}"></span>명</div>
             <div class="stat-item">이 달 방문자<br>502명</div>
-            <div class="stat-item" id="all">총 방문자<br></div>
+            <div class="stat-item" id="all"></div>
             <div class="stat-item">신규 회원가입 수<br>28명</div>
             <div class="stat-item">수익창출<br>광고비용 방문자 X 100원 매출액: 300원</div>
             <div class="stat-item">신규 이력서 수<br>43개</div>
@@ -22,7 +22,7 @@
         <div class="nav-buttons">
             <button type="button" class="btn" onclick="location.href='helpList'">도움말</button>
             <button type="button" class="btn">답변</button>
-            <button type="button" class="btn">로그아웃</button>
+            <button type="button" class="btn" onclick="logout()">로그아웃</button>
         </div>
     </header>
 
@@ -40,28 +40,45 @@
     </div>
 
     <script>
-    
+
     $(document).ready(function() {
         
-        var hnum ="[[${hnum}]]";
-        
-        $.ajax({
+    	const role = localStorage.getItem('role');
+    	
+    	 if (role !== 'ROLE_ADMIN') {
+             location.href = '/main';
+             return;
+         }
+    });
+    
+    $(document).ready(function(){
+		$.ajax({
 			type: "GET",
-			url: "http://localhost:9002/help/"+ hnum,
-			dataType: "json", // 서버가 보내주는 데이터의 타입
+			url: "http://localhost:9002/visitor",
 			success: function(data){
 				console.log(data);
-				
-				$("#helpTitle").html(data.title);
-				$("#helpContent").html(data.content);
-				
+				$("#all").html("총 방문자<br>" + data);
 			},
 			error: function(){
 				console.log("에러 발생.....");
 			}
 		})
-    });
+	});
     
+    function logout() {
+	    // 로컬 스토리지에서 해당하는 데이터 삭제
+	    localStorage.removeItem('username');
+	    localStorage.removeItem('role');
+	    
+	    alert('로그아웃 되었습니다.');
+	    // 로그아웃 후 서버로 로그아웃 요청을 보내는 등의 추가적인 서버 측 작업 수행 가능
+	  
+	    window.location.href = '/main'; // 변경 필요
+	}
+    
+ 		// Thymeleaf에서 cnt 변수를 JavaScript로 전달
+    	const cnt = [[${cnt}]];
+
         const ctx = document.getElementById('myChart').getContext('2d');
         let chart;
 
@@ -71,7 +88,7 @@
             datasets: [
                 {
                     label: '방문수 변화량',
-                    data: [50, 80, 30],
+                    data: [30, 80, cnt],
                     borderWidth: 2,
                     borderColor: 'rgb(75, 192, 192)',
                     tension: 0.4
@@ -84,7 +101,7 @@
             datasets: [
                 {
                     label: '방문수 변화량',
-                    data: [40, 60, 80, 100, 120, 140, 160, 180, 200, 220, 240, 260],
+                    data: [40, 60, 30, 120, 100, cnt],
                     borderWidth: 2,
                     borderColor: 'rgb(75, 192, 192)',
                     tension: 0.4
@@ -97,7 +114,7 @@
             datasets: [
                 {
                     label: '방문수 변화량',
-                    data: [300, 400, 500, 600, 700, 800],
+                    data: [300, 400, 500, 100, 700, 800],
                     borderWidth: 2,
                     borderColor: 'rgb(75, 192, 192)',
                     tension: 0.4
