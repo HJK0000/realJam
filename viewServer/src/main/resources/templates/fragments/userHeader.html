@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Header</title>
+    <link rel="stylesheet" th:href="@{/css/userHeader.css}">
+</head>
+<body>
+<div th:fragment="header-content">
+    <div class="header-container">
+        <div class="logo">
+            <img src="" alt="Jam Jam">
+        </div>
+        <div class="search-box">
+            <input type="text">
+            <button>검색</button>
+        </div>
+        <div class="nav-menu">
+            <a href="#">채용정보</a>
+            <a href="#">공채정보</a>
+            <a href="#">헤드헌팅</a>
+            <a href="#">기업·연봉</a>
+            <a href="#">커리어</a>
+            <a href="#">취업톡톡</a>
+        </div>
+        <div class="user-actions" id="loginStatus">
+            <!-- 로그인 상태에 따라 버튼 내용이 변경됩니다 -->
+            <a th:href="@{/loginForm}" th:text="${#strings.isEmpty(username) ? '로그인' : '로그아웃'}"></a>
+        </div>
+        <div class="user-actions">
+        	<a href="joinForm">회원가입</a>
+        </div>
+        
+    </div>
+</div>
+    <script th:inline="javascript">
+        var loggedInUser = /*[[${loggedInUser}]]*/ null;
+        var loginButton = document.getElementById('loginStatus').querySelector('a');
+        
+        if (loggedInUser) {
+            loginButton.innerText = '로그아웃';
+            loginButton.href = '/logout'; // 로그아웃 링크 설정
+            loginButton.onclick = function(e) {
+                e.preventDefault(); // 링크 클릭 시 기본 동작 방지
+                localStorage.removeItem('username');
+                localStorage.removeItem('role');
+                
+                location.href = '/'; // 로그아웃 후 메인 페이지로 이동
+            };
+        } else {
+            loginButton.innerText = '로그인';
+            loginButton.href = '/loginForm'; // 로그인 링크 설정
+        }
+    </script>
+</body>
+</html>
