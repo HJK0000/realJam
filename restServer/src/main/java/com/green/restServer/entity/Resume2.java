@@ -94,7 +94,7 @@ public class Resume2 {
     private LocalDate endDate;
     //회사명
     @Column(name = "cName")
-    private String cName;
+    private String companyName;
     //직급
     @Column(name = "rank")
     private String rank;
@@ -130,7 +130,7 @@ public class Resume2 {
     public void update(Career newCareer) {
         this.startDate = newCareer.getStartDate();
         this.endDate = newCareer.getEndDate();
-        this.cName = newCareer.getCName();
+        this.companyName = newCareer.getCName();
         this.rank = newCareer.getRank();
         this.status = newCareer.getStatus();
         this.type = newCareer.getType();

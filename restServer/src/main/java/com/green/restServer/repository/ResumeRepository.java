@@ -1,4 +1,4 @@
-package com.green.restServer.repository;
+/*package com.green.restServer.repository;
 
 import java.util.List;
 
@@ -15,3 +15,4 @@ public interface ResumeRepository extends JpaRepository<Resume, Long>{
 	@Query(value="select * from resume where username= :username", nativeQuery=true)
 	public List<Resume> findAllByUsername(@Param("username")String username);
 }
+*/

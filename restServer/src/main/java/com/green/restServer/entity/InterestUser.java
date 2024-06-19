@@ -36,5 +36,5 @@ public class InterestUser extends BaseEntity{
 	
 	@ManyToOne
     @JoinColumn(name = "rno", referencedColumnName = "rno", nullable = false)
-    private Resume resume;
+    private Resume2 resume;
 }

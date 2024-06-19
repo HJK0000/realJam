@@ -31,7 +31,7 @@ public class Career extends BaseEntity{
 
 	    @ManyToOne
 	    @JoinColumn(name = "rno", referencedColumnName = "rno", nullable = false)
-	    private Resume resume;
+	    private Resume2 resume;
 
 	    @ManyToOne
 	    @JoinColumn(name = "user_username", referencedColumnName = "username", nullable = false)

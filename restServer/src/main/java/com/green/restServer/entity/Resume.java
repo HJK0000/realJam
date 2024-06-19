@@ -1,4 +1,4 @@
-package com.green.restServer.entity;
+/*package com.green.restServer.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -52,3 +52,4 @@ public class Resume extends BaseEntity{
     
     
 }
+*/
