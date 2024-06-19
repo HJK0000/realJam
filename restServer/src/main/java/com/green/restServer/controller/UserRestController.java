@@ -24,7 +24,6 @@ import com.green.restServer.entity.ApplyList;
 import com.green.restServer.entity.Company;
 import com.green.restServer.entity.JobAd;
 import com.green.restServer.entity.OfferList;
-import com.green.restServer.entity.Resume;
 import com.green.restServer.entity.Resume2;
 import com.green.restServer.entity.School;
 import com.green.restServer.entity.User;
@@ -33,7 +32,6 @@ import com.green.restServer.repository.CompanyRepository;
 import com.green.restServer.repository.JobAdRepository;
 import com.green.restServer.repository.OfferListRepository;
 import com.green.restServer.repository.Resume2Repository;
-import com.green.restServer.repository.ResumeRepository;
 import com.green.restServer.repository.SchoolRepository;
 import com.green.restServer.repository.UserRepository;
 
@@ -99,6 +97,8 @@ public class UserRestController {
 		Optional<User> result = userRepo.findById(username);
 		User u = result.get();
 		
+		System.out.println("------------" + resume.getCompanyName());
+		
 		resume.setUser(u);
 		
 		Resume2 rs = resume2Repo.save(resume);
@@ -112,6 +112,7 @@ public class UserRestController {
 			int response = 0;
 			return response;
 		}
+		
 	}
 	
 	@GetMapping("/resumeList/{user_username}")
@@ -266,6 +267,14 @@ public class UserRestController {
 		applyListRepo.save(applyList);
 		
 		return ResponseEntity.ok("지원이 완료되었습니다.");
+	}
+	
+	@GetMapping("/job-apply/{username}")
+	public List<ApplyList> getMyApply(@PathVariable("username")String username){
+		
+		List<ApplyList> list= applyListRepo.findByUserUsername(username);
+		
+		return list;
 	}
 	
 }

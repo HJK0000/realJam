@@ -14,5 +14,8 @@ public interface ApplyListRepository extends JpaRepository<ApplyList, Long>{
 	
 	@Query(value="select * from apply_list where company_username= :company_username", nativeQuery = true)
 	public List<ApplyList> findByCompanyUsername(@Param("company_username") String company_username);
-
+	
+	@Query(value="select * from apply_list where user_username= :user_username", nativeQuery=true)
+	public List<ApplyList> findByUserUsername(@Param("user_username")String username);
+	
 }

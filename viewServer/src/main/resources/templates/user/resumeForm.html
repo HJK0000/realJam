@@ -50,8 +50,20 @@
 				<input type="text" id="region3" name="region3">
 			</li>
 			<li>
-				<label for="sectors">희망업종</label>
-				<input type="text" id="sectors" name="sectors">
+				<label for="sectors">희망업종</label> <select id="sectors"
+					name="sectors">
+					<option value="">선택</option>
+					<option value="서비스업">서비스업</option>
+					<option value="제조·화학">제조·화학</option>
+					<option value="IT·웹·통신">IT·웹·통신</option>
+					<option value="은행·금융업">은행·금융업</option>
+					<option value="미디어·디자인">미디어·디자인</option>
+					<option value="교육업">교육업</option>
+					<option value="의료·제약·복지">의료·제약·복지</option>
+					<option value="판매·유통">판매·유통</option>
+					<option value="건설업">건설업</option>
+					<option value="기관·협회">기관·협회</option>
+				</select>
 			</li>
 			<li>
 				<label for="job">희망직무</label>
@@ -69,8 +81,8 @@
 				<input type="text" id="endDate" name="endDate">
 			</li>
 			<li>
-				<label for="cName">회사명</label>
-				<input type="text" id="cName" name="cName">
+				<label for="cname">회사명</label>
+				<input type="text" id="cname" name="cname">
 			</li>
 			
 			<li>
@@ -378,7 +390,7 @@
 		//경력사항
 		const startDate = document.getElementById("startDate") ? document.getElementById("startDate").value : null;
 		const endDate = document.getElementById("endDate") ? document.getElementById("endDate").value: null;
-		const cName = document.getElementById("cName") ? document.getElementById("cName").value : null;
+		const cName = document.getElementById("cname") ? document.getElementById("cname").value : null;
 		const rank = document.getElementById("rank") ? document.getElementById("rank").value : null;
 		const status = document.getElementById("status") ? document.getElementById("status").value : null;
 		const type = document.getElementById("type") ? document.getElementById("type").value : null;
@@ -460,6 +472,8 @@
 		const def = document.getElementById("def") ? document.getElementById("def").value : null;
 		const disclo = document.getElementById("disclo") ? document.getElementById("disclo").value : null;
 		
+		console.log("회사명: " + cName);
+		
 		const resumeData = {
 				username: username,
 				uname: uname,
@@ -475,7 +489,7 @@
 				job: job,
 				startDate: startDate,
 				endDate: endDate,
-				cName: cName,
+				companyName: cName,
 				rank: rank,
 				status: status,
 				type: type,

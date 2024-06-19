@@ -4,14 +4,25 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<style>
+	#rlist2{
+		display: flex;
+		flex-wrap: wrap;
+		list-style: none;
+		padding: 0;
+	}
+	#rlist2 li{
+		margin-right: 20px;
+	}
+</style>
 </head>
 <body>
 <h2>이력서 목록</h2>
 <hr>
-	<div>
-		<ul id="rlist">
+	<div id="rlist">
+		<!-- <ul id="rlist"> -->
 			
-		</ul>
+		<!-- </ul> -->
 	</div>
 </body>
 <script>
@@ -26,22 +37,24 @@
 				rlist.empty();
 				response.forEach(function(list){
 					const listItem = `
+						<ul id="rlist2">
 						<li>
-							<label for="rnum">번호</label>
+							<label for="rnum">번호:</label>
 							<span class="rnum">${list.rno}</span>
 						</li>
 						<li>
-							<label for="rtitle">이력서 제목</label>
+							<label for="rtitle">이력서 제목:</label>
 							<a href="#" onclick="goResumeDetail(${list.rno})">${list.rtitle}</a>
 						</li>
 						<li>
-							<label for="modify">수정</label>
+							<label for="modify"></label>
 							<a href="#" onclick="modifyResume(${list.rno})">수정하기</a> 
 						</li>
 						<li>
-							<label for="delete">삭제</label>
+							<label for="delete"></label>
 							<input type="button" onclick="deleteResume(${list.rno})" value="삭제하기">
 						</li>
+						</ul>
 					`;
 					rlist.append(listItem);
 				});
