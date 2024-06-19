@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.green.restServer.entity.Company;
+import com.green.restServer.entity.User;
 
 
 public interface CompanyRepository extends JpaRepository<Company, String>{
@@ -17,5 +18,7 @@ public interface CompanyRepository extends JpaRepository<Company, String>{
 	
 	@Query(value="select * from company where sector= :sector",nativeQuery= true)
 	public List<Company> findBySectors(@Param("sector")String sector);
+	
+	Company findByUsername(String username);
 }
 

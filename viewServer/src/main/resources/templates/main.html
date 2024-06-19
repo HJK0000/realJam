@@ -1,10 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Main Page</title>
+    <meta charset="UTF-8">
+    <title>Main Page</title>
+    <link rel="stylesheet" th:href="@{/css/userHeader.css}">
 </head>
 <body>
+<div th:replace="~{fragments/userHeader :: header-content}"></div>
+
+<main>
+    
+</main>
+
+
 
 </body>
 </html>
