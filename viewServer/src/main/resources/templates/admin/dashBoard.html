@@ -40,6 +40,28 @@
     </div>
 
     <script>
+    
+    $(document).ready(function() {
+        
+        var hnum ="[[${hnum}]]";
+        
+        $.ajax({
+			type: "GET",
+			url: "http://localhost:9002/help/"+ hnum,
+			dataType: "json", // 서버가 보내주는 데이터의 타입
+			success: function(data){
+				console.log(data);
+				
+				$("#helpTitle").html(data.title);
+				$("#helpContent").html(data.content);
+				
+			},
+			error: function(){
+				console.log("에러 발생.....");
+			}
+		})
+    });
+    
         const ctx = document.getElementById('myChart').getContext('2d');
         let chart;
 
