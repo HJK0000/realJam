@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" th:href="@{/css/nav_styles.css}">
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+</head>
+<body>
+<div th:fragment="fragment-nav">
+	<div class="navbar">
+        <div class="logo">
+            <!-- <a href="/user/main"><img src="jamjam_logo.png" alt="Jam Jam"></a> -->
+        </div>
+        <div class="nav-menu">
+            <a href="/user/jobadList">채용정보</a>
+            <a href="/user/positionUserList">포지션매치</a>
+            <a href="/user/mypage">마이페이지</a>
+        </div>
+        <div class="search-box">
+            <input type="text" placeholder="검색어를 입력하세요">
+            <button>검색</button>
+        </div>
+        
+        <div id="userinfo">
+        	
+        </div>
+        
+        <div class="user-actions">
+            <a id="loginButton" href="/loginForm">로그인</a>
+            <a id="signupButton" href="/joinForm">회원가입</a>
+        </div>
+    </div>
+</div>
+	
+    
+    <script src="/js/user_nav.js">
+   		
+    </script>
+    
+</body>
+</html>

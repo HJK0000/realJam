@@ -80,9 +80,11 @@
 				
 				if(role == 'ROLE_ADMIN'){
 					location.href = "/admin/dashBoard"
-				}else{
-					location.href = "/main"
-				}
+                }else if(role == 'ROLE_MEMBER'){
+                    location.href = "/user/usermain";
+                }else if(role == 'ROLE_COMPANY'){
+                    location.href = "/com/myPage";
+                }
 				
 			},
 			error: function(){
@@ -114,10 +116,11 @@
 				
 				if(role == 'ROLE_ADMIN'){
 					location.href = "/admin/dashBoard"
-				}else{
-					location.href = "/main"
-				}
-				
+                }else if(role == 'ROLE_MEMBER'){
+                    location.href = "/user/usermain";
+                }else if(role == 'ROLE_COMPANY'){
+                    location.href = "/com/myPage";
+                }
 			},
 			error: function(){
 				console.log("에러 발생.....");
