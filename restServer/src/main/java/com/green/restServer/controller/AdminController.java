@@ -69,4 +69,5 @@ public class AdminController {
 		
 		return ResponseEntity.ok("삭제 완료");
 	}
+	
 }
