@@ -9,6 +9,15 @@ textarea {
 	height: 6.25em;
 	resize: none;
 }
+
+/* 초기에 채용공고 등록 폼과 수정폼을 숨기는 코드*/
+#jobReg {
+	display : none;
+}
+
+#jobUpdate {
+	display : none;
+}
 </style>
 <script src="https://code.jquery.com/jquery-3.7.1.js"
 	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
@@ -490,13 +499,11 @@ textarea {
 					
 					// 바디에 담겨져 온 company 정보
 					
-					const company = data.company;
-					const queryParams = new URLSearchParams({
-						
-						username : company.username
-						
-					}).toString();
-					
+					document.querySelectorAll('.container').forEach(function(div) {
+						div.style.display = 'none';
+					});
+					document.querySelector("#jobList").style.display = "block";
+					location.reload(); // 화면을 다시 로드
 				}
 				console.log(data);
 				// Add any additional actions to be performed on successful response.
