@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,15 +16,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.green.restServer.dto.ApplyDto;
+import com.green.restServer.dto.JobAdDto;
 import com.green.restServer.dto.OfferListDto;
 import com.green.restServer.dto.UserDto;
+import com.green.restServer.entity.ApplyList;
 import com.green.restServer.entity.Company;
+import com.green.restServer.entity.JobAd;
 import com.green.restServer.entity.OfferList;
 import com.green.restServer.entity.Resume;
 import com.green.restServer.entity.Resume2;
 import com.green.restServer.entity.School;
 import com.green.restServer.entity.User;
+import com.green.restServer.repository.ApplyListRepository;
 import com.green.restServer.repository.CompanyRepository;
+import com.green.restServer.repository.JobAdRepository;
 import com.green.restServer.repository.OfferListRepository;
 import com.green.restServer.repository.Resume2Repository;
 import com.green.restServer.repository.ResumeRepository;
@@ -38,8 +45,8 @@ import jakarta.servlet.http.HttpServletRequest;
 @RequestMapping("/user")
 public class UserRestController {
 	
-	@Autowired
-	ResumeRepository resumeRepo;
+	//@Autowired
+	//ResumeRepository resumeRepo;
 	
 	@Autowired
 	UserRepository userRepo;
@@ -215,6 +222,50 @@ public class UserRestController {
 		
 		offerListRepo.save(offerlist);
 		
+	}
+	
+	@Autowired
+	JobAdRepository jobadRepo;
+	
+	@GetMapping("/jobad")
+	public List<JobAd> jobadList() {
+		List<JobAd> list= jobadRepo.findAll();
+		
+		return list;
+	}
+	
+	@Autowired
+	ApplyListRepository applyListRepo;
+	
+	@PostMapping("/job-apply")
+	public ResponseEntity<String> jobApply(@RequestBody ApplyDto applyDto) {
+		System.out.println("받은 데이터~~~~~~~~~~~~ " + applyDto);
+		System.out.println("받은 rno~~~~~~ : " + applyDto.getRno());
+		System.out.println("받은 jno~~~~~~~: " + applyDto.getJno());
+		System.out.println("받은 username~~~~~~: " + applyDto.getUser_username());
+	
+		//System.out.println("구한 회사데이터~~~~~:" + );
+		
+		ApplyList applyList = new ApplyList();
+		Resume2 resume = resume2Repo.findById(applyDto.getRno()).orElseThrow();
+		JobAd jobAd = jobadRepo.findById(applyDto.getJno()).orElseThrow();
+		User user = userRepo.findByUsername(applyDto.getUser_username());
+		System.out.println("구한 유저데이터~~~~~:" + user);
+		
+		Company company = jobAd.getCompany();
+		
+		System.out.println("구한 회사데이터~~~~~:" + company);
+		
+		applyList.setResume(resume);
+		applyList.setJobAd(jobAd);
+		applyList.setUser(user);
+		applyList.setCompany(company);
+		applyList.setStatus(0);
+		applyList.setSave(applyDto.getSave());
+		
+		applyListRepo.save(applyList);
+		
+		return ResponseEntity.ok("지원이 완료되었습니다.");
 	}
 	
 }

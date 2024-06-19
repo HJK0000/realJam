@@ -59,4 +59,16 @@ public class UserController {
 		model.addAttribute("ono", ono);
 		return "user/offerDetailPage";
 	}
+	
+	@RequestMapping("/jobadList")
+	public String jobadList() {
+		return "user/jobAdPage";
+	}
+	
+	@RequestMapping("/jobadDetail")
+	public String jobadDetail(@RequestParam("jno")String jno, Model model) {
+		model.addAttribute("jno", jno);
+		
+		return "user/jobadDetail";
+	}
 }

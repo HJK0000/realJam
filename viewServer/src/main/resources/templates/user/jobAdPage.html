@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </head>
 <body>
 <h2>채용공고 목록</h2>
@@ -12,5 +13,43 @@
 <div id="pagination" class="pagination">
 	
 </div>
+
+<script>
+	$(document).ready(function(){
+		$.ajax({
+			url: "http://localhost:9002/user/jobad",
+			method: "GET",
+			success: function(response){
+				console.log("Success: ", response);
+				
+				const jbList = $("#jobList");
+				jbList.empty();
+				response.forEach(function(list){
+					const receiptCloseDt = new Date(list.receiptCloseDt);
+	                const options = { year: 'numeric', month: 'long', day: 'numeric' };
+	                const formattedDate = receiptCloseDt.toLocaleDateString(undefined, options);
+					
+					const listItem = `
+					<div class="Ad">
+					<a href="#" onclick="gojobDetail(${list.jno})"><h3>${list.wantedTitle}</h3></a>
+					<span>접수마감일: ${formattedDate}</span> / <span>지역: ${list.region}</span> / <span>모집분야: ${list.position1}</span>
+					</div>
+					
+					`;
+					jbList.append(listItem);
+				});
+				
+			},
+			error: function(error){
+				console.log("Error: ", error);
+				
+			}
+		});
+	});
+	
+	function gojobDetail(jno){
+		window.location.href = "/user/jobadDetail?jno=" + jno;
+	}
+</script>
 </body>
 </html>
