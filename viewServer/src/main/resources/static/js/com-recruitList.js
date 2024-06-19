@@ -9,37 +9,47 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	// 삭제하기 버튼용 delete 요청
 	function deleteJobAd(jobAdId) {
-		fetch(apiUrl2 + '/' + jobAdId, {
-			method: 'DELETE',
-			headers: {
-				'Username': username
-			}
-		})
-			.then(response => {
-				if (!response.ok) {
-					throw new Error('Failed to delete job advertisement');
-				}
-				return response.json();
-			})
-			.then(data => {
-				// Optionally handle success response, if needed
-				console.log('Server response:', data); // 서버에서 보낸 데이터 콘솔에 출력
-				alert(data.message);
-				// 페이지 새로고침
-				window.location.reload();
-			})
-			.catch(error => {
-				console.error('Error deleting job advertisement:', error);
-				alert('채용공고 삭제에 실패했습니다');
-			});
-	}
 
+		// 삭제 확인 메시지 표시
+		const confirmDelete = confirm(" 해당 채용공고를 정말 삭제하시겠습니까?");
+
+		if (confirmDelete) {
+			fetch(apiUrl2 + '/' + jobAdId, {
+				method: 'DELETE',
+				headers: {
+					'Username': username
+				}
+			})
+				.then(response => {
+					if (!response.ok) {
+						throw new Error('Failed to delete job advertisement');
+					}
+					return response.json();
+				})
+				.then(data => {
+					// Optionally handle success response, if needed
+					console.log('Server response:', data); // 서버에서 보낸 데이터 콘솔에 출력
+					alert(data.message);
+					// 페이지 새로고침
+					window.location.reload();
+				})
+				.catch(error => {
+					console.error('Error deleting job advertisement:', error);
+					alert('채용공고 삭제에 실패했습니다');
+				});
+		}
+	}
 	// 수정하기 버튼용 update 요청
 	function updateJobAd(jobAdId) {
-		
+
+		document.querySelectorAll('.container').forEach(function(div) {
+			div.style.display = 'none';
+		});
+
+		document.querySelector("#jobUpdate").style.display = "block";
 		console.log(username);
 		console.log(jobAdId);
-		
+
 		fetch(apiUrl3 + '/' + jobAdId, {
 
 			method: 'GET',
@@ -90,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
 				document.getElementById('empEmail2').value = data.empEmail;
 				document.getElementById('receiptCloseDt2').value = data.receiptCloseDt;
 
-				
+
 			})
 			.catch(error => {
 				console.error('Error updating job advertisement:', error);
@@ -147,13 +157,13 @@ document.addEventListener('DOMContentLoaded', function() {
 					titleCell.appendChild(titleLink); // titleLink를 titleCell에 추가
 					row.appendChild(titleCell);
 
-					
+
 					// 클릭 이벤트 리스너 추가
 					titleLink.addEventListener('click', () => {
-					
+
 						// jobAd.jno를 사용하여 /com/jobDetail 앤드포인트로 이동
 						window.location.href = '/com/jobDetail?id=' + jobAd.jno;
-						
+
 					});
 
 					// 수정 버튼 셀
@@ -168,9 +178,9 @@ document.addEventListener('DOMContentLoaded', function() {
 					// 수정버튼에 eventListener 달기
 					updateButton.addEventListener('click', () => {
 						updateJobAd(jobAd.jno); // jobAd의 id인 jno를 매개변수로 넘겨준다.
-						
+
 					})
-					
+
 					// 삭제 버튼 셀
 					const deleteCell = document.createElement('td');
 					const deleteButton = document.createElement('button');
@@ -184,13 +194,13 @@ document.addEventListener('DOMContentLoaded', function() {
 					deleteButton.addEventListener('click', () => {
 						deleteJobAd(jobAd.jno); // Assuming jobAd has an 'id' property
 					});
-					
+
 
 					deleteCell.appendChild(deleteButton);
 					row.appendChild(deleteCell);
 
 					// 행을 테이블 본문에 추가
-					tableBody.appendChild(row); 
+					tableBody.appendChild(row);
 
 
 
