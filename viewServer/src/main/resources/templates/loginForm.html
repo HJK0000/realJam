@@ -79,7 +79,7 @@
 				localStorage.setItem("role", role);
 				
 				if(role == 'ROLE_ADMIN'){
-					location.href = "/admin/dashBoard"
+					location.href = "/admin/dashBoard";
                 }else if(role == 'ROLE_MEMBER'){
                     location.href = "/user/usermain";
                 }else if(role == 'ROLE_COMPANY'){
@@ -102,7 +102,7 @@
 		
 		$.ajax({
 			type: "POST",
-			url: "http://localhost:9002/comlogin",
+			url: "http://localhost:9002/comLogin",
 			contentType: "application/x-www-form-urlencoded",
 			data: formData2,
 			dataType: "text", // 서버가 보내주는 데이터의 타입
@@ -115,7 +115,7 @@
 				localStorage.setItem("role", role);
 				
 				if(role == 'ROLE_ADMIN'){
-					location.href = "/admin/dashBoard"
+					location.href = "/admin/dashBoard";
                 }else if(role == 'ROLE_MEMBER'){
                     location.href = "/user/usermain";
                 }else if(role == 'ROLE_COMPANY'){
@@ -125,7 +125,7 @@
 			error: function(){
 				console.log("에러 발생.....");
 			}
-		})
+		});
 	}
 	
 	 // jQuery로 탭 버튼 클릭 이벤트 설정
