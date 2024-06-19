@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class UserController {
 	
 	@RequestMapping("/mypage")
-	public String mypage(Model model) {
-		//model.addAttribute("username", username);
+	public String mypage(@RequestParam("username")String username,Model model) {
+		model.addAttribute("username", username);
 		return "user/mypage";
 	}
 	

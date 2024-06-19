@@ -10,10 +10,6 @@
 </head>
 
 <body>
-<header>
-	<div th:replace="~{/fragments/comHeader.html}"></div>
-</header>
-
 	<!-- <p>Session Username: <span th:text="${session.username}"></span></p> -->
 	<h1>기업 마이페이지</h1>
 	<hr>
@@ -34,50 +30,25 @@
 		</thead>
 		<tbody>
 			<tr>
-				<td id="cname"></td>
+				<td th:text="${cname}"></td>
 				<td><img th:src="@{/images/하이브 로고.png}" alt="기업로고" width="400"
 					height="200"></td>
-				<td id="ceo"></td>
-				<td id="caddr"></td>
-				<td id="employees"></td>
-				<td id="size"></td>
-				<td id="major"></td>
-				<td id="yrSales"></td>
-				<td id="sector"></td>
+				<td th:text="${ceo}"></td>
+				<td th:text="${caddr}"></td>
+				<td th:text="${employees}"></td>
+				<td th:text="${size}"></td>
+				<td th:text="${major}"></td>
+				<td th:text="${yrSales}"></td>
+				<td th:text="${sector}"></td>
 			</tr>
 		</tbody>
 	</table>
 	<input type="submit" value="기업 정보 수정하기" onclick="updateComp(event)">
 	<script>
 	
-		
+		let username = localStorage.getItem('username');
 
-		
-		
-		$(document).ready(function(){
-			
-			const username = localStorage.getItem('username');
-			console.log(username);
-			
-			$.ajax({
-				url: 'http://localhost:9002/com/getCompanyInfo/'+ username,
-				method: 'GET',
-				success: function(response){
-					$('#cname').text('기업명: ' + response.cname);
-					$('#ceo').text('대표자 명: ' + response.ceo);
-					$('#caddr').text('회사주소: ' + response.caddr);
-					$('#employees').text('사원 수: ' + response.employees);
-					$('#size').text('기업규모: ' + response.size);
-					$('#major').text('주요사업: ' + response.major);
-					$('#yrSales').text('연매출액: ' + response.yrSales);
-					$('#sector').text('업종: ' + response.sector);
-				},
-				error: function(error){
-					console.log("Error: " + error);
-				}
-			});
-		});
-		
+		console.log(username);
 		
 		function updateComp(event) {
 
