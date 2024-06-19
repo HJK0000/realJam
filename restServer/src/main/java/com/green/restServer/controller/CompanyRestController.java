@@ -24,12 +24,19 @@ import org.springframework.web.bind.annotation.RestController;
 import com.green.restServer.dto.CompanyDto;
 import com.green.restServer.dto.CompanyResponseDto;
 import com.green.restServer.dto.JobAdDto;
+import com.green.restServer.dto.OfferListDto;
+import com.green.restServer.entity.ApplyList;
 import com.green.restServer.entity.Company;
 import com.green.restServer.entity.JobAd;
+import com.green.restServer.entity.OfferList;
 import com.green.restServer.entity.Resume2;
+import com.green.restServer.entity.User;
+import com.green.restServer.repository.ApplyListRepository;
 import com.green.restServer.repository.CompanyRepository;
 import com.green.restServer.repository.JobAdRepository;
+import com.green.restServer.repository.OfferListRepository;
 import com.green.restServer.repository.Resume2Repository;
+import com.green.restServer.repository.UserRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -48,14 +55,22 @@ public class CompanyRestController {
 	@Autowired
 	private Resume2Repository resume2Repository;
 	
+	@Autowired
+	private OfferListRepository offerListRepository;
+	
+	@Autowired
+	private ApplyListRepository applyListRepository;
+	
 	public CompanyRestController() {
 	}
 
-	public CompanyRestController(CompanyRepository companyRepository, JobAdRepository jobAdRepository, Resume2Repository resume2Repository) {
+	public CompanyRestController(CompanyRepository companyRepository, JobAdRepository jobAdRepository, Resume2Repository resume2Repository, OfferListRepository offerListRepository, ApplyListRepository applyListRepository) {
 
 		this.companyRepository = companyRepository;
 		this.jobAdRepository = jobAdRepository;
 		this.resume2Repository = resume2Repository;
+		this.offerListRepository = offerListRepository;
+		this.applyListRepository = applyListRepository;
 	}
 
 	@GetMapping("/getCompanyInfo")
@@ -278,10 +293,16 @@ public class CompanyRestController {
 	@GetMapping("/getPositionList")
 	public ResponseEntity<?> getPositionList(@RequestHeader("Username") String username, HttpServletResponse response)throws IOException {
 		
+		
+		System.out.println("getPositionList...............");
+		
+		
 		System.out.println("Received Username: " + username);
 		Company company = companyRepository.findById(username).orElseThrow(NullPointerException::new);
 		
 		String sectors = company.getSector(); // 업종
+		
+		System.out.println("회사의 업종 " + sectors);
 		
 		String def = "예";
 		
@@ -289,16 +310,68 @@ public class CompanyRestController {
 		
 		for(Resume2 resume2 : result) {
 			
-			System.out.println(resume2);
-			System.out.println(resume2.getUser().getUname());
+			System.out.println("업종 매치해서 가져온 이력서들" + resume2);
+			System.out.println("이력서의 주인들" + resume2.getUser().getUname());
 		}
 		
 		return ResponseEntity.status(HttpStatus.OK).body(result);
 
 		
 	}
-
 	
+	@PostMapping("/jobOffer")
+	public ResponseEntity<?> jobOffer(@RequestHeader("Username") String username, @RequestBody OfferListDto offerListDto, HttpServletResponse response) throws IOException {
+		
+		System.out.println("jobOffer....................");
+		//Dto -> entity
+		
+		System.out.println("헤더로 받아온 companyUsername : " + username);
+		System.out.println("바디로 받아온 offerList의 내용: " + offerListDto);
+		
+		
+		Optional<Company> comObject = companyRepository.findById(username);
+		
+		String cname = comObject.get().getCname();
+		
+		Company company = new Company();
+		company.setUsername(username);
+		
+		User user = new User();
+		user.setUsername(offerListDto.getUser());
+		
+		OfferList offerList = new OfferList();
+		
+		// 기본값 둘다 0으로 하기 (검토중)
+		
+		offerList.setCompany(company);
+		offerList.setUser(user);
+		offerList.setStatus("0");
+		offerList.setAccept("0");
+		offerList.setTitle(offerListDto.getTitle());
+		offerList.setContent(offerListDto.getContent());
+		offerList.setCopName(cname);
+		
+		offerListRepository.save(offerList);
+		
+		return ResponseEntity.status(HttpStatus.OK).body("포지션 제안이 완료되었습니다!");
+		
+	}
+
+	@GetMapping("/getResumeList")
+	public ResponseEntity<?> getResumeList(@RequestHeader("Username") String company_username, HttpServletResponse response) throws IOException {
+		
+		System.out.println("GetResumeList......................");
+			
+		List<ApplyList> result = applyListRepository.findByCompanyUsername(company_username);
+		
+		for(ApplyList list : result) {
+			
+			System.out.println("배열에서 뽑아낸 객체 : " + list);
+		}
+		
+		return ResponseEntity.status(HttpStatus.OK).body(result);
+		
+	}
 //	jobAdDto.setCompanyUsername(jobAd.getCompany().getUsername());
 //	jobAdDto.setSector1(jobAd.getSector1());
 //	jobAdDto.setWantedTitle(jobAd.getWantedTitle());
