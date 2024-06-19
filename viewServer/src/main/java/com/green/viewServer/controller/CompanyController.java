@@ -1,5 +1,7 @@
 package com.green.viewServer.controller;
 
+
+import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
 
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.green.viewServer.dto.AgeCalculator;
 import com.green.viewServer.entity.Company;
 import com.green.viewServer.repository.CompanyRepository;
 
@@ -22,6 +25,13 @@ public class CompanyController {
 
 	@Autowired
 	private CompanyRepository companyRepository;
+	
+	
+	private AgeCalculator ageCalculator;
+	
+	public CompanyController(AgeCalculator ageCalculator) {
+		this.ageCalculator = ageCalculator;
+	}
 	
 	
 	@RequestMapping("/")
@@ -142,5 +152,18 @@ public class CompanyController {
 		
 	}
 	
+	@RequestMapping("/resumeList")
+	public String resumeList() {
+		
+		
+		return "company/comResumeList";
+		
+	}
+	
+		
+	
+
+
+
 	
 }

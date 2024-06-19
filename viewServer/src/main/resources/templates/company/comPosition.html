@@ -6,30 +6,71 @@
 <script src="https://code.jquery.com/jquery-3.7.1.js"
 	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
 	crossorigin="anonymous"></script>
+<style>
+	/* 초기에 제안 폼을 숨기는 코드 */
+	#suggestion-form {
+		display : none;
+	}
+</style>
+
+
 </head>
 <body>
-	<h1>포지션 매칭 리스트</h1>
-	<hr>
-	
-	<input type="hidden" name="username">
-	<table border="1">
-		<thead>
-			<tr>
-				<th>이름</th>
-				<th>이력서 제목</th>
-				<th>포지션 제안</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td></td>
-				<td></td>
-				<td><button type="button" value="포지션 제안하기" onclick="goPositionDetail()"></button></td>
-			<tr>
-		</tbody>
-	</table>
-	
-	
+
+	<div id="matching-list">
+		<h1>포지션 매칭 리스트</h1>
+		<hr>
+
+		<input type="hidden" name="username">
+		<table border="1">
+			<thead>
+				<tr>
+					<th>이름</th>
+					<th>이력서 제목</th>
+					<th>포지션 제안</th>
+				</tr>
+			</thead>
+			<tbody id="position-list">
+			</tbody>
+		</table>
+	</div>
+
+	<div id="suggestion-form">
+		<h1>포지션 제안 폼</h1>
+		<hr>
+		<div id="user-info">
+			<ul>
+				<li><strong>포지션 제안</strong></li>
+				<li id="cname"></li>
+				<li>지원자정보</li>
+
+				<li>이름 :</li>
+				<li id="cname2"></li>
+				<li>성별 :</li>
+				<li id="gender"></li>
+				<li>나이 :</li>
+				<li id="age"></li>
+				<li>희망 근무지역 :</li>
+				<li id="region"></li>
+				<li>희망 업종 :</li>
+				<li id="sectors"></li>
+				<li>희망 직무 :</li>
+				<li id="job"></li>
+			</ul>
+		</div>
+		<div id="suggestion form">
+			<form>
+				<input type="hidden" class="username" name="username" id="username"
+					required="required"> 제안 제목 <input type="text"
+					name="offertitle" id="offertitle" placeholder="내용을 입력해주세요.">
+				제안 내용
+				<textarea name="offerinfo" id="offerinfo" placeholder="내용을 입력해주세요."
+					required="required"></textarea>
+				<input type="button" value="포지션 제안하기" onclick="suggestOffer()">
+			</form>
+		</div>
+	</div>
+
 	<script>
 	document.addEventListener('DOMContentLoaded', (event) => {
 	    // localstorage에서 username 가져오기 (지금은 세션에 없으니까 주석처리) 나중에 세션에서 가져오는 걸로 수정하기
@@ -51,9 +92,32 @@
 	            console.log(response);
 	            
 	            response.forEach(function(resume2) {
-	                console.log(resume2.user.uname);
-	                console.log(resume2.rtitle);
-	                //resume2.user.username input hidden에 넣기
+	               	
+	            	// 새로운 행 tr 생성
+	            	let newRow = $('<tr>');
+	            	
+	            	// 이름 셀 td 추가
+	            	let nameCell = $('<td>').text(resume2.user.uname);
+	            	newRow.append(nameCell);
+	            	
+	            	// 이력서 제목 셀 td 추가
+	            	let titleCell = $('<td>').text(resume2.rtitle);
+	            	newRow.append(titleCell);
+	            	
+	            	// 포지션 제안 버튼 셀 td 추가
+	            	let buttonCell = $('<td>');
+	            	let button = $('<button type="button">').text('포지션 제안하기');
+	            	button.on('click', function(){
+	            		goPositionDetail(resume2.user, resume2);
+	            		//console.log(resume2.user.username);
+	            	});
+	            	buttonCell.append(button);
+	            	newRow.append(buttonCell);
+	            	
+	            	// 테이블에 행 추가
+	            	$('#position-list').append(newRow);
+	            	
+	                //resume2.user.username input hidden에 넣기?
 	                
 	            }); // forEach 괄호 추가
 	            
@@ -65,12 +129,96 @@
 	});
 	
 	
-	function goPositionDetail(){
+	function goPositionDetail(user, resume2){
 		
 		// 페이지 이동 코드 넣기
 		// 이동할때 username 들고가기
 		// 파라미터
 		// 컨트롤러에서 model에 넣어서 전달하기
+		alert(resume2.user.username + "의 포지션 제안 페이지로 이동합니다.");
+		
+	
+		// resume2의 데이터를 가져와서 각 li 태그에 넣기
+		$('#cname').text(resume2.user.uname);
+		$('#cname2').text(resume2.user.uname);
+		
+		if(resume2.user.gender === "1") { // 
+			
+			$('#gender').text("남성");
+			
+			
+		} else if (resume2.user.gender === "0"){
+			
+			$('#gender').text("여성");
+			
+		}
+		
+		// 생년월일을 나이로 변환하여 표시
+		
+		const birthDate = new Date(resume2.user.birthDate);
+		const today = new Date();
+		
+		let age = today.getFullYear() - birthDate.getFullYear();
+		const monthDifference = today.getMonth() - birthDate.getMonth();
+		if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+	        age--;
+	    }
+	    $('#age').text(age);
+	    
+	    // region1, region2, region3 을 쉼표로 구분하여 출력
+	    const regions = [resume2.region1, resume2.region2, resume2.region3].filter(Boolean).join(', ');
+		$('#region').text(regions);
+		$('#sectors').text(resume2.sectors);
+		$('#job').text(resume2.job);
+		
+		$('#username').val(resume2.user.username);
+		
+		// 제안 폼이 보이도록 설정
+		$("#matching-list").hide();
+		$("#suggestion-form").show();
+	}
+	
+	// 포지션 제안하기
+	function suggestOffer(){
+		
+		const title = document.getElementById("offertitle").value;
+		const content = document.getElementById("offerinfo").value;
+		const username = document.getElementById("username").value;
+		const companyUsername = localStorage.getItem('username');
+
+		const offerList = {
+				
+				title :  title,
+				content : content,
+				user : username
+	
+		};
+		
+		console.log("offerList..... " + offerList);
+		
+		  $.ajax({
+		        method : "POST",
+		        url : "http://localhost:9002/com/jobOffer",
+		        contentType : "application/json",
+		        headers: {
+		        	
+		            "Username": companyUsername
+		        },
+		        
+		        data : JSON.stringify(offerList),
+		        
+		        success: function(response) {
+		        	alert(response);
+		            console.log(response);
+		            
+		            // 제안이 성공하면 다시 포지션 매칭 리스트만 보이도록 설정
+		            $("#suggestion-form").hide();
+		            $("#matching-list").show();
+		        },
+		        error : function(error){
+		        	console.log("Error: ", error);
+		        }
+		  });
 		
 	}
 	</script>

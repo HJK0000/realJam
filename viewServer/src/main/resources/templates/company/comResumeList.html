@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>포지션 매칭 페이지</title>
+<script src="https://code.jquery.com/jquery-3.7.1.js"
+	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+	crossorigin="anonymous"></script>
+</head>
+<body>
+
+	<h1>지원받은 이력서 조회</h1>
+	<hr>
+
+	<table border="1">
+		<thead>
+			<tr>
+				<th>채용공고 제목</th>
+				<th>지원자 이름</th>
+				<th>이력서 제목</th>
+				<th>합격/불합격 버튼</th>
+				<th>최종 합격 여부</th>
+			</tr>
+		</thead>
+		<tbody id="resumeList">
+		</tbody>
+	</table>
+
+
+
+
+	<script>
+		document.addEventListener('DOMContentLoaded', (event) => {
+			
+			 // localstorage에서 username 가져오기 (지금은 세션에 없으니까 주석처리) 나중에 세션에서 가져오는 걸로 수정하기
+		    // let username = localStorage.getItem('username');
+		    let username1 = "com1"; // 여기에 실제 username 값을 설정. 실제로는 session에서 가져오기.
+		    localStorage.setItem('username', username1); // localStorage에 username저장
+		    
+		    let username = localStorage.getItem('username');
+		    
+		    console.log("로컬스토리지에서 얻어온 username = " + username);
+			
+			$.ajax({
+				type : "GET",
+				url : "http://localhost:9002/com/getResumeList",
+				headers : {
+					
+					"Username" : username
+					
+				},
+				success : function(response){
+					
+					console.log(response);
+					
+					response.forEach(function(applyList){
+						
+						
+						// 새로운 행 tr 생성
+						let newRow = $('<tr>');
+						
+						// 채용공고 제목 td 추가
+
+						let titleCell = $('<td>').text(applyList.jobAd.wantedTitle);
+						newRow.append(titleCell);
+						
+						// 지원자 이름 td 추가
+						let nameCell = $('<td>').text(applyList.user.uname);
+						newRow.append(nameCell);
+						
+						// 이력서 제목 td 추가
+						let rTitleCell = $('<td>').text(applyList.resume.rtitle);
+						newRow.append(rTitleCell);
+						
+						// 합격/불합격 버튼 td 추가
+						let buttonCell = $('<td>');
+						let button1 = $('<button type="button">').text('최종 합격');
+						let button2 = $('<button type="button">').text('최종 불합격');
+						button1.on('click', function(){
+							goToPutApplyList(applyList.ano);
+						});
+						button2.on('click', function(){
+							goToDeleteApplyList(applyList.ano);
+						});
+						buttonCell.append(button1, button2);
+						newRow.append(buttonCell);
+						
+						// 최종합격 여부 td 추가
+						
+						console.log(applyList.status);
+						
+						let statusText = "";
+										
+						if(applyList.status === 0){
+							statusText = "심사중";
+						} else if(applyList.status === 1){
+							statusText = "합격";
+						}
+						
+						let statusCell = $('<td>').text(statusText);
+						newRow.append(statusCell);
+						
+						// 테이블에 행 추가
+						$('#resumeList').append(newRow);
+							
+					}); // forEach 괄호 추가
+					
+				}, //success 함수 괄호
+				error : function(error){
+					console.error("에러 발생함.. ", error);
+				} //error 함수 괄호
+			});
+			
+			function goToPutApplyList(ano){
+				
+				// 필요한 것 : ajax코드, put, ano
+				console.log(ano);
+				
+				let comUsername = localStorage.getItem("username"); // 기업
+
+				if(confirm("진짜로 합격 처리하시겠습니까?")){
+					
+				// 확인을 클릭한 경우 PUT 요청 실행
+				
+				$.ajax({
+					
+					method : "PUT",
+					url : 'http://localhost:9002/com/applyList/' + ano,
+					headers : {
+						"Username" : comUsername
+						
+					},					
+					success : function(response){
+						
+						alert(response);
+						location.reload(); 
+					},
+					error : function(error){
+						
+						console.error("Error : ", error);
+						
+					}
+					
+				});
+				} else {
+					// 취소를 클릭한 경우 아무 작업도 하지 않음
+					 console.log("최종 합격 보류")
+					
+				}
+			}
+			
+			function goToDeleteApplyList(ano){
+				
+				//필요한 것 : ajax코드, delete, ano
+				console.log(ano);
+				
+				let username = localStorage.getItem('username');
+			
+				console.log(username);
+
+				// 사용자에게 확인 메시지 표시
+				if(confirm("진짜로 불합격 처리하시겠습니까? 불합격 처리를 할 경우 지원받은 이력서 목록에서 삭제됩니다.")){
+				// 확인을 클릭한 경우 DELETE 요청 실행
+
+				
+				$.ajax({
+					
+					url : 'http://localhost:9002/com/applyList/' + ano + "/" + username ,
+					method : "DELETE",
+					
+					headers : {
+						"Username" : username
+					},
+					
+					success : function(response){
+						alert(response);
+						location.reload(); // 페이지 새로고침하여 최신 데이터 반영
+					},
+					error : function(error){
+						
+						console.error("합격 처리 중 에러 발생: ", error);
+						alert("합격 처리 중 에러 발생");
+					}
+							
+							
+				});
+			} else {
+				// 취소를 클릭한 경우 아무 작업도 하지 않음
+				console.log("불합격 처리 보류");
+				
+			}
+			
+			
+			}
+			
+			
+		});		
+	</script>
+</body>
+</html>

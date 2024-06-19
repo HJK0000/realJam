@@ -38,6 +38,7 @@ import com.green.restServer.repository.OfferListRepository;
 import com.green.restServer.repository.Resume2Repository;
 import com.green.restServer.repository.UserRepository;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -371,6 +372,33 @@ public class CompanyRestController {
 		
 		return ResponseEntity.status(HttpStatus.OK).body(result);
 		
+	}
+	
+	@PutMapping("/applyList/{ano}")
+	public ResponseEntity<?> goToPutApplyList(@PathVariable("ano") Long ano, @RequestHeader("Username") String username, HttpServletResponse response) throws IOException {
+		
+		System.out.println("goToPutApplyList..............");
+		
+		System.out.println("url로 가져온 ano" + ano);
+		System.out.println("헤더의 username" + username);
+		
+		applyListRepository.updateApplyListStatusToAccepted(ano);
+		
+		
+		return ResponseEntity.status(HttpStatus.OK).body("최종합격 처리가 완료되었습니다.");
+	}
+	
+	@DeleteMapping("/applyList/{ano}/{username}")
+	public ResponseEntity<?> goToDeleteApplyList(@PathVariable("ano") Long ano, @PathVariable("username") String username , @RequestHeader("Username") String comUsername, HttpServletResponse response) throws IOException{
+		
+		
+		System.out.println("goToDeleteApplyList..............");
+		System.out.println("ano :" + ano);
+		System.out.println("username" + username);
+		
+		applyListRepository.deleteById(ano);
+		
+		return ResponseEntity.status(HttpStatus.OK).body("최종 불합격 처리가 완료되었습니다.");
 	}
 //	jobAdDto.setCompanyUsername(jobAd.getCompany().getUsername());
 //	jobAdDto.setSector1(jobAd.getSector1());
