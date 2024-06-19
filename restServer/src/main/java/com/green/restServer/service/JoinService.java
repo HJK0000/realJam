@@ -81,7 +81,7 @@ public class JoinService {
 		data2.setSize(companyDto.getSize());
 		data2.setMajor(companyDto.getMajor());
 		data2.setYrSales(companyDto.getYrSales());
-		data2.setCRole("ROLE_MEMBER");
+		data2.setCRole("ROLE_COMPANY");
 		
 		companyRepository.save(data2);
 		

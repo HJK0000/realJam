@@ -79,9 +79,11 @@
 				localStorage.setItem("role", role);
 				
 				if(role == 'ROLE_ADMIN'){
-					location.href = "/admin/dashBoard"
-				}else{
-					location.href = "/main"
+					location.href = "/admin/dashBoard";
+				}else if(role == 'ROLE_MEMBER'){
+					location.href = "/user/usermain";
+				}else if(role == 'ROLE_COMPANY'){
+					location.href = "/com/myPage";
 				}
 				
 			},
@@ -100,7 +102,7 @@
 		
 		$.ajax({
 			type: "POST",
-			url: "http://localhost:9002/comlogin",
+			url: "http://localhost:9002/comLogin",
 			contentType: "application/x-www-form-urlencoded",
 			data: formData2,
 			dataType: "text", // 서버가 보내주는 데이터의 타입
@@ -114,8 +116,10 @@
 				
 				if(role == 'ROLE_ADMIN'){
 					location.href = "/admin/dashBoard"
-				}else{
-					location.href = "/main"
+				}else if(role == 'ROLE_MEMBER'){
+					location.href = "/user/usermain";
+				}else if(role == 'ROLE_COMPANY'){
+					location.href = "/com/myPage";
 				}
 				
 			},
