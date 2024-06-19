@@ -74,8 +74,8 @@ public class CompanyRestController {
 		this.applyListRepository = applyListRepository;
 	}
 
-	@GetMapping("/getCompanyInfo")
-	public ResponseEntity<?> getCompanyInfo(@RequestHeader("username") String username, HttpServletResponse response)
+	@GetMapping("/getCompanyInfo/{username}")
+	public ResponseEntity<?> getCompanyInfo(@PathVariable("username")String username, HttpServletResponse response)
 			throws IOException {
 
 		System.out.println("Received Username: " + username);

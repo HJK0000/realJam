@@ -44,23 +44,7 @@ public class CompanyController {
 	
 	
 	@RequestMapping("/myPage")
-	public String myPage(@RequestParam("username") String username, @RequestParam("cname") String cname, @RequestParam("ceo") String ceo, @RequestParam("caddr") String caddr,
-			@RequestParam("cnum") String cnum, @RequestParam("employees") int employees, @RequestParam("logo") String logo,
-			@RequestParam("major") String major, @RequestParam("sector") String sector, @RequestParam("size") String size,
-			@RequestParam("yrSales") String yrSales, Model model, HttpSession session) {
-
-		model.addAttribute("cname", cname);
-		model.addAttribute("ceo", ceo);
-		model.addAttribute("caddr", caddr);
-		model.addAttribute("cnum", cnum);
-		model.addAttribute("employees", employees);
-		model.addAttribute("logo", logo);
-		model.addAttribute("major", major);
-		model.addAttribute("sector", sector);
-		model.addAttribute("size", size);
-		model.addAttribute("yrSales", yrSales);
-
-		session.setAttribute("username", username);
+	public String myPage() {
 		
 		return "company/comMypage";
 	}
