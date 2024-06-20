@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" th:href="@{/css/nav_styles.css}">
+<link rel="stylesheet" th:href="@{/css/user_sidebar.css}">
+<script src="/js/user_nav.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 <style>
 	#rlist2{
@@ -10,20 +13,34 @@
 		flex-wrap: wrap;
 		list-style: none;
 		padding: 0;
+		
+		border-top: 1px solid #ccc;
+		border-bottom: 1px solid #ccc;
+		padding: 10px 0;
 	}
 	#rlist2 li{
 		margin-right: 20px;
 	}
+	
 </style>
 </head>
 <body>
-<h2>이력서 목록</h2>
-<hr>
-	<div id="rlist">
-		<!-- <ul id="rlist"> -->
-			
-		<!-- </ul> -->
+<div th:replace="~{fragments/user_nav :: fragment-nav}"></div>
+<div class="container" id="container">
+	<div id="sidebar">
+		<div th:replace="~{fragments/user_sidebar :: fragment-sidebar}"></div>
 	</div>
+	<div class="content">
+		<h2>이력서 목록</h2>
+		<hr>
+			<div id="rlist">
+				<!-- <ul id="rlist"> -->
+					
+				<!-- </ul> -->
+			</div>
+	</div>
+</div>
+
 </body>
 <script>
 	$(document).ready(function(){
@@ -37,6 +54,7 @@
 				rlist.empty();
 				response.forEach(function(list){
 					const listItem = `
+					
 						<ul id="rlist2">
 						<li>
 							<label for="rnum">번호:</label>
@@ -55,6 +73,7 @@
 							<input type="button" onclick="deleteResume(${list.rno})" value="삭제하기">
 						</li>
 						</ul>
+			
 					`;
 					rlist.append(listItem);
 				});

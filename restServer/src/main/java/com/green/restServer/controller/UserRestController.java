@@ -61,6 +61,16 @@ public class UserRestController {
 		return u;
 	}
 	
+	@PutMapping("/info/{username}")
+	public User modiInfo(@PathVariable("username")String username,@RequestBody User user) {
+		System.out.println("*******user정보: " + user);
+		
+		User u = userRepo.save(user);
+		
+		System.out.println(u);
+		return u;
+	}
+	
 	@PostMapping("/grad/{username}")
 	public void postSchool(@PathVariable("username") String username, @RequestBody List<School> schools) {
 		User user = userRepo.findByUserName(username);
@@ -223,6 +233,14 @@ public class UserRestController {
 		
 		offerListRepo.save(offerlist);
 		
+	}
+	
+	@DeleteMapping("/offerlist/{ono}")
+	public String deleteOffer(@PathVariable("ono") Long ono) {
+		System.out.println(ono);
+		offerListRepo.deleteById(ono);
+		
+		return "삭제성공";
 	}
 	
 	@Autowired

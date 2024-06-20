@@ -1,0 +1,63 @@
+@charset "UTF-8";
+
+/* 전체 컨테이너를 flex 컨테이너로 설정 */
+#container {
+    display: flex;
+    height: 100vh;
+}
+
+/* 사이드바 스타일 */
+#sidebar {
+    flex: 0 0 250px; /* 고정 너비 */
+    background-color: #f0f0f5; /* 배경색 */
+    color: #333; /* 텍스트 색상 */
+    padding: 20px;
+    box-sizing: border-box; /* 패딩을 포함하여 너비 계산 */
+    overflow-y: auto; /* 스크롤 가능하도록 설정 */
+    font-family: 'Noto Sans KR', sans-serif; /* 한글 웹폰트 적용 */
+}
+
+.sidebar-menu h3 {
+    color: #2962FF; /* 파란색 제목 */
+    margin-bottom: 10px;
+    font-size: 18px; /* 제목 폰트 크기 조정 */
+}
+
+.sidebar-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-menu li {
+    margin-bottom: 5px;
+}
+
+.sidebar-menu a {
+    font-size: 15px; /* 링크 폰트 크기 조정 */
+    display: block;
+    padding: 10px 15px;
+    color: #333;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.sidebar-menu a:hover {
+    background-color: #e0e0e5; /* 호버 효과 */
+}
+
+.sidebar-menu a.active { /* 현재 페이지 활성화 스타일 */
+    background-color: #2962FF;
+    color: white;
+}
+
+/* 컨텐츠 영역 스타일 */
+.content {
+    flex: 1;
+    padding: 20px;
+    background-color: #fff;
+    height: 100vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+}

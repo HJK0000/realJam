@@ -4,15 +4,33 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<link rel="stylesheet" th:href="@{/css/nav_styles.css}">
+<link rel="stylesheet" th:href="@{/css/user_sidebar.css}">
+<script src="/js/user_nav.js"></script>
+<style>
+	.Ad{
+		border-top: 1px solid #ccc;
+		border-bottom: 1px solid #ccc;
+		padding: 10px 0;
+	}
+</style>
 </head>
 <body>
-<h2>채용공고 목록</h2>
-<div id="jobList" class="jobList">
-	
+<div th:replace="~{fragments/user_nav :: fragment-nav}"></div>
+<div class="container" id="container">
+	<div id="sidebar">
+		<div th:replace="~{fragments/user_sidebar :: fragment-sidebar}"></div>
+	</div>
+		<div class="content">
+			<h2>채용공고 목록</h2>
+			<div id="jobList" class="jobList">
+				
+			</div>
+			<div id="pagination" class="pagination">
+			</div>
+	</div>
 </div>
-<div id="pagination" class="pagination">
-	
-</div>
+
 
 <script>
 	$(document).ready(function(){
