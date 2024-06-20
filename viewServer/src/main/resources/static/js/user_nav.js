@@ -21,8 +21,10 @@ $(document).ready(function(){
             loginButton.attr('href','/loginForm'); // 로그인 링크 설정
         }
         
-        const username = localStorage.getItem("username");
-   			
+        $("#userinfo").text("(" + loggedInUser + ")" + "님 안녕하세요.");
+        //userinfo.text("(" + loggedInUser + ")" + "님 안녕하세요.");
+        //const username = localStorage.getItem("username");
+   			/*
    			$.ajax({
    				url: 'http://localhost:9002/user/mypage/' + username,
    				method: 'GET',
@@ -35,10 +37,23 @@ $(document).ready(function(){
    					console.error("Error: ", error);
    				}
    			});
+   			*/
     });
     
     function goMypage(){
 		 const username = localStorage.getItem("username");
-		 
-		 
+		 /*
+		 $.ajax({
+   				url: 'http://localhost:9002/user/mypage/' + username,
+   				method: 'GET',
+   				success: function(response){
+   					localStorage.setItem('userData', JSON.stringify(response));
+   					
+   					$("#userinfo").text("(" + response.uname + ")" + "님 안녕하세요.");
+   				},
+   				error: function(error){
+   					console.error("Error: ", error);
+   				}
+   			});
+   			*/
 	}

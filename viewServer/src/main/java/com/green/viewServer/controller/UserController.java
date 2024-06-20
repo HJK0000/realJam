@@ -15,6 +15,11 @@ public class UserController {
 		return "user/mypage";
 	}
 	
+	@RequestMapping("/moduserinfo")
+	public String modUserInfoP() {
+		return "user/modUserInfo";
+	}
+	
 	@RequestMapping("/usermain")
 	public String usermain() {
 		return "usermain";

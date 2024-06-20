@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+</head>
+<body>
+<h2>개인정보 수정</h2>
+<hr>
+<div class="form-container" id="user-form">
+		<form id="regForm1">
+			<input type="text" name="username" placeholder=" 아이디*">
+			<input type="button" name="dup-check" value="중복체크" onclick="loadDoc1()"><br>
+			<input type="text" name="password" placeholder=" 비밀번호*"><br>
+			<input type="text" name="uname" placeholder=" 이름*"><br>
+			<input type="radio" name="gender" value="0">남성
+			<input type="radio" name="gender" value="1">여성<br>
+			<input type="date" name="birthDate"><br>
+			<input type="text" name="email" placeholder=" 이메일*"><br>
+			<input type="text" name="tel" placeholder=" 전화번호*"><br>
+			<input type="text" name="uaddr" placeholder=" 현 거주지*"><br><br>
+			<input type="file" name="originName" id="image"><br><br>
+			<label for="image" style="background-color: #007bff; color: white; padding: 8px 12px; cursor: pointer; border-radius: 4px;">사진 선택</label>
+			
+			<input type="button" value="수정하기" onclick="modiForm()">
+		</form>
+	</div>
+
+<script>
+	
+	$(document).ready(function(){
+		const username = localStorage.getItem("username");
+		
+		$.ajax({
+			url: "http://localhost:9002/user/mypage/" +  username,
+			method: "GET",
+			success: function(response){
+				document.querySelector("input[name='username']").value = response.username;
+				document.querySelector("input[name='password']").value = response.password;
+				document.querySelector("input[name='uname']").value = response.uname;
+				$("#gender").text(response.gender === 0 ? '남자' : '여자');
+				$("input[name='tel']").val(response.tel);
+				$("input[name='birthDate']").val(response.birthDate);
+				$("input[name='email']").val(response.email);
+				$("input[name='uaddr']").val(response.uaddr);
+				
+				 $("input[name='gender'][value='" + response.gender + "']").prop("checked", true);
+			},
+			error: function(error){
+				console.log("Error: ", error);
+			}
+		});
+	});
+	
+	function modiForm(){
+		const username = localStorage.getItem("username");
+		const role = localStorage.getItem("role");
+		
+		let uname = document.querySelector("input[name='uname']").value;
+		let birth_date = document.querySelector("input[name='birthDate']").value;
+		let email = document.querySelector("input[name='email']").value;
+		let gender = document.querySelector("input[name='gender']").value;
+		let tel = document.querySelector("input[name='tel']").value;
+		let uaddr = document.querySelector("input[name='uaddr']").value;
+		let password = document.querySelector("input[name='password']").value;
+		
+		const userInfo = {
+				username : username,
+				password : password,
+				uname : uname,
+				email : email,
+				birthDate : birth_date,
+				uaddr : uaddr,
+				gender : gender,
+				tel : tel,
+				role: role
+		}
+		
+		console.log(JSON.stringify(userInfo));
+		
+		
+		$.ajax({
+			url:"http://localhost:9002/user/info/"+username,
+			method: "PUT",
+			contentType: "application/json",
+			data: JSON.stringify(userInfo),
+			success: function(response){
+				alert("개인정보가 수정되었습니다.");
+				window.location.href="/user/mypage";
+			},
+			error: function(error){
+				console.log("Error: ", error);
+			}
+		});
+		
+	}
+</script>
+</body>
+</html>

@@ -4,9 +4,18 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<link rel="stylesheet" th:href="@{/css/nav_styles.css}">
+<link rel="stylesheet" th:href="@{/css/user_sidebar.css}">
+<script src="/js/user_nav.js"></script>
 </head>
 <body>
-<h1>이력서 등록 폼</h1>
+<div th:replace="~{fragments/user_nav :: fragment-nav}"></div>
+<div class="container" id="container">
+	<div id="sidebar">
+		<div th:replace="~{fragments/user_sidebar :: fragment-sidebar}"></div>
+	</div>
+	<div class="content">
+		<h2>이력서 등록 폼</h2>
 <hr>
 <div id="resume2">
 	<form id="frm" name="frm">
@@ -94,8 +103,20 @@
 				<input type="text" id="status" name="status">
 			</li>
 			<li>
-				<label for="type">업종</label>
-				<input type="text" id="type" name="type">
+				<label for="sectors">업종</label> <select id="sectors"
+					name="sectors">
+					<option value="">선택</option>
+					<option value="서비스업">서비스업</option>
+					<option value="제조·화학">제조·화학</option>
+					<option value="IT·웹·통신">IT·웹·통신</option>
+					<option value="은행·금융업">은행·금융업</option>
+					<option value="미디어·디자인">미디어·디자인</option>
+					<option value="교육업">교육업</option>
+					<option value="의료·제약·복지">의료·제약·복지</option>
+					<option value="판매·유통">판매·유통</option>
+					<option value="건설업">건설업</option>
+					<option value="기관·협회">기관·협회</option>
+				</select>
 			</li>
 			<li>
 				<label for="position">직무</label>
@@ -210,9 +231,11 @@
 			
 		</ul>
 	<input type="button" onclick="regResume()" value="이력서저장">
-	<input type="button" onclick="regResume2()" value="이력서저장2">
 	</form>
 </div>
+	</div>
+</div> 
+
 
 <script>
 	let hasAddedRow = false;
