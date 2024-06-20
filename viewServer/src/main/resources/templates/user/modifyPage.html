@@ -241,7 +241,7 @@
 
 <script>
 const rno = "[[${rno}]]";
-const username = "aaaa";
+const username = localStorage.getItem("username");
 //학력항목 추가
 document.getElementById('addRowButton').addEventListener('click',function(){
 	if (!hasAddedRow){
@@ -432,7 +432,7 @@ $(document).ready(function(){
 });
 
 function regResume(){
-	const username = "aaaa";
+	const username = localStorage.getItem("username");
 	
 	
 	const uname = document.getElementById("uname") ? document.getElementById("uname").value : null;
