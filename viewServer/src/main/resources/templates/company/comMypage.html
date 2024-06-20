@@ -63,14 +63,14 @@
 				url: 'http://localhost:9002/com/getCompanyInfo/'+ username,
 				method: 'GET',
 				success: function(response){
-					$('#cname').text('기업명: ' + response.cname);
-					$('#ceo').text('대표자 명: ' + response.ceo);
-					$('#caddr').text('회사주소: ' + response.caddr);
-					$('#employees').text('사원 수: ' + response.employees);
-					$('#size').text('기업규모: ' + response.size);
-					$('#major').text('주요사업: ' + response.major);
-					$('#yrSales').text('연매출액: ' + response.yrSales);
-					$('#sector').text('업종: ' + response.sector);
+					$('#cname').text(response.cname);
+					$('#ceo').text(response.ceo);
+					$('#caddr').text(response.caddr);
+					$('#employees').text(response.employees);
+					$('#size').text(response.size);
+					$('#major').text(response.major);
+					$('#yrSales').text(response.yrSales);
+					$('#sector').text(response.sector);
 				},
 				error: function(error){
 					console.log("Error: " + error);
@@ -84,27 +84,28 @@
 			event.preventDefault();
 			alert("기업 정보 수정페이지로 이동합니다");
 
-			$
-					.ajax({
-						type : "GET",
-						url : "http://localhost:9002/com/getCompanyInfo",
-						headers : {
-
-							"Username" : username
-						},
-						
-						success : function(data) {
-							
-							console.log("데이터 조회 성공:", data);
+//			const username = localStorage.getItem('username');
+//					
+//				$.ajax({
+//						type : "GET",
+//						url : "http://localhost:9002/com/getCompanyInfo/" + username,
+//						headers : {
+//
+//							"Username" : username
+//						},
+//						
+//						success : function(data) {
+//							
+//							console.log("데이터 조회 성공:", data);
 							
 							window.location.href = 'http://localhost:8094/com/toCompanyUpdate';
 						
-						},
-						error : function(xhr, status, error) {
-							console.log("에러 발생:", error);
-							// 에러 발생시 처리할 내용을 추가할 수 있습니다.
-						}
-					});
+//						},
+//						error : function(xhr, status, error) {
+//							console.log("에러 발생:", error);
+//							// 에러 발생시 처리할 내용을 추가할 수 있습니다.
+//						}
+//					});
 		}
 	</script>
 </body>

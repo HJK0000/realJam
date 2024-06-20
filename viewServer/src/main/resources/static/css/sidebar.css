@@ -1,10 +1,11 @@
-/* sidebar.css */
-.container{
-	display: flex;
+/* 전체 컨테이너를 flex 컨테이너로 설정 */
+#container {
+    display: flex;
 }
 
-aside {
-    width: 250px; /* 사이드바 너비 */
+/* 사이드바 스타일 */
+#sidebar {
+    flex: 0 0 250px; /* 고정 너비 */
     background-color: #f0f0f5; /* 배경색 */
     color: #333; /* 텍스트 색상 */
     padding: 20px;
@@ -30,7 +31,7 @@ aside {
 }
 
 .sidebar-menu a {
-	font-size: 15px; /* 링크 폰트 크기 조정 */
+    font-size: 15px; /* 링크 폰트 크기 조정 */
     display: block;
     padding: 10px 15px;
     color: #333;
@@ -46,4 +47,14 @@ aside {
 .sidebar-menu a.active { /* 현재 페이지 활성화 스타일 */
     background-color: #2962FF;
     color: white;
+}
+
+/* 컨텐츠 영역 스타일 */
+.content {
+    flex: 1;
+    padding: 20px;
+    background-color: #fff;
+    height: 100vh;
+    overflow-y: auto;
+    box-sizing: border-box;
 }

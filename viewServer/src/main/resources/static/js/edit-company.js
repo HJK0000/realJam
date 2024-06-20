@@ -6,9 +6,9 @@ document.addEventListener('DOMContentLoaded', function() {
 	// 기업 정보 수정 페이지가 로드되면 이 함수가 바로 실행됨
 
 	// REST API 서버의 엔드포인트 URL
-	const apiUrl = 'http://localhost:9002/com/getCompanyInfo';
+
 	const username = localStorage.getItem('username'); 
-	
+	const apiUrl = 'http://localhost:9002/com/getCompanyInfo/' + username;
 	console.log(username);
 	// Ajax get 요청
 	$.ajax({
@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		}, 
 		success: function(response) {
 			const obj = response;
+			console.log("obj = " + obj);
 			$("input[name='username'] ").val(obj.username);
 			$("input[name='password'] ").val(obj.password);
 			$("input[name='cname'] ").val(obj.cname);
