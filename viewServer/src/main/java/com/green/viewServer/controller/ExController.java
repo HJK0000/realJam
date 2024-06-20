@@ -6,10 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class ExController {
 	
-	@RequestMapping("/")
-	public String root() {
-		return "usermain";
-	}
+	
 	
 
 }
