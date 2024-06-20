@@ -105,9 +105,9 @@ public class UserRestController {
 	Resume2Repository resume2Repo; 
 	
 	//이력서 등록 
-	@PostMapping("/resume")
-	public int postResume(@RequestBody Resume2 resume, HttpServletRequest request) {
-		String username = "aaaa"; //하드코딩
+	@PostMapping("/resume/{username}")
+	public int postResume(@RequestBody Resume2 resume, HttpServletRequest request,@PathVariable("username")String username) {
+		System.out.println("*******************요청아이디: " + username);
 		
 		Optional<User> result = userRepo.findById(username);
 		User u = result.get();
