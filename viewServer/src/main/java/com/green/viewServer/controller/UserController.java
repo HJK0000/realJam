@@ -32,7 +32,7 @@ public class UserController {
 	
 	
 	@RequestMapping("/resumeList")
-	public String resumeList(@RequestParam("username")String username) {
+	public String resumeList() {
 		return "user/resumeList";
 	}
 	
