@@ -4,203 +4,240 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<link rel="stylesheet" th:href="@{/css/nav_styles.css}">
+<link rel="stylesheet" th:href="@{/css/user_sidebar.css}">
+<script src="/js/user_nav.js"></script>
 </head>
 <body>
-<h1>이력서 수정 페이지</h1>
-<hr>
-<div id="resume2">
-	<form id="frm" name="frm">
-		<ul id="formList">
-			
-			<li>
-				<p id="uname"></p>
-			</li>
-			<li>
-				<p id="gender"></p>
-			</li>
-			<li>
-				<p id="birth_date"></p>
-			</li>
-			<li>
-				<p id="email"></p>
-			</li>
-			<li>
-				<p id="tel"></p>
-			</li>
-			<li>
-				<p id="uaddr"></p>
-			</li>
-			<li>
-				<label for="portfolioUrl">포트폴리오</label>
-				<input type="file" id="portfolioUrl" name="portfolioUrl">
-			</li>
-			
-			<hr><!-- 희망근무조건 -->
-			<h3>희망근무조건</h3>
-			<li>
-				<label for="region1">희망근무지1</label>
-				<input type="text" id="region1" name="region1">
-			</li>
-			<li>
-				<label for="region2">희망근무지2</label>
-				<input type="text" id="region2" name="region2">
-			</li>
-			<li>
-				<label for="region3">희망근무지3</label>
-				<input type="text" id="region3" name="region3">
-			</li>
-			<li>
-				<label for="sectors">희망업종</label>
-				<input type="text" id="sectors" name="sectors">
-			</li>
-			<li>
-				<label for="job">희망직무</label>
-				<input type="text" id="job" name="job">
-			</li>
-			
-			<hr><!-- 경력사항 -->
-			<h3>경력사항</h3>
-			<li>
-				<label for="startDate">입사일</label>
-				<input type="text" id="startDate" name="startDate">
-			</li>
-			<li>
-				<label for="endDate">퇴사일</label>
-				<input type="text" id="endDate" name="endDate">
-			</li>
-			<li>
-				<label for="cName">회사명</label>
-				<input type="text" id="cName" name="cName">
-			</li>
-			
-			<li>
-				<label for="rank">직급</label>
-				<input type="text" id="rank" name="rank">
-			</li>
-			<li>
-				<label for="status">상태</label>
-				<input type="text" id="status" name="status">
-			</li>
-			<li>
-				<label for="type">업종</label>
-				<input type="text" id="type" name="type">
-			</li>
-			<li>
-				<label for="position">직무</label>
-				<input type="text" id="position" name="position">
-			</li>
-			<li>
-				<label for="work">업무내용</label>
-				<input type="text" id="work" name="work">
-			</li>
-			
-			<hr><!-- 학력사항 -->
-			<h3>학력사항</h3>
-			<input type="button" value="학력추가" id="addRowButton">
-			<ul id="educationList">
-				<li>
-					<label for="accDate">입학일</label>
-					<input type="text" id="accDate" name="accDate">
-				</li>
-				<li>
-					<label for="gradDate">졸업일</label>
-					<input type="text" id="gradDate" name="gradDate">
-				</li>
-				<li>
-					<label for="eduName">학교명</label>
-					<input type="text" id="eduName" name="eduName">
-				</li>
-				<li>
-					<label for="major">전공</label>
-					<input type="text" id="major" name="major">
-				</li>
-				<li>
-					<label for="score">학점</label>
-					<input type="text" id="score" name="score">
-				</li>
-				<li>
-					<label for="schoolNow">학적상태</label>
-					<input type="text" id="schoolNow" name="schoolNow">
-				</li>
-			</ul>
-			
-			<!-- hr -->
-			
-			<h3>자격증</h3>
-			<input type="button" value="자격증추가" id="addlicenseButton">
-			<ul id="certificateList">
-				<li>
-					<label for="licensename">자격증명</label>
-					<input type="text" id="licensename" name="licensename">
-				</li>
-				<li>
-					<label for="given">발급기관</label>
-					<input type="text" id="given" name="given">
-				</li>
-				<li>
-					<label for="getDate">취득일</label>
-					<input type="text" id="getDate" name="getDate">
-				</li>
-			</ul>
-			
-			<h3>보유능력</h3>
-			<input type="button" value="보유능력추가" id="addOaButton">
-			<ul id="oaList">
-				<li>
-					<label for="oaType">능력명</label>
-					<input type="text" id="oaType" name="oaType">
-				</li>
-				<li>
-					<label for="content">내용</label>
-					<input type="text" id="content" name="content">
-				</li>
-			</ul>
-			
-			<h3>사회활동</h3>
-			<input type="button" value="활동 추가" id="addExButton">
-			<ul id="exList">
-				<li>
-					<label for="startDay">시작일</label>
-					<input type="date" id="startDay" name="startDay">
-				</li>
-				<li>
-					<label for="endDay">종료일</label>
-					<input type="date" id="endDay" name="endDay">
-				</li>
-				<li>
-					<label for="org">참여기관</label>
-					<input type="text" id="org" name="org">
-				</li>
-				<li>
-					<lable for="econtent">활동내용</lable>
-					<textarea name="econtent" id="econtent"></textarea>
-				</li>
-			</ul>
-			
-			<hr>
-			<li>
-				<label for="rtitle">이력서제목</label>
-				<input type="text" id="rtitle" name="rtitle">
-			</li>
-			<li>
-				<label for="selfinfo">자기소개서</label>
-				<textarea id="selfinfo" name="selfinfo"></textarea>
-			</li>
-			
-			<li>
-				<label for="def">대표이력서 설정</label>
-				<input type="text" id="def" name="def">
-			</li>
-			<li>
-				<label for="disclo">대표이력서 설정</label>
-				<input type="text" id="disclo" name="disclo">
-			</li>
-			
-		</ul>
-		<input type="hidden" name="rno" id="rno">
-	<input type="button" onclick="regResume()" value="이력서저장">
-	</form>
+<div th:replace="~{fragments/user_nav :: fragment-nav}"></div>
+<div class="container" id="container">
+	<div id="sidebar">
+		<div th:replace="~{fragments/user_sidebar :: fragment-sidebar}"></div>
+	</div>
+	<div class="content">
+		<h2>이력서 수정 페이지</h2>
+		<hr>
+		<div id="resume2">
+			<form id="frm" name="frm">
+				<ul id="formList">
+					
+					<li>
+						<p id="uname"></p>
+					</li>
+					<li>
+						<p id="gender"></p>
+					</li>
+					<li>
+						<p id="birth_date"></p>
+					</li>
+					<li>
+						<p id="email"></p>
+					</li>
+					<li>
+						<p id="tel"></p>
+					</li>
+					<li>
+						<p id="uaddr"></p>
+					</li>
+					<li>
+						<label for="portfolioUrl">포트폴리오</label>
+						<input type="file" id="portfolioUrl" name="portfolioUrl">
+					</li>
+					
+					<hr><!-- 희망근무조건 -->
+					<h3>희망근무조건</h3>
+					<li>
+						<label for="region1">희망근무지1</label>
+						<input type="text" id="region1" name="region1">
+					</li>
+					<li>
+						<label for="region2">희망근무지2</label>
+						<input type="text" id="region2" name="region2">
+					</li>
+					<li>
+						<label for="region3">희망근무지3</label>
+						<input type="text" id="region3" name="region3">
+					</li>
+					<li>
+						<label for="sectors">업종</label> <select id="sectors"
+							name="sectors">
+							<option value="">선택</option>
+							<option value="서비스업">서비스업</option>
+							<option value="제조·화학">제조·화학</option>
+							<option value="IT·웹·통신">IT·웹·통신</option>
+							<option value="은행·금융업">은행·금융업</option>
+							<option value="미디어·디자인">미디어·디자인</option>
+							<option value="교육업">교육업</option>
+							<option value="의료·제약·복지">의료·제약·복지</option>
+							<option value="판매·유통">판매·유통</option>
+							<option value="건설업">건설업</option>
+							<option value="기관·협회">기관·협회</option>
+						</select>
+					</li>
+					<li>
+						<label for="job">희망직무</label>
+						<input type="text" id="job" name="job">
+					</li>
+					
+					<hr><!-- 경력사항 -->
+					<h3>경력사항</h3>
+					<li>
+						<label for="startDate">입사일</label>
+						<input type="text" id="startDate" name="startDate">
+					</li>
+					<li>
+						<label for="endDate">퇴사일</label>
+						<input type="text" id="endDate" name="endDate">
+					</li>
+					<li>
+						<label for="cName">회사명</label>
+						<input type="text" id="cName" name="cName">
+					</li>
+					
+					<li>
+						<label for="rank">직급</label>
+						<input type="text" id="rank" name="rank">
+					</li>
+					<li>
+						<label for="status">상태</label>
+						<input type="text" id="status" name="status">
+					</li>
+					<li>
+						<label for="sectors">업종</label> <select id="sectors"
+							name="sectors">
+							<option value="">선택</option>
+							<option value="서비스업">서비스업</option>
+							<option value="제조·화학">제조·화학</option>
+							<option value="IT·웹·통신">IT·웹·통신</option>
+							<option value="은행·금융업">은행·금융업</option>
+							<option value="미디어·디자인">미디어·디자인</option>
+							<option value="교육업">교육업</option>
+							<option value="의료·제약·복지">의료·제약·복지</option>
+							<option value="판매·유통">판매·유통</option>
+							<option value="건설업">건설업</option>
+							<option value="기관·협회">기관·협회</option>
+						</select>
+					</li>
+					<li>
+						<label for="position">직무</label>
+						<input type="text" id="position" name="position">
+					</li>
+					<li>
+						<label for="work">업무내용</label>
+						<input type="text" id="work" name="work">
+					</li>
+					
+					<hr><!-- 학력사항 -->
+					<h3>학력사항</h3>
+					<input type="button" value="학력추가" id="addRowButton">
+					<ul id="educationList">
+						<li>
+							<label for="accDate">입학일</label>
+							<input type="text" id="accDate" name="accDate">
+						</li>
+						<li>
+							<label for="gradDate">졸업일</label>
+							<input type="text" id="gradDate" name="gradDate">
+						</li>
+						<li>
+							<label for="eduName">학교명</label>
+							<input type="text" id="eduName" name="eduName">
+						</li>
+						<li>
+							<label for="major">전공</label>
+							<input type="text" id="major" name="major">
+						</li>
+						<li>
+							<label for="score">학점</label>
+							<input type="text" id="score" name="score">
+						</li>
+						<li>
+							<label for="schoolNow">학적상태</label>
+							<input type="text" id="schoolNow" name="schoolNow">
+						</li>
+					</ul>
+					
+					<!-- hr -->
+					
+					<h3>자격증</h3>
+					<input type="button" value="자격증추가" id="addlicenseButton">
+					<ul id="certificateList">
+						<li>
+							<label for="licensename">자격증명</label>
+							<input type="text" id="licensename" name="licensename">
+						</li>
+						<li>
+							<label for="given">발급기관</label>
+							<input type="text" id="given" name="given">
+						</li>
+						<li>
+							<label for="getDate">취득일</label>
+							<input type="text" id="getDate" name="getDate">
+						</li>
+					</ul>
+					
+					<h3>보유능력</h3>
+					<input type="button" value="보유능력추가" id="addOaButton">
+					<ul id="oaList">
+						<li>
+							<label for="oaType">능력명</label>
+							<input type="text" id="oaType" name="oaType">
+						</li>
+						<li>
+							<label for="content">내용</label>
+							<input type="text" id="content" name="content">
+						</li>
+					</ul>
+					
+					<h3>사회활동</h3>
+					<input type="button" value="활동 추가" id="addExButton">
+					<ul id="exList">
+						<li>
+							<label for="startDay">시작일</label>
+							<input type="date" id="startDay" name="startDay">
+						</li>
+						<li>
+							<label for="endDay">종료일</label>
+							<input type="date" id="endDay" name="endDay">
+						</li>
+						<li>
+							<label for="org">참여기관</label>
+							<input type="text" id="org" name="org">
+						</li>
+						<li>
+							<lable for="econtent">활동내용</lable>
+							<textarea name="econtent" id="econtent"></textarea>
+						</li>
+					</ul>
+					
+					<hr>
+					<li>
+						<label for="rtitle">이력서제목</label>
+						<input type="text" id="rtitle" name="rtitle">
+					</li>
+					<li>
+						<label for="selfinfo">자기소개서</label>
+						<textarea id="selfinfo" name="selfinfo"></textarea>
+					</li>
+					
+					<li>
+						<label for="def">대표이력서 설정</label>
+						<input type="text" id="def" name="def">
+					</li>
+					<li>
+						<label for="disclo">이력서 공개설정</label>
+						<input type="text" id="disclo" name="disclo">
+					</li>
+					
+				</ul>
+				<input type="hidden" name="rno" id="rno">
+			<input type="button" onclick="regResume()" value="이력서수정">
+			</form>
+		</div>
+				
+			</div>
 </div>
+
 
 <script>
 const rno = "[[${rno}]]";
@@ -474,7 +511,7 @@ function regResume(){
 			job: job,
 			startDate: startDate,
 			endDate: endDate,
-			c_name: cName,
+			companyName: cName,
 			rank: rank,
 			status: status,
 			type: type,
@@ -515,6 +552,7 @@ function regResume(){
 		success: function(response){
 			console.log("success: ", response);
 			alert("이력서 변경 성공");
+			window.location.href="/user/resumeList";
 			
 		},
 		error: function(error){

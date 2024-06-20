@@ -7,6 +7,24 @@
 <link rel="stylesheet" th:href="@{/css/nav_styles.css}">
 <link rel="stylesheet" th:href="@{/css/user_sidebar.css}">
 <script src="/js/user_nav.js"></script>
+<style>
+	#userinfo{
+		
+	}
+	
+	#applyList2 {
+        border: 2px solid black; /* 검정색 테두리 */
+        width: 200px; /* 고정된 너비 */
+        height: 200px; /* 고정된 높이 */
+        display: flex; /* 유연한 상자 모델 */
+        justify-content: center; /* 가운데 정렬 */
+        align-items: center; /* 가운데 정렬 */
+    }
+
+    #applyList2 li {
+        list-style-type: none; /* 기본 목록 스타일 제거 */
+    }
+</style>
 </head>
 <body>
 <div th:replace="~{fragments/user_nav :: fragment-nav}"></div>
@@ -20,7 +38,7 @@
 		<h1>마이페이지</h1>  
 		<hr>
 		<div id="userinfo">
-			<span>개인정보</span> <button onclick="modifyinfo()">개인정보 수정</button>
+			<span style="font-size: 30px">개인정보</span> <button onclick="modifyinfo()">개인정보 수정</button>
 			<p id="username"></p>
 			<p id="uname"></p>
 			<p id="birth_date"></p>
@@ -30,7 +48,9 @@
 			<p id="uaddr"></p>
 			<input type="hidden" name="password">
 		</div>
-		<div id="applyList"></div>
+		<span style="font-size: 30px">지원한 회사</span>
+		<div id="applyList">
+		</div>
 	</div>
 </div>
 
@@ -49,7 +69,7 @@
 				$('#uname').text('name: ' + response.uname);
 				$('#birth_date').text('생년월일: ' + response.birthDate);
 				$('#email').text('이메일: ' + response.email);
-				$('#gender').text('성별: ' + (response.gender === 0 ? '남자' : '여자'));
+				$('#gender').text('성별: ' + (response.gender === 0 ? '여자' : '남자'));
 				$('#tel').text('전화번호: ' + response.tel);
 				$('#uaddr').text('주소: ' + response.uaddr);
 				$('input[name="password"]').val(response.password);
@@ -77,7 +97,6 @@
 					const listItem = `
 						<ul id="applyList2">
 							<li>
-							<h3>지원한 회사</h3>
 								<label for="company">회사명</label> : <span id="cName">${list.company.cname}</span><br>
 								<label for="jobad">채용공고 명</label> : <span id="wantedTitle">${list.jobAd.wantedTitle}</span><br>
 								<label for="status">상태</label> : <span id="status">${statusText}</span>

@@ -4,92 +4,115 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<link rel="stylesheet" th:href="@{/css/nav_styles.css}">
+<link rel="stylesheet" th:href="@{/css/user_sidebar.css}">
+<script src="/js/user_nav.js"></script>
+<style>
+	#work, #econtent,
+	#rtitle, #selfinfo{
+		width: 300px;
+        height: 200px;
+        border-radius: 10px;
+	}
+</style>
+
 </head>
 <body>
-<h2>이력서 상세페이지</h2>
-<hr>
-<div class="resume">
-	<div>
-		<span>이력서 제목</span>
-		<div class="text" id="title"></div>
+<div th:replace="~{fragments/user_nav :: fragment-nav}"></div>
+<div class="container" id="container">
+	<div id="sidebar">
+		<div th:replace="~{fragments/user_sidebar :: fragment-sidebar}"></div>
 	</div>
-	<!-- 이력서 저장된 개인정보 -->
-	<div>
-		<span>개인 정보</span>
-		<div class="text" id="uname"></div>
-		<div class="text" id="tel"></div>
-		<div class="text" id="email"></div>
-		<div class="text" id="uaddr"></div>
-		<div class="text" id="gender"></div>
-		<div class="text" id="birthDay"></div>
-	</div>
-	<br>
-	<!-- 이력서 저장된 희망사항 -->
-	<div>
-		<span>희망근무사항</span>
-		<div class="text" id="region1"></div>
-		<div class="text" id="region2"></div>
-		<div class="text" id="region3"></div>
-		<div class="text" id="sectors"></div>
-		<div class="text" id="job"></div>
-	</div>
-	<br>
-	<!-- 이력서 저장된 경력사항 -->
-	<div>
-		<span>경력사항</span>
-		<div class="text" id="startDate"></div>
-		<div class="text" id="endDate"></div>
-		<div class="text" id="cName"></div>
-		<div class="text" id="rank"></div>
-		<div class="text" id="status"></div>
-		<div class="text" id="type"></div>
-		<div class="text" id="position"></div>
-		<div><textarea id="work"></textarea></div>
-	</div>
-	<br>
-	
-	<!-- 이력서 저장된 학력 -->
-	<div>
-		<span>학력</span>
-		<div class="text" id="eduName"></div>
-		<div class="text" id="accDate"></div>
-		<div class="text" id="gradDate"></div>
-		<div class="text" id="major"></div>
-		<div class="text" id="score"></div>
-		<div class="text" id="schoolNow"></div>
-	</div>
-	<br>
-	
-	<div>
-		<span>자격증</span>
-		<div class="text" id="licensename"></div>
-		<div class="text" id="given"></div>
-		<div class="text" id="getDate"></div>
-	</div>
-	<br>
-	
-	<div>
-		<span>보유능력</span>
-		<div class="text" id="oaType"></div>
-		<div class="text" id="content"></div>
-	</div>
-	<br>
-	
-	<div>
-		<span>사회활동</span>
-		<div class="text" id="startDay"></div>
-		<div class="text" id="endDay"></div>
-		<div class="text" id="org"></div>
-		<div><textarea id="econtent"></textarea></div>
-	</div>
-	<br>
-	
-	<div>
-		<span>이력서 제목</span><br>
-		<input type="text" name="rtitle" readonly><br>
-		<textarea id="selfinfo"></textarea>
+	<div class="content">
+		<h2>이력서 상세페이지</h2>
+		<hr>
+		<div class="resume">
+			<div>
+				<span style="font-size: 25px;">이력서</span>
+				<div class="text" id="title"></div>
+			</div>
+			<!-- 이력서 저장된 개인정보 -->
+			<div>
+				<span>개인 정보</span>
+				<div class="text" id="uname"></div>
+				<div class="text" id="tel"></div>
+				<div class="text" id="email"></div>
+				<div class="text" id="uaddr"></div>
+				<div class="text" id="gender"></div>
+				<div class="text" id="birthDay"></div>
+			</div>
+			<br>
+			<!-- 이력서 저장된 희망사항 -->
+			<div>
+				<span>희망근무사항</span>
+				<div class="text" id="region1"></div>
+				<div class="text" id="region2"></div>
+				<div class="text" id="region3"></div>
+				<div class="text" id="sectors"></div>
+				<div class="text" id="job"></div>
+			</div>
+			<br>
+			<!-- 이력서 저장된 경력사항 -->
+			<div>
+				<span>경력사항</span>
+				<div class="text" id="startDate"></div>
+				<div class="text" id="endDate"></div>
+				<div class="text" id="cName"></div>
+				<div class="text" id="rank"></div>
+				<div class="text" id="status"></div>
+				<div class="text" id="type"></div>
+				<div class="text" id="position"></div>
+				<div><textarea id="work" readonly></textarea></div>
+			</div>
+			<br>
+			
+			<!-- 이력서 저장된 학력 -->
+			<div>
+				<span>학력</span>
+				<div class="text" id="eduName"></div>
+				<div class="text" id="accDate"></div>
+				<div class="text" id="gradDate"></div>
+				<div class="text" id="major"></div>
+				<div class="text" id="score"></div>
+				<div class="text" id="schoolNow"></div>
+			</div>
+			<br>
+			
+			<div>
+				<span>자격증</span>
+				<div class="text" id="licensename"></div>
+				<div class="text" id="given"></div>
+				<div class="text" id="getDate"></div>
+			</div>
+			<br>
+			
+			<div>
+				<span>보유능력</span>
+				<div class="text" id="oaType"></div>
+				<div class="text" id="content"></div>
+			</div>
+			<br>
+			
+			<div>
+				<span>사회활동</span>
+				<div class="text" id="startDay"></div>
+				<div class="text" id="endDay"></div>
+				<div class="text" id="org"></div>
+				<div><textarea id="econtent" readonly></textarea></div>
+			</div>
+			<br>
+			
+			<div>
+				<span>이력서 제목</span><br>
+				<input type="text" name="rtitle" readonly><br>
+				<textarea id="selfinfo" readonly></textarea>
+			</div>
+		</div>
+		
 	</div>
 </div>
+
+
 
 <script>
 	const username = "aaaa";
@@ -155,7 +178,7 @@
 				tel.innerText = "전화번호: " + response.user.tel;
 				email.innerText = "이메일: " + response.user.email;
 				uaddr.innerText = "주소: " + response.user.uaddr;
-				gender.innerText = "성별: " + response.user.gender;
+				gender.innerText = "성별: " + (response.user.gender === 0 ? '여자' : '남자');
 				birthDay.innerText = "생년월일: " + response.user.birthDate;
 				
 				region1.innerText = "희망근무지1: " + response.region1;

@@ -4,28 +4,40 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<link rel="stylesheet" th:href="@{/css/nav_styles.css}">
+<link rel="stylesheet" th:href="@{/css/user_sidebar.css}">
+<script src="/js/user_nav.js"></script>
 </head>
 <body>
-<h2>개인정보 수정</h2>
-<hr>
-<div class="form-container" id="user-form">
-		<form id="regForm1">
-			<input type="text" name="username" placeholder=" 아이디*">
-			<input type="button" name="dup-check" value="중복체크" onclick="loadDoc1()"><br>
-			<input type="text" name="password" placeholder=" 비밀번호*"><br>
-			<input type="text" name="uname" placeholder=" 이름*"><br>
-			<input type="radio" name="gender" value="0">남성
-			<input type="radio" name="gender" value="1">여성<br>
-			<input type="date" name="birthDate"><br>
-			<input type="text" name="email" placeholder=" 이메일*"><br>
-			<input type="text" name="tel" placeholder=" 전화번호*"><br>
-			<input type="text" name="uaddr" placeholder=" 현 거주지*"><br><br>
-			<input type="file" name="originName" id="image"><br><br>
-			<label for="image" style="background-color: #007bff; color: white; padding: 8px 12px; cursor: pointer; border-radius: 4px;">사진 선택</label>
-			
-			<input type="button" value="수정하기" onclick="modiForm()">
-		</form>
+<div th:replace="~{fragments/user_nav :: fragment-nav}"></div>
+<div class="container" id="container">
+	<div id="sidebar">
+		<div th:replace="~{fragments/user_sidebar :: fragment-sidebar}"></div>
 	</div>
+	<div class="content">
+		<h2>개인정보 수정</h2>
+		<hr>
+		<div class="form-container" id="user-form">
+			<form id="regForm1">
+				<input type="text" name="username" placeholder=" 아이디*">
+				<input type="button" name="dup-check" value="중복체크" onclick="loadDoc1()"><br>
+				<input type="text" name="password" placeholder=" 비밀번호*"><br>
+				<input type="text" name="uname" placeholder=" 이름*"><br>
+				<input type="radio" name="gender" value="0">남성
+				<input type="radio" name="gender" value="1">여성<br>
+				<input type="date" name="birthDate"><br>
+				<input type="text" name="email" placeholder=" 이메일*"><br>
+				<input type="text" name="tel" placeholder=" 전화번호*"><br>
+				<input type="text" name="uaddr" placeholder=" 현 거주지*"><br><br>
+				<input type="file" name="originName" id="image"><br><br>
+				<label for="image" style="background-color: #007bff; color: white; padding: 8px 12px; cursor: pointer; border-radius: 4px;">사진 선택</label>
+				
+				<input type="button" value="수정하기" onclick="modiForm()">
+			</form>
+		</div>
+	</div>
+</div>
+
 
 <script>
 	
@@ -39,7 +51,7 @@
 				document.querySelector("input[name='username']").value = response.username;
 				document.querySelector("input[name='password']").value = response.password;
 				document.querySelector("input[name='uname']").value = response.uname;
-				$("#gender").text(response.gender === 0 ? '남자' : '여자');
+				$("#gender").text(response.gender === 0 ? '여자' : '남자');
 				$("input[name='tel']").val(response.tel);
 				$("input[name='birthDate']").val(response.birthDate);
 				$("input[name='email']").val(response.email);

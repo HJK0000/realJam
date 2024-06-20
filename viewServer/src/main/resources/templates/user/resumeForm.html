@@ -7,6 +7,14 @@
 <link rel="stylesheet" th:href="@{/css/nav_styles.css}">
 <link rel="stylesheet" th:href="@{/css/user_sidebar.css}">
 <script src="/js/user_nav.js"></script>
+<style>
+	#work, #econtent,
+	#selfinfo{
+		width: 300px;
+        height: 200px;
+        border-radius: 10px;
+	}
+</style>
 </head>
 <body>
 <div th:replace="~{fragments/user_nav :: fragment-nav}"></div>
@@ -123,7 +131,7 @@
 				<input type="text" id="position" name="position">
 			</li>
 			<li>
-				<label for="work">업무내용</label>
+				<label for="work">업무내용</label><br>
 				<input type="text" id="work" name="work">
 			</li>
 			
@@ -180,11 +188,11 @@
 			<input type="button" value="보유능력추가" id="addOaButton">
 			<ul id="oaList">
 				<li>
-					<label for="oaType">능력명</label>
+					<label for="oaType">능력명</label><br>
 					<input type="text" id="oaType" name="oaType">
 				</li>
 				<li>
-					<label for="content">내용</label>
+					<label for="content">내용</label><br>
 					<input type="text" id="content" name="content">
 				</li>
 			</ul>
@@ -205,7 +213,7 @@
 					<input type="text" id="org" name="org">
 				</li>
 				<li>
-					<lable for="econtent">활동내용</lable>
+					<lable for="econtent">활동내용</lable><br>
 					<textarea name="econtent" id="econtent"></textarea>
 				</li>
 			</ul>
@@ -216,7 +224,7 @@
 				<input type="text" id="rtitle" name="rtitle">
 			</li>
 			<li>
-				<label for="selfinfo">자기소개서</label>
+				<label for="selfinfo">자기소개서</label><br>
 				<textarea id="selfinfo" name="selfinfo"></textarea>
 			</li>
 			
@@ -251,7 +259,7 @@
 				$('#uname').text("이름: " + response.uname);
 				$('#birth_date').text('생년월일: ' + response.birthDate);
 				$('#email').text('이메일: ' + response.email);
-				$('#gender').text('성별: ' + (response.gender === '1' ? '남자' : '여자'));
+				$('#gender').text('성별: ' + (response.gender === 0 ? '여자' : '남자'));
 				$('#tel').text('전화번호: ' + response.tel);
 				$('#uaddr').text('주소: ' + response.uaddr);
 			},
