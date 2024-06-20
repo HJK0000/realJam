@@ -1,104 +1,329 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
 <head>
+<link rel="stylesheet" th:href="@{/css/header.css}">
+<link rel="stylesheet" th:href="@{/css/sidebar.css}">
 <meta charset="UTF-8">
 <title>채용공고 상세 페이지</title>
 <script src="https://code.jquery.com/jquery-3.7.1.js"
 	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
 	crossorigin="anonymous"></script>
+<style>
+body {
+	font-family: 'Arial', sans-serif;
+	background-color: #f4f4f4;
+	margin: 0;
+	padding: 0;
+}
+
+#container {
+	display: flex;
+}
+
+#sidebar {
+	width: 250px;
+	background-color: #ffffff;
+	border-right: 1px solid #ddd;
+}
+
+.content {
+	flex: 1;
+	padding: 20px;
+	background-color: #ffffff;
+	margin: 20px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.job-content {
+	background-color: #ffffff;
+	padding: 20px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+}
+
+.job-header {
+	display: flex;
+	justify-content: space-between;
+	border-bottom: 1px solid #ddd;
+	padding-bottom: 20px;
+	margin-bottom: 20px;
+}
+
+.job-header h2 {
+	margin: 0;
+	font-size: 24px;
+	color: #333;
+}
+
+.job-conditions {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 20px;
+}
+
+.job-conditions div {
+	width: 48%;
+}
+
+.job-conditions h3 {
+	font-size: 18px;
+	color: #555;
+}
+
+.job-conditions span, .job-conditions div {
+	display: inline-block;
+	width: auto;
+	margin-right: 10px;
+}
+
+.job-conditions p {
+	margin: 0;
+}
+
+.job-conditions2 {
+    margin-top: 20px;
+}
+
+.job-conditions2 > div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.job-conditions2 span {
+    font-weight: bold;
+    width: 120px;
+    display: inline-block;
+}
+
+.job-conditions2 div div {
+    flex: 1;
+    margin-left: 10px;
+}
+.company-info {
+	width: 30%;
+	text-align: center;
+}
+
+.company-info img {
+	margin-bottom: 10px;
+}
+
+.comsimpleinfo {
+	background-color: #f9f9f9;
+	padding: 10px;
+	border-radius: 5px;
+	text-align: left;
+}
+
+.comsimpleinfo h3 {
+	font-size: 18px;
+	color: #333;
+	margin-bottom: 10px;
+}
+
+.comsimpleinfo span {
+	font-weight: bold;
+}
+
+.comsimpleinfo div {
+	margin-bottom: 5px;
+}
+
+.additionalInfo h2 {
+	font-size: 20px;
+	color: #333;
+	margin-bottom: 20px;
+}
+
+.additionalInfo table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 20px;
+}
+
+.additionalInfo table, .additionalInfo th, .additionalInfo td {
+	border: 1px solid #ddd;
+}
+
+.additionalInfo th, .additionalInfo td {
+	padding: 10px;
+	text-align: left;
+}
+
+.additionalInfo th {
+	background-color: #f9f9f9;
+	font-weight: bold;
+}
+
+.etc-info {
+	margin-bottom: 20px;
+}
+
+.etc-info div {
+	margin-bottom: 10px;
+}
+
+.etc-info strong {
+	display: inline-block;
+	width: 100px;
+}
+
+.etc-info div {
+	display: flex;
+	align-items: center;
+}
+
+.etc-info div div {
+	flex: 1;
+}
+
+.etc-info div strong {
+	width: 120px;
+}
+
+input[type="submit"] {
+	padding: 10px 20px;
+	background-color: #4CAF50;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	margin-right: 10px;
+}
+
+input[type="submit"]:hover {
+	background-color: #45a049;
+}
+</style>
 </head>
 <body>
+	<header>
+		<div th:replace="~{/fragments/comHeader.html}"></div>
+	</header>
 
-	<h1>공고 상세보기 페이지</h1>
-	<hr>
-
-	<div class="job-content">
-		<div class="job-header">
-			<div>
-				<div id="cname" name="cname"></div>
-				<h2 id="wantedTitle" name="wantedTitle"></h2>
-				<div class="job-conditions">
+	<div id="container">
+		<div id="sidebar">
+			<div th:include="~{/fragments/comsidebar.html}"></div>
+		</div>
+		<div class="content">
+			<div class="job-content">
+				<div class="job-header">
 					<div>
-						<h3>지원 자격</h3>
-						<span><strong>지원 자격</strong></span>:<div id="yofExperiences" name="yofExperiences"></div>
-						<span><strong>학력</strong></span>:<div id="Educondition" name="Educondition"></div>
+						<div id="cname" name="cname"></div>
+						<h2 id="wantedTitle" name="wantedTitle"></h2>
+						<div class="job-conditions">
+							<div>
+								<h3>지원 자격</h3>
+								<span><strong>지원 자격</strong></span>:
+								<div id="yofExperiences" name="yofExperiences"></div>
+								<br> <br> <span><strong>학력</strong></span>:
+								<div id="Educondition" name="Educondition"></div>
+							</div>
+							<div>
+								<h3>근무 조건</h3>
+								<span><strong>고용 형태</strong></span>:
+								<div id="empTpNm" name="empTpNm"></div>
+								<br> <br> <span><strong>급여</strong></span>:
+								<div id="sale" name="sale"></div>
+								만원<br>
+								<br>
+								<span><strong> 지역</strong></span>:
+								<div id="region" name="region"></div>
+								<br>
+								<br> <span><strong>근무시간</strong></span>:
+								<div id="wkdWkhCnt" name="wkdWkhCnt"></div>
+
+							</div>
+						</div>
+					</div>
+					<div class="company-info">
+						<div>
+							<img id="companyLogo" src="" alt="회사 로고">
+						</div>
+						<div class="comsimpleinfo">
+							<h3>기업정보</h3>
+							<div id="cname2" name="cname2"></div>
+							<span><strong>산업(업종)</strong></span>
+							<div id="sector1" name="sector1"></div>
+							<span><strong>사원수 </strong></span>
+							<div id="employees" name="employees">명</div>
+							<span><strong>홈페이지</strong></span>
+							<div id="url" name="url"></div>
+						</div>
+					</div>
+				</div>
+
+				<div class="additionalInfo">
+					<h2>모집부문</h2>
+					<table border="1">
+						<thead>
+							<tr>
+								<th>모집부문</th>
+								<th>근무지역</th>
+								<th>근무내용</th>
+								<th>세부사항</th>
+								<th>모집인원</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td id="position1" name="position1"></td>
+								<td id="region1" name="region1"></td>
+								<td id="jobCont" name="jobCont"></td>
+								<td>
+									<div>
+										<strong>지원조건</strong><br> <span>학력:</span>
+										<div id="Educondition2" name="Educondition2"></div>
+										<br> <span>지원가능:</span>
+										<div id="yofExperiences2" name="yofExperiences2"></div>
+									</div>
+									<hr>
+									<div>
+										<strong>필요스킬</strong><br>
+										<div id="needskillList" name="needskillList">-</div>
+									</div>
+								</td>
+								<td id="collectPsncnt" name="collectPsncnt"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<hr>
+				<div class="etc-info">
+					<div>
+						<strong>인사 담당자</strong>
+						<div id="empName" name="empName"></div>
+						<strong>이메일</strong>
+						<div id="empEmail" name="empEmail"></div>
+						<strong>연락처</strong>
+						<div id="empTel" name="empTel"></div>
+					</div>
+				</div>
+				<div class="job-conditions2">
+					<h3>근무 환경</h3>
+					<div>
+						<span><strong>근무 지역</strong></span>:
+						<div id="region2" name="region2"></div>
 					</div>
 					<div>
-					<h3>근무 조건</h3>
-					<span><strong>고용 형태</strong></span>:<div id="empTpNm" name="empTpNm"></div>
-					<p><strong>급여</strong>:<div id="sale" name="sale"></div></p>만원
-					<p><strong>지역</strong>:<div id="region" name="region"></div></p>
-					<p><strong>근무시간</strong>: <div id="wkdWkhCnt" name="wkdWkhCnt"></div></p>
-					</div>					
+						<span><strong>복리 후생</strong></span>:
+						<div id="etcWelfare" name="etcWelfare"></div>
+					</div>
 				</div>
-			</div>
-			<div class="company-info">
 				<div>
-					<img id="companyLogo" src="" alt="회사 로고"> 
+					<h3>공고 마감일</h3>
+					<p>
+					<div id="receiptCloseDt" name="receiptCloseDt"></div>
+					</p>
 				</div>
-				<div class="comsimpleinfo">
-					<h3>기업정보</h3> 
-					<div id="cname2" name="cname2"></div> 
-					<span><strong>산업(업종)</strong></span><div id="sector1" name="sector1"></div>
-					<span><strong>사원수 </strong></span><div id="employees" name="employees">명</div>
-					<span><strong>홈페이지</strong></span><div id="url" name="url"></div>
+				<div>
+					<input type="submit" value="공고수정하기"> <input type="submit"
+						value="공고 삭제하기">
 				</div>
 			</div>
 		</div>
-		
-		<div class="additionalInfo">
-			<h2>모집부문</h2>
-			<table border="1">
-				<thead>
-					<tr>
-						<th>모집부문</th>
-						<th>근무지역</th>
-						<th>근무내용</th>
-						<th>세부사항</th>
-						<th>모집인원</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td id="position1" name="position1"></td>
-						<td id="region1" name="region1"></td>
-						<td id="jobCont" name="jobCont"></td>
-						<td>
-							<div>
-								<strong>지원조건</strong><br>
-								<span>학력:</span><div id="Educondition2" name="Educondition2"></div><br>
-								<span>지원가능:</span><div id="yofExperiences2" name="yofExperiences2"></div>
-							</div><hr>
-							<div>
-								<strong>필요스킬</strong><br>
-								<div id="needskillList" name="needskillList">-</div>
-							</div>
-						</td>
-						<td id="collectPsncnt" name="collectPsncnt"></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<hr>
-		<div class="etc-info">
-			<div>
-			<strong>인사 담당자</strong><div id="empName" name="empName"></div><strong>이메일</strong><div id="empEmail" name="empEmail"></div>
-			<strong>연락처</strong><div id="empTel" name="empTel"></div>
-			</div>
-		</div>
-		<div>
-			<h3>근무 환경</h3>
-			<span><strong>근무 지역</strong></span><div id="region2" name="region2"></div>
-			<span><strong>복리 후생</strong></span><div id="etcWelfare" name="etcWelfare"></div>
-		</div>
-		<div>
-			<h3>공고 마감일</h3>
-			<p><div id="receiptCloseDt" name="receiptCloseDt"></div></p>
-		</div>
-		<div>
-			<input type="submit" value="공고수정하기"> 
-			<input type="submit" value="공고 삭제하기">
-		</div>
+
 
 	</div>
 	<script>
@@ -110,8 +335,6 @@
 			var jno = "[[${jno}]]"; // 모델에 있는 jno를 이렇게 받는다.
 
 			console.log(jno);
-			
-	
 
 			$.ajax({
 
@@ -120,7 +343,7 @@
 				success : function(data) {
 
 					console.log("데이터 조회 성공 :", data);
-					
+
 					$('#wantedTitle').text(data.wantedTitle);
 					$('#cname').text(data.company.cname);
 					$('#cname2').text(data.company.cname);
@@ -130,17 +353,18 @@
 					$('#sale').text(data.sale);
 					$('#region').text(data.region);
 					$('#wkdWkhCnt').text(data.wkdWkhCnt);
-					
+
 					// 로고 이미지 설정
 					if (data.company.logo) {
-						$('#companyLogo').attr('src', '/images/' + data.company.logo);
+						$('#companyLogo').attr('src',
+								'/images/' + data.company.logo);
 					}
-					
+
 					$('#sector1').text(data.sector1);
 					$('#employees').text(data.company.employees);
 					$('#url').text(data.company.url);
-					$('#position1').text(data.position1);	
-					$('#region1').text(data.region);	
+					$('#position1').text(data.position1);
+					$('#region1').text(data.region);
 					$('#jobCont').text(data.jobCont);
 					$('#Educondition2').text(data.educondition);
 					$('#yofExperiences2').text(data.yofExperiences);
@@ -150,17 +374,16 @@
 					$('#empTel').text(data.empTel);
 					$('#empTel').text(data.empTel);
 					$('#region2').text(data.region);
-					$('#etcWelfare').text(data.etcWelfare);	
-					$('#receiptCloseDt').text(data.receiptCloseDt);	
+					$('#etcWelfare').text(data.etcWelfare);
+					$('#receiptCloseDt').text(data.receiptCloseDt);
 
-				
 				},
 
 				error : function(xhr, status, error) {
 
 					console.log("에러 발생 :", error);
 
-					//에러 발생시 처리할 내용을 추가할 수 있습니다.	
+					//에러 발생시 처리할 내용을 추가할 수 있습니다.    
 				}
 			});
 		});

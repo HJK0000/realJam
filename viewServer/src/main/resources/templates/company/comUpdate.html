@@ -9,6 +9,12 @@
 	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
 	crossorigin="anonymous"></script>
 <script src="/js/edit-company.js" defer></script>
+<style>
+	    	body {
+    		margin: 0;
+			padding: 0;
+    	}
+</style>
 </head>
 <body>
 <header>
@@ -16,38 +22,44 @@
 </header>
 
 <div id="container">
-<div id="sidebar">
-<div th:include="~{/fragments/comsidebar.html}"></div>
+    <div id="sidebar">
+        <div th:include="~{/fragments/comsidebar.html}"></div>
+    </div>
+    <div class="content">
+        <form id="edit-company-form">
+        <ul>
+            <li>기업아이디</li> 
+            <input type="text" id="username" name="username" th:value="${username}" readonly=true /><br>
+            <li>기업비밀번호</li> 
+            <input type="text" name="password" th:value="${password}"><br>
+            <li>기업명</li> 
+            <input type="text" name="cname" th:value="${cname}"><br>
+            <li>기업로고</li> 
+            <input type="text" name="logo" th:value="${logo}"><br>
+            <li>대표자명</li> 
+            <input type="text" name="ceo" th:value="${ceo}"><br>
+            <li>사업자번호</li> 
+            <input type="text" name="cnum" th:value="${cnum}"><br>
+            <li>기업주소</li> 
+            <input type="text" name="caddr" th:value="${caddr}"><br>
+            <li>사원수</li> 
+            <input type="text" name="employees" th:value="${employees}"><br>
+            <li>기업홈페이지</li> 
+            <input type="text" name="url" th:value="${url}"><br>
+            <li>기업규모</li> 
+            <input type="text" name="size" th:value="${size}"><br>
+            <li>주요사업</li> 
+            <input type="text" name="major" th:value="${major}"><br>
+            <li>연매출액</li> 
+            <input type="text" name="yrSales" th:value="${yrSales}" class="small-input"><span>만원</span><br>
+            <li>업종</li> 
+            <input type="text" name="sector" th:value="${sector}"><br>
+            <button type="submit" class="update">수정</button>
+            <button type="button" onclick="window.location.href = document.referrer;">취소</button>
+        </ul>
+        </form>
+    </div>
 </div>
-	<div class="content">
-	
-	<form id="edit-company-form">
-		<li>기업아이디</li> <input type="text" id="username" name="username"
-			th:value="${username}" readonly=true /><br>
-		<li>기업비밀번호</li> <input type="text" name="password"
-			th:value="${password}"><br>
-		<li>기업명</li> <input type="text" name="cname" th:value="${cname}"><br>
-		<li>기업로고</li> <input type="text" name="logo" th:value="${logo}"><br>
-
-		<li>대표자명</li> <input type="text" name="ceo" th:value="${ceo}"><br>
-		<li>사업자번호</li> <input type="text" name="cnum" th:value="${cnum}"><br>
-		<li>기업주소</li> <input type="text" name="caddr" th:value="${caddr}"><br>
-		<li>사원수</li> <input type="text" name="employees"
-			th:value="${employees}"><br>
-		<li>기업홈페이지</li> <input type="text" name="url" th:value="${url}"><br>
-		<li>기업규모</li> <input type="text" name="size" th:value="${size}"><br>
-		<li>주요사업</li> <input type="text" name="major" th:value="${major}"><br>
-		<li>연매출액</li> <input type="text" name="yrSales" th:value="${yrSales}">만원<br>
-		<li>업종</li> <input type="text" name="sector" th:value="${sector}"><br>
-		<button type="submit" class="update">수정</button>
-		<button type="button" onclick="window.location.href = document.referrer;">취소</button>
-	</form>
-	<div id="error_result"></div>
-	
-	</div>
-
-</div>
-
 	<script language='javascript'>
   		document.getElementById("username").style.background = "#e5e5e5";
 

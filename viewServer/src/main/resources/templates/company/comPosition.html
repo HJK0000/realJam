@@ -1,76 +1,227 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
 <head>
+<link rel="stylesheet" th:href="@{/css/header.css}">
+<link rel="stylesheet" th:href="@{/css/sidebar.css}">
 <meta charset="UTF-8">
 <title>포지션 매칭 페이지</title>
 <script src="https://code.jquery.com/jquery-3.7.1.js"
 	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
 	crossorigin="anonymous"></script>
 <style>
-	/* 초기에 제안 폼을 숨기는 코드 */
-	#suggestion-form {
-		display : none;
-	}
+/* 초기에 제안 폼을 숨기는 코드 */
+#suggestion-form {
+	display: none;
+}
 </style>
+<style>
+/* 공통 스타일 */
+body {
+	font-family: Arial, sans-serif;
+	line-height: 1.6;
+	background-color: #f0f0f0;
+	margin: 0;
+	padding: 0;
+}
 
+.content {
+	padding: 20px;
+	background-color: #ffffff;
+	margin-bottom: 20px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	border-radius: 8px;
+	 width: 90%; /* 너비 조정 */
+    margin: auto; /* 가운데 정렬 */
+}
 
+hr {
+	border: none;
+	border-top: 1px solid #ccc;
+	margin: 10px 0;
+}
+
+/* 포지션 매칭 리스트 페이지 */
+#matching-list {
+	margin-top: 20px;
+}
+
+/* 표 스타일링 */
+#position-list {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+#position-list th, #position-list td {
+	padding: 12px;
+	text-align: center;
+	border: 1px solid #ddd;
+}
+
+#position-list th {
+	background-color: #f2f2f2;
+}
+
+#position-list tr:nth-child(even) {
+	background-color: #f9f9f9;
+}
+
+#position-list tr:hover {
+	background-color: #e6f7ff;
+}
+
+#position-list button {
+	background-color: #2962FF;
+	color: white;
+	border: none;
+	padding: 8px 16px;
+	cursor: pointer;
+	border-radius: 4px;
+}
+
+#position-list button:hover {
+	background-color: white;
+	color: #2962FF;
+	border: 1px solid #2962FF;
+}
+
+/* 포지션 제안 폼 페이지 */
+#suggestion-form {
+	display: none;
+	margin-top: 20px;
+}
+
+#suggestion-form.visible {
+	display: block;
+}
+
+#user-info {
+	margin-bottom: 20px;
+}
+
+#suggestion-form ul {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+#suggestion-form ul li {
+	margin-bottom: 5px;
+}
+
+#suggestion-form form {
+	margin-top: 20px;
+	display: flex;
+	justify-content: space-between;
+}
+
+#suggestion-form .left-side {
+	width: 45%;
+	padding-right: 20px;
+	border-right: 1px solid #ccc;
+}
+
+#suggestion-form .right-side {
+	width: 50%;
+	padding-left: 20px;
+}
+
+#suggestion-form input[type="text"], #suggestion-form textarea {
+	width: 100%;
+	padding: 10px;
+	margin-bottom: 10px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+#suggestion-form input[type="button"] {
+	background-color: #2962FF;
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	cursor: pointer;
+	border-radius: 4px;
+}
+
+#suggestion-form input[type="button"]:hover {
+	background-color: white;
+	color: #2962FF;
+	border: 1px solid #2962FF;
+}
+</style>
 </head>
 <body>
-
-	<div id="matching-list">
-		<h1>포지션 매칭 리스트</h1>
-		<hr>
-
-		<input type="hidden" name="username">
-		<table border="1">
-			<thead>
-				<tr>
-					<th>이름</th>
-					<th>이력서 제목</th>
-					<th>포지션 제안</th>
-				</tr>
-			</thead>
-			<tbody id="position-list">
-			</tbody>
-		</table>
-	</div>
-
-	<div id="suggestion-form">
-		<h1>포지션 제안 폼</h1>
-		<hr>
-		<div id="user-info">
-			<ul>
-				<li><strong>포지션 제안</strong></li>
-				<li id="cname"></li>
-				<li>지원자정보</li>
-
-				<li>이름 :</li>
-				<li id="cname2"></li>
-				<li>성별 :</li>
-				<li id="gender"></li>
-				<li>나이 :</li>
-				<li id="age"></li>
-				<li>희망 근무지역 :</li>
-				<li id="region"></li>
-				<li>희망 업종 :</li>
-				<li id="sectors"></li>
-				<li>희망 직무 :</li>
-				<li id="job"></li>
-			</ul>
+	<header>
+		<div th:replace="~{/fragments/comHeader.html}"></div>
+	</header>
+	<div id="container">
+		<div id="sidebar">
+			<div th:include="~{/fragments/comsidebar.html}"></div>
 		</div>
-		<div id="suggestion form">
-			<form>
-				<input type="hidden" class="username" name="username" id="username"
-					required="required"> 제안 제목 <input type="text"
-					name="offertitle" id="offertitle" placeholder="내용을 입력해주세요.">
-				제안 내용
-				<textarea name="offerinfo" id="offerinfo" placeholder="내용을 입력해주세요."
-					required="required"></textarea>
-				<input type="button" value="포지션 제안하기" onclick="suggestOffer()">
-			</form>
+
+		<div id="matching-list">
+			<div class="content">
+				<h1>포지션 매칭 리스트</h1>
+				<hr>
+
+				<table id="position-list">
+					<thead>
+						<tr>
+							<th>이름</th>
+							<th>이력서 제목</th>
+							<th>포지션 제안</th>
+						</tr>
+					</thead>
+					<tbody id="position-list-body">
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<div id="suggestion-form">
+			<div class="content">
+				<h1>포지션 제안 폼</h1>
+				<hr>
+				<div id="user-info">
+					<ul>
+						<li><strong>포지션 제안</strong></li>
+						<li id="cname"></li>
+						<li>지원자정보</li>
+
+						<li>이름 :</li>
+						<li id="cname2"></li>
+						<li>성별 :</li>
+						<li id="gender"></li>
+						<li>나이 :</li>
+						<li id="age"></li>
+						<li>희망 근무지역 :</li>
+						<li id="region"></li>
+						<li>희망 업종 :</li>
+						<li id="sectors"></li>
+						<li>희망 직무 :</li>
+						<li id="job"></li>
+					</ul>
+				</div>
+				<div id="suggestion-form-fields">
+					<form novalidate>
+						<div class="left-side">
+							<input type="hidden" class="username" name="username"
+								id="username" th:required="required"> 제안 제목 <input
+								type="text" name="offertitle" id="offertitle"
+								placeholder="내용을 입력해주세요." required>
+						</div>
+						<div class="right-side">
+							제안 내용
+							<textarea name="offerinfo" id="offerinfo"
+								placeholder="내용을 입력해주세요." required></textarea>
+							<br> <input type="button" value="포지션 제안하기"
+								onclick="suggestOffer()">
+						</div>
+					</form>
+				</div>
+			</div>
 		</div>
 	</div>
-
 	<script>
 	document.addEventListener('DOMContentLoaded', (event) => {
 	    // localstorage에서 username 가져오기 (지금은 세션에 없으니까 주석처리) 나중에 세션에서 가져오는 걸로 수정하기
@@ -186,6 +337,14 @@
 		const username = document.getElementById("username").value;
 		const companyUsername = localStorage.getItem('username');
 
+		if(title.trim() === '' || content.trim() === ''){
+			alert("제안 제목과 내용을 모두 입력해주세요.");
+			return; // 제안 제목과 내용이 비어있으면 함수 종료
+			
+			
+		}
+		
+		
 		const offerList = {
 				
 				title :  title,
