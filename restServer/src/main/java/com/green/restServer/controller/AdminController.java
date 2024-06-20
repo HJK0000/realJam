@@ -19,6 +19,7 @@ import com.green.restServer.entity.Help;
 import com.green.restServer.repository.HelpRepository;
 import com.green.restServer.service.HelpService;
 
+//@CrossOrigin("*")
 @RestController
 @RequestMapping("/help")
 public class AdminController {
@@ -65,6 +66,7 @@ public class AdminController {
 
 	@DeleteMapping("/{hnum}")
 	public ResponseEntity<String> delete(@PathVariable("hnum") Long hnum) {
+		System.out.println("delete..................");
 		helpService.delete(hnum);
 		
 		return ResponseEntity.ok("삭제 완료");

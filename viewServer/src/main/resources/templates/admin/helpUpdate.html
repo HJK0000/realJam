@@ -1,94 +1,163 @@
-	<!DOCTYPE html>
-	<html xmlns:th="http://www.thymeleaf.org">
-	<head>
-	<meta charset="UTF-8">
-	<title>Insert title here</title>
-	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-	</head>
-	<body>
-		<div>
-			 <form id="frm">
-			 	<input type="text" name="title" id="helpTitle"><br>
-			 	<input type="text" name="content" id="helpContent"><br>
-			 	<input type="submit" value="등록" onclick="submitForm(event)">
-			 	<input type="button" value="삭제" onclick="deleteHelp(hnum)">
-			 </form>
-		 </div>
-		 
-		 <script>
-		 
-		 $(document).ready(function() {
-			 const hnum = getQueryParam();
-	         
-	         $.ajax({
-					type: "GET",
-					url: `http://localhost:9002/help/${hnum}`,
-					dataType: "json", // 서버가 보내주는 데이터의 타입
-					success: function(data){
-						console.log(data);
-						
-						$("#helpTitle").val(data.title);
-						$("#helpContent").val(data.content);
-						
-					},
-					error: function(){
-						console.log("에러 발생.....");
-					}
-				})
-	     });
-		 
-		 function submitForm(event){
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>도움말 수정</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/dashBoard.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/css/detail.css}">
+<script src="https://code.jquery.com/jquery-3.7.1.js"
+	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+	crossorigin="anonymous"></script>
+</head>
+<body>
+	<header>
+		<div class="logo" onclick="goToDashboard()">Jam Jam</div>
+		<nav class="stats">
+			<div class="stat-item" id="today">
+				오늘 방문자<br> <span th:text="${cnt}"></span>명
+			</div>
+			<div class="stat-item">
+				이 달 방문자<br>502명
+			</div>
+			<div class="stat-item" id="all"></div>
+			<div class="stat-item">
+				신규 회원가입 수<br>28명
+			</div>
+			<div class="stat-item">
+				광고 수익창출<br> <span th:text="${cnt} * 100"></span>원
+			</div>
+			<div class="stat-item">
+				신규 이력서 수<br>43개
+			</div>
+		</nav>
+		<div class="nav-buttons">
+			<button type="button" class="btn" onclick="location.href='helpList'">도움말</button>
+			<button type="button" class="btn">답변</button>
+			<button type="button" class="btn" onclick="logout()">로그아웃</button>
+		</div>
+	</header>
+	<main>
+		<form id="frm">
+			<input type="hidden" id="hnum" th:value="${hnum}">
+			<p id="t">제목</p><input type="text" name="title" id="title"><br> 
+			<p id="c">내용</p><input type="text" name="content" id="content"><br>
+			<input type="button" value="삭제" class="btn btn-b" onclick="deleteHelp()">
+			<input type="submit" value="수정" class="btn btn-b" onclick="submitForm(event)">
+		</form>
+	</main>
+
+	<script>
+		$(document).ready(function() {
+
+			const role = localStorage.getItem('role');
+
+			if (role !== 'ROLE_ADMIN') {
+				location.href = '/';
+				return;
+			}
+		});
+
+		$(document).ready(function() {
+			$.ajax({
+				type : "GET",
+				url : "http://localhost:9002/visitor",
+				success : function(data) {
+					console.log(data);
+					$("#all").html("총 방문자<br>" + data + "명");
+				},
+				error : function() {
+					console.log("에러 발생.....");
+				}
+			})
+		});
+
+		function logout() {
+			// 로컬 스토리지에서 해당하는 데이터 삭제
+			localStorage.removeItem('username');
+			localStorage.removeItem('role');
+
+			alert('로그아웃 되었습니다.');
+			// 로그아웃 후 서버로 로그아웃 요청을 보내는 등의 추가적인 서버 측 작업 수행 가능
+
+			window.location.href = '/'; // 변경 필요
+		}
+
+		$(document).ready(function() {
+			const hnum = getQueryParam();
+
+			$.ajax({
+				type : "GET",
+				url : "http://localhost:9002/help/" + hnum,
+				dataType : "json", // 서버가 보내주는 데이터의 타입
+				success : function(data) {
+					console.log(data);
+
+					$("#title").val(data.title);
+					$("#content").val(data.content);
+
+				},
+				error : function() {
+					console.log("에러 발생.....");
+				}
+			})
+		});
+
+		function submitForm(event) {
 			event.preventDefault(); //submit버튼의 기본기능을 제한하겠다.
-			
-			const hnum = getQueryParam(); 
-			
+
+			const hnum = getQueryParam();
+
 			var form = document.forms['frm'];
 			var formData = $(form).serialize();
-			var data1=JSON.stringify({
-					"title" : $('#helpTitle').val(),
-					"content" :$('#helpContent').val()
+			var data1 = JSON.stringify({
+				"title" : $('#title').val(),
+				"content" : $('#content').val()
 			});
-			
+
 			$.ajax({
-				type: "PUT",
-				url: "http://localhost:9002/help/" + hnum,
-				contentType: "application/json",
-				data: data1,
-				success: function(data){
+				type : "PUT",
+				url : "http://localhost:9002/help/" + hnum,
+				contentType : "application/json",
+				data : data1,
+				success : function(data) {
 					console.log(data);
 					alert("수정완료!");
-	//				$("#demo").html(data);
+					//				$("#demo").html(data);
 					location.href = "/admin/helpList"
 				},
-				error: function(){
+				error : function() {
 					console.log("에러 발생.....");
 				}
 			})
 		}
-		 
+
 		function getQueryParam() {
-		    const urlParams = new URLSearchParams(window.location.search);
-		    return urlParams.get("hnum");
-		    
+			const urlParams = new URLSearchParams(window.location.search);
+			return urlParams.get("hnum");
+
 		}
-		 
-		
-		function deleteHelp(hnum) {
-			var hnum = $('#hnum').val();
-			if(confirm("정말 삭제하시겠습니까?")) {
+
+		function deleteHelp() {
+			const hnum = getQueryParam();
+			
+			if (confirm("정말 삭제하시겠습니까?")) {
 				$.ajax({
-					type: "DELETE",
-					url: "http://localhost:9002/help/" + hnum,
-					success: function(response){
+					type : "DELETE",
+					url : "http://localhost:9002/help/" + hnum,
+					success : function(response) {
 						alert("삭제 완료");
-						location.reload(); // 삭제 후 페이지 새로고침
+						location.href = "/admin/helpList"
 					},
-					error: function(){
+					error : function() {
 						console.log("삭제 에러 발생.....");
 					}
 				});
 			}
 		}
-	    </script>
-	</body>
-	</html>
+
+		function goToDashboard() {
+			window.location.href = '/admin/dashBoard';
+		}
+	</script>
+</body>
+</html>

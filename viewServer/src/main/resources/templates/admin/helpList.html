@@ -2,30 +2,100 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>도움말 리스트</title>
 <link rel="stylesheet" type="text/css" th:href="@{/css/dashBoard.css}">
-<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 0;
+    }
+
+    .stat-item {
+        margin-right: 20px;
+        text-align: center;
+    }
+
+    table {
+        width: 90%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        margin : 0 auto;
+        
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+        
+    }
+
+    th {
+        background-color: #f2f2f2;
+        color: #333;
+        
+    }
+
+    td a {
+        text-decoration: none;
+        color: #007bff;
+        display: inline-block;
+        padding: 5px 10px; /* 링크에 패딩 추가 */
+        
+    }
+
+    td a:hover {
+        text-decoration: underline;
+    }
+
+    .btn-write {
+        margin-top: 20px;
+    }
+</style>
+<script src="https://code.jquery.com/jquery-3.7.1.js"
+	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+	crossorigin="anonymous"></script>
 </head>
 <body>
 	<header>
-        <div class="logo">Jam Jam</div>
-        <nav class="stats">
-            <div class="stat-item" id="today">오늘 방문자<br><span th:text="${cnt}"></span>명</div>
-            <div class="stat-item">이 달 방문자<br>502명</div>
-            <div class="stat-item" id="all">총 방문자<br></div>
-            <div class="stat-item">신규 회원가입 수<br>28명</div>
-            <div class="stat-item">수익창출<br>광고비용 방문자 X 100원 매출액: 300원</div>
-            <div class="stat-item">신규 이력서 수<br>43개</div>
-        </nav>
-        <div class="nav-buttons">
-            <button type="button" class="btn" onclick="location.href='helpList'">도움말</button>
-            <button type="button" class="btn">답변</button>
-            <button type="button" class="btn" onclick="logout()">로그아웃</button>
-        </div>
-    </header>
+		<div class="logo" onclick="goToDashboard()">Jam Jam</div>
+		<nav class="stats">
+			<div class="stat-item" id="today">
+				오늘 방문자<br> <span th:text="${cnt}"></span>명
+			</div>
+			<div class="stat-item">
+				이 달 방문자<br>502명
+			</div>
+			<div class="stat-item" id="all"></div>
+			<div class="stat-item">
+				신규 회원가입 수<br>28명
+			</div>
+			<div class="stat-item">
+				광고 수익창출<br> <span th:text="${cnt} * 100"></span>원
+			</div>
+			<div class="stat-item">
+				신규 이력서 수<br>43개
+			</div>
+		</nav>
+		<div class="nav-buttons">
+			<button type="button" class="btn" onclick="location.href='helpList'">도움말</button>
+			<button type="button" class="btn">답변</button>
+			<button type="button" class="btn" onclick="logout()">로그아웃</button>
+		</div>
+	</header>
 
 
 	<table id="helpTable">
+		<colgroup>
+	        <col style="width: 30%;">
+	        <col style="width: 60%;">
+	        <col style="width: 5%;">
+	        <col style="width: 5%;">
+	    </colgroup>
 		<thead>
 			<tr>
 				<th>제목</th>
@@ -37,55 +107,95 @@
 		<tbody id="helpBody">
 		</tbody>
 	</table>
-	
-	<button onclick="location.href='helpForm'">등록</button>
-	
-	<script>
-	$(document).ready(function(){
-		$.ajax({
-			type: "GET",
-			url: "http://localhost:9002/help",
-			success: function(data){
-				console.log(data);
-				displayHelp(data);
-			},
-			error: function(){
-				console.log("에러 발생.....");
-			}
-		})
-	});
 
-	function displayHelp(data) {
-		var helpTable = $("#helpBody");
-		helpTable.empty(); // 기존 테이블 내용 비우기
-		
-		$.each(data, function(index, help) {
-			var row = "<tr>" +
-			"<td><a href='helpDetail?hnum=" + help.hnum + "'>" + help.title + "</a></td>" +
-			"<td>" + help.content + "</td>" +
-			"<td><a href='helpUpdate?hnum=" + help.hnum + "'>수정</a></td>" +
-			"<td><a href='#' onclick='deleteHelp(" + help.hnum + ")'>삭제</a></td>" +
-			"</tr>";
-			helpTable.append(row);
+	<button onclick="location.href='helpForm'" class="btn btn-a">글쓰기</button>
+
+	<script>
+		$(document).ready(function() {
+
+			const role = localStorage.getItem('role');
+
+			if (role !== 'ROLE_ADMIN') {
+				location.href = '/';
+				return;
+			}
 		});
-	}
-	
-	function deleteHelp(hnum) {
-		if(confirm("정말 삭제하시겠습니까?")) {
+
+		$(document).ready(function() {
 			$.ajax({
-				type: "DELETE",
-				url: "http://localhost:9002/help/" + hnum,
-				success: function(response){
-					alert("삭제 완료");
-					location.reload(); // 삭제 후 페이지 새로고침
+				type : "GET",
+				url : "http://localhost:9002/visitor",
+				success : function(data) {
+					console.log(data);
+					$("#all").html("총 방문자<br>" + data + "명");
 				},
-				error: function(){
-					console.log("삭제 에러 발생.....");
+				error : function() {
+					console.log("에러 발생.....");
 				}
+			})
+		});
+
+		function logout() {
+			// 로컬 스토리지에서 해당하는 데이터 삭제
+			localStorage.removeItem('username');
+			localStorage.removeItem('role');
+
+			alert('로그아웃 되었습니다.');
+			// 로그아웃 후 서버로 로그아웃 요청을 보내는 등의 추가적인 서버 측 작업 수행 가능
+
+			window.location.href = '/'; // 변경 필요
+		}
+
+		$(document).ready(function() {
+			$.ajax({
+				type : "GET",
+				url : "http://localhost:9002/help",
+				success : function(data) {
+					console.log(data);
+					displayHelp(data);
+				},
+				error : function() {
+					console.log("에러 발생.....");
+				}
+			})
+		});
+
+		function displayHelp(data) {
+			var helpTable = $("#helpBody");
+			helpTable.empty(); // 기존 테이블 내용 비우기
+
+			$.each(data, function(index, help) {
+				var row = "<tr>" + "<td><a href='helpDetail?hnum=" + help.hnum
+						+ "'>" + help.title + "</a></td>" + "<td>"
+						+ help.content + "</td>"
+						+ "<td><a href='helpUpdate?hnum=" + help.hnum
+						+ "'>수정</a></td>"
+						+ "<td><a onclick='deleteHelp(" + help.hnum
+						+ ")'>삭제</a></td>" + "</tr>";
+				helpTable.append(row);
 			});
 		}
-	}
-</script>
+
+		function deleteHelp(hnum) {
+			if (confirm("정말 삭제하시겠습니까?")) {
+				$.ajax({
+					type : "DELETE",
+					url : "http://localhost:9002/help/" + hnum,
+					success : function(response) {
+						alert("삭제 완료");
+						location.reload(); // 삭제 후 페이지 새로고침
+					},
+					error : function() {
+						console.log("삭제 에러 발생.....");
+					}
+				});
+			}
+		}
+
+		function goToDashboard() {
+			window.location.href = '/admin/dashBoard';
+		}
+	</script>
 
 </body>
 </html>

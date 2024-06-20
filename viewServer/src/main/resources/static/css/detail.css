@@ -1,0 +1,66 @@
+@charset "UTF-8";
+
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
+
+
+main {
+    width: 90%;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    margin : 0 auto;
+}
+
+.form-container {
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+#title,
+#content {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+#title:focus,
+#content:focus {
+    border-color: #5b9bd5;
+    outline: none;
+    box-shadow: 0 0 8px rgba(91, 155, 213, 0.2);
+}
+
+#content {
+    resize: vertical; /* 사용자가 텍스트 영역 크기를 조정할 수 있도록 설정 */
+}
+
+.button-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+
+/* 추가적인 스타일 */
+button.btn:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(91, 155, 213, 0.5);
+}

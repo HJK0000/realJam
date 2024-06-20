@@ -2,55 +2,134 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>상세보기</title>
 <link rel="stylesheet" type="text/css" th:href="@{/css/dashBoard.css}">
-<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/css/detail.css}">
+<script src="https://code.jquery.com/jquery-3.7.1.js"
+	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+	crossorigin="anonymous"></script>
 </head>
 <body>
 
 	<header>
-        <div class="logo">Jam Jam</div>
-        <nav class="stats">
-            <div class="stat-item" id="today">오늘 방문자<br><span th:text="${cnt}"></span>명</div>
-            <div class="stat-item">이 달 방문자<br>502명</div>
-            <div class="stat-item" id="all">총 방문자<br></div>
-            <div class="stat-item">신규 회원가입 수<br>28명</div>
-            <div class="stat-item">수익창출<br>광고비용 방문자 X 100원 매출액: 300원</div>
-            <div class="stat-item">신규 이력서 수<br>43개</div>
-        </nav>
-        <div class="nav-buttons">
-            <button type="button" class="btn" onclick="location.href='helpList'">도움말</button>
-            <button type="button" class="btn">답변</button>
-            <button type="button" class="btn" onclick="logout()">로그아웃</button>
-        </div>
-    </header>
-
-<h1>Detail</h1>
-
-	<h2 id="helpTitle"></h2>
-	<p id="helpContent"></p>
-	
+		<div class="logo" onclick="goToDashboard()">Jam Jam</div>
+		<nav class="stats">
+			<div class="stat-item" id="today">
+				오늘 방문자<br> <span th:text="${cnt}"></span>명
+			</div>
+			<div class="stat-item">
+				이 달 방문자<br>502명
+			</div>
+			<div class="stat-item" id="all"></div>
+			<div class="stat-item">
+				신규 회원가입 수<br>28명
+			</div>
+			<div class="stat-item">
+				광고 수익창출<br> <span th:text="${cnt} * 100"></span>원
+			</div>
+			<div class="stat-item">
+				신규 이력서 수<br>43개
+			</div>
+		</nav>
+		<div class="nav-buttons">
+			<button type="button" class="btn" onclick="location.href='helpList'">도움말</button>
+			<button type="button" class="btn">답변</button>
+			<button type="button" class="btn" onclick="logout()">로그아웃</button>
+		</div>
+	</header>
+<main>
+	<p id="t">제목</p><div id="title"></div>
+	<p id="c">내용</p><div id="content"></div>
+	<input type="button" class="btn btn-b" value="삭제" onclick="deleteHelp()">
+	<input type="button" class="btn btn-b" value="수정" onclick="updateHelp()">
+	<input type="hidden" id="hnum" th:value="${hnum}">
+</main>
 	<script>
-        $(document).ready(function() {
-            
-            var hnum ="[[${hnum}]]";
-            
-            $.ajax({
-				type: "GET",
-				url: "http://localhost:9002/help/"+ hnum,
-				dataType: "json", // 서버가 보내주는 데이터의 타입
-				success: function(data){
+		$(document).ready(function() {
+
+			const role = localStorage.getItem('role');
+
+			if (role !== 'ROLE_ADMIN') {
+				location.href = '/';
+				return;
+			}
+		});
+
+		$(document).ready(function() {
+			$.ajax({
+				type : "GET",
+				url : "http://localhost:9002/visitor",
+				success : function(data) {
 					console.log(data);
-					
-					$("#helpTitle").html(data.title);
-					$("#helpContent").html(data.content);
-					
+					$("#all").html("총 방문자<br>" + data + "명");
 				},
-				error: function(){
+				error : function() {
 					console.log("에러 발생.....");
 				}
 			})
-        });
-    </script>
+		});
+
+		$(document).ready(function() {
+
+			var hnum = "[[${hnum}]]";
+
+			$.ajax({
+				type : "GET",
+				url : "http://localhost:9002/help/" + hnum,
+				dataType : "json", // 서버가 보내주는 데이터의 타입
+				success : function(data) {
+					console.log(data);
+
+					$("#title").html(data.title);
+					$("#content").html(data.content);
+
+				},
+				error : function() {
+					console.log("에러 발생.....");
+				}
+			})
+		});
+
+		function logout() {
+			// 로컬 스토리지에서 해당하는 데이터 삭제
+			localStorage.removeItem('username');
+			localStorage.removeItem('role');
+
+			alert('로그아웃 되었습니다.');
+			// 로그아웃 후 서버로 로그아웃 요청을 보내는 등의 추가적인 서버 측 작업 수행 가능
+
+			window.location.href = '/'; // 변경 필요
+		}
+
+		function goToDashboard() {
+			window.location.href = '/admin/dashBoard';
+		}
+		
+		function deleteHelp() {
+			var hnum = $('#hnum').val();
+			
+			if (confirm("정말 삭제하시겠습니까?")) {
+				$.ajax({
+					type : "DELETE",
+					url : "http://localhost:9002/help/" + hnum,
+					success : function(response) {
+						alert("삭제 완료");
+						location.href = "/admin/helpList"
+					},
+					error : function() {
+						console.log("삭제 에러 발생.....");
+					}
+				});
+			}
+		}
+
+		function updateHelp() {
+	        
+	        var hnum = $('#hnum').val();
+	        
+	        window.location.href = 'helpUpdate?hnum=' + hnum;
+	    }
+		
+	</script>
 </body>
 </html>
