@@ -20,7 +20,30 @@
 
 <a th:href="@{/user/jobadList}">채용공고 페이지</a>
 
-<script src="/js/user_nav.js"></script>
+<div id="count" th:text="${count}" style="display: none;"></div>
 
+
+<script src="/js/user_nav.js"></script>
+<script>
+	
+	$(document).ready(function() {
+		
+		var cnt = $('#count').text();
+		
+		console.log("현재 카운트 값: " + cnt);
+		
+		$.ajax({
+			type: "POST",
+			url: "http://localhost:9002/visitor",
+			success: function(data){
+				
+			},
+			error: function(){
+				console.log("에러 발생.....");
+			}
+		});
+	});
+	
+</script>
 </body>
 </html>
