@@ -155,11 +155,11 @@ textarea {
 				<form name="frm" id="frm">
 					<div class="form-group">
 						<label for="wantedTitle">공고제목</label> <input type="text"
-							id="wantedTitle" name="wantedTitle" width=200 />
+							id="wantedTitle" name="wantedTitle" width=200 required/>
 					</div>
 					<div class="form-group">
 						<label for="sector1">모집업종</label> <select id="sector1"
-							name="sector1">
+							name="sector1" required>
 							<option value="">선택</option>
 							<option value="서비스업">서비스업</option>
 							<option value="제조·화학">제조·화학</option>
@@ -175,7 +175,7 @@ textarea {
 					</div>
 					<div class="form-group">
 						<label for="position1">모집직무</label> <select id="position1"
-							name="position1">
+							name="position1" required>
 							<option value="">선택</option>
 							<option value="기획전략">기획전략</option>
 							<option value="마케팅·홍보·조사">마케팅·홍보·조사</option>
@@ -202,17 +202,17 @@ textarea {
 					</div>
 					<div class="form-group">
 						<label for="collectPsncnt">모집 인원</label> <input type="number"
-							id="collectPsncnt" name="collectPsncnt">명
+							id="collectPsncnt" name="collectPsncnt" required>명
 					</div>
 					<div class="form-group" id="jobContContainer">
 						<label for="jobCont">직무내용</label>
 						<textarea type="text" class="jobContInput" name="jobCont"
-							id="jobCont">
+							id="jobCont" required>
 			</textarea>
 					</div>
 					<div class="form-group">
 						<label for="empTpNm">고용형태</label> <select id="empTpNm"
-							name="empTpNm">
+							name="empTpNm" required>
 							<option value="">선택</option>
 							<option value="정규직">정규직</option>
 							<option value="비정규직">비정규직</option>
@@ -222,7 +222,7 @@ textarea {
 					</div>
 					<div class="form-group">
 						<label for="region">근무 지역</label> <select id="region"
-							name="region">
+							name="region" required>
 							<option value="">선택</option>
 							<option value="서울특별시">서울특별시</option>
 							<option value="부산광역시">부산광역시</option>
@@ -237,7 +237,7 @@ textarea {
 					</div>
 					<div class="form-group">
 						<label for="educondition">학력 제한</label> <select id="educondition"
-							name="educondition">
+							name="educondition" required>
 
 							<option value="">선택</option>
 							<option value="학력무관">학력무관</option>
@@ -254,7 +254,8 @@ textarea {
 					</div>
 					<div class="form-group">
 						<label for="yofExperiences">경력 제한</label> <select
-							id="yofExperiences" name="yofExperiences">
+							id="yofExperiences" name="yofExperiences" required>
+							<option value="">선택</option>	
 							<option value="신입">신입</option>
 							<option value="경력">경력</option>
 							<option value="경력무관">경력무관</option>
@@ -271,15 +272,15 @@ textarea {
 							<strong>접수방법</strong>
 						</p>
 						<label for="option1">취업잼잼 이력서 지원</label> <input type="radio"
-							id="option1" name="rcptMthd" value="취업잼잼이력서지원"> <label
+							id="option1" name="rcptMthd" value="취업잼잼이력서지원" required> <label
 							for="option2">홈페이지 방문 지원</label> <input type="radio" id="option2"
-							name="rcptMthd" value="홈페이지방문지원">
+							name="rcptMthd" value="홈페이지방문지원" required>
 					</div>
 					<br>
 
 					<div class="form-group">
 						<label for="wkdWkhCnt">근무 시간:</label> <select id="wkdWkhCnt"
-							name="wkdWkhCnt">
+							name="wkdWkhCnt" required>
 							<option value="09:00~18:00">09:00~18:00</option>
 							<option value="09:30~18:30">09:30~18:30</option>
 							<option value="10:00~19:00">10:00~19:00</option>
@@ -288,14 +289,14 @@ textarea {
 					</div>
 					<div class="form-group">
 						<label for="salTpCd">급여조건</label> <select id="salTpCd"
-							name="salTpCd">
+							name="salTpCd" required>
 							<option value="연봉">연봉</option>
 							<option value="월급">월급</option>
 						</select>
 					</div>
 					<div class="form-group">
 						<label for="sale">급여액</label> <input type="number" id="sale"
-							name="sale" placeholder="급여 입력">만원
+							name="sale" placeholder="급여 입력" required>만원
 					</div>
 					<div class="form-group">
 						<label for="retirepay">퇴직금 여부</label> <input type="checkbox"
@@ -304,7 +305,7 @@ textarea {
 					<div class="form-group">
 						<label for="etcWelfare">기타복리후생</label>
 						<textarea rows="5" cols="50" id="etcWelfare" name="etcWelfare"
-							placeholder="내용을 입력해주세요."></textarea>
+							placeholder="내용을 입력해주세요." required></textarea>
 					</div>
 					<div class="form-group">
 						<label for="mltsvcExcHope">병역특례채용희망</label> <input type="checkbox"
@@ -320,15 +321,15 @@ textarea {
 			</div>  -->
 					<div class="form-group">
 						<label for="empName">담당자명</label> <input type="text" id="empName"
-							name="empName">
+							name="empName" required>
 					</div>
 					<div class="form-group">
 						<label for="empTel">연락처</label> <input type="text" id="empTel"
-							name="empTel">
+							name="empTel" required>
 					</div>
 					<div class="form-group">
 						<label for="empEmail">이메일</label> <input type="text" id="empEmail"
-							name="empEmail">
+							name="empEmail" required>
 					</div>
 
 					<div class="form-group">
