@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet" th:href="@{/css/nav_styles.css}">
-<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <title>User Main Page</title>
+    <link rel="stylesheet" th:href="@{/css/nav_styles.css}">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+            crossorigin="anonymous"></script>
 </head>
 <body>
 <div th:fragment="fragment-nav">
-	<div class="navbar">
+    <div class="navbar">
         <div class="logo">
             <!-- <a href="/user/main"><img src="jamjam_logo.png" alt="Jam Jam"></a> -->
         </div>
@@ -23,7 +25,7 @@
         </div>
         
         <div id="userinfo">
-        	
+            <!-- 사용자 정보 표시를 위한 공간 -->
         </div>
         
         <div class="user-actions">
@@ -32,11 +34,8 @@
         </div>
     </div>
 </div>
-	
     
-    <script src="/js/user_nav.js">
-   		
-    </script>
+<script src="/js/user_nav.js"></script>
     
 </body>
 </html>
