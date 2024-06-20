@@ -1,52 +1,96 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>DashBoard</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/dashBoard.css}">
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<meta charset="UTF-8">
+<title>대쉬보드</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/dashBoard.css}">
+<script src="https://code.jquery.com/jquery-3.7.1.js"
+	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+	crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
-    <header>
-        <div class="logo">Jam Jam</div>
-        <nav class="stats">
-            <div class="stat-item" id="today">오늘 방문자<br><span th:text="${cnt}"></span>명</div>
-            <div class="stat-item">이 달 방문자<br>502명</div>
-            <div class="stat-item" id="all"></div>
-            <div class="stat-item">신규 회원가입 수<br>28명</div>
-            <div class="stat-item">수익창출<br>광고비용 방문자 X 100원 매출액: 300원</div>
-            <div class="stat-item">신규 이력서 수<br>43개</div>
-        </nav>
-        <div class="nav-buttons">
-            <button type="button" class="btn" onclick="location.href='helpList'">도움말</button>
-            <button type="button" class="btn">답변</button>
-            <button type="button" class="btn" onclick="logout()">로그아웃</button>
-        </div>
-    </header>
+	<header>
+		<div class="logo" onclick="goToDashboard()">Jam Jam</div>
+		<nav class="stats">
+			<div class="stat-item" id="today">
+				오늘 방문자<br> <span th:text="${cnt}"></span>명
+			</div>
+			<div class="stat-item">
+				이 달 방문자<br>502명
+			</div>
+			<div class="stat-item" id="all"></div>
+			<div class="stat-item">
+				신규 회원가입 수<br>28명
+			</div>
+			<div class="stat-item">
+				광고 수익창출<br> <span th:text="${cnt} * 100"></span>원
+			</div>
+			<div class="stat-item">
+				신규 이력서 수<br>43개
+			</div>
+		</nav>
+		<div class="nav-buttons">
+			<button type="button" class="btn" onclick="location.href='helpList'">도움말</button>
+			<button type="button" class="btn">답변</button>
+			<button type="button" class="btn" onclick="logout()">로그아웃</button>
+		</div>
+	</header>
 
-    <div class="chart-title">취업잼잼 방문수 변화량</div>
+	<div class="chart-title">취업잼잼 방문수 변화량</div>
 
-    <div class="chart-container">
-        <div id="chartsize">
-            <canvas id="myChart"></canvas>
-            <div class="btn-group">
-                <button type="button" onclick="updateChart('3months')">3개월</button>
-                <button type="button" onclick="updateChart('1year')">1년</button>
-                <button type="button" onclick="updateChart('all')">전체</button>
-            </div>
-        </div>
-    </div>
+	<div class="chart-container">
+		<div id="chartsize">
+			<canvas id="myChart"></canvas>
+			<div class="btn-group">
+				<button type="button" onclick="updateChart('3months')">3개월</button>
+				<button type="button" onclick="updateChart('1year')">1년</button>
+				<button type="button" onclick="updateChart('all')">전체</button>
+			</div>
+		</div>
 
-    <script>
+		<div id="chartsize">
+			<canvas id="myChart2"></canvas>
+		</div>
+	</div>
 
+	<script>
+    
+// Thymeleaf에서 cnt 변수를 JavaScript로 전달
+    let chart;
+    
+   	const cnt = "[[${cnt}]]";
+
+    const ctx = document.getElementById('myChart').getContext('2d');
+    
+	const ctx2 = document.getElementById('myChart2');
+	
+	 let chartF= new Chart(ctx2, {
+	    type: 'bar',
+	    data: {
+	      labels: ['일일 방문자', '총 방문자'],
+	      datasets: [{
+	        label: '방문자',
+	        data: [cnt, 19],
+	        borderWidth: 1
+	      }]
+	    },
+	    options: {
+	      scales: {
+	        y: {
+	          beginAtZero: true
+	        }
+	      }
+	    }
+	  });
+	
     $(document).ready(function() {
         
     	const role = localStorage.getItem('role');
     	
     	 if (role !== 'ROLE_ADMIN') {
-             location.href = '/main';
+             location.href = '/';
              return;
          }
     });
@@ -57,13 +101,18 @@
 			url: "http://localhost:9002/visitor",
 			success: function(data){
 				console.log(data);
-				$("#all").html("총 방문자<br>" + data);
+				$("#all").html("총 방문자<br>" + data + "명");
+				update(chartF,data);
 			},
 			error: function(){
 				console.log("에러 발생.....");
 			}
 		})
 	});
+    function update(chartF,data){
+    	chartF.data.datasets[0].data = [cnt,data];
+        chartF.update();
+    }
     
     function logout() {
 	    // 로컬 스토리지에서 해당하는 데이터 삭제
@@ -73,54 +122,49 @@
 	    alert('로그아웃 되었습니다.');
 	    // 로그아웃 후 서버로 로그아웃 요청을 보내는 등의 추가적인 서버 측 작업 수행 가능
 	  
-	    window.location.href = '/main'; // 변경 필요
+	    window.location.href = '/'; // 변경 필요
 	}
     
- 		// Thymeleaf에서 cnt 변수를 JavaScript로 전달
-    	const cnt = [[${cnt}]];
 
-        const ctx = document.getElementById('myChart').getContext('2d');
-        let chart;
+    // 데이터 배열 정의
+    const data3Months = {
+        labels: ['4월', '5월', '6월'],
+        datasets: [
+            {
+                label: '방문수 변화량',
+                data: [30, 80, cnt],
+                borderWidth: 2,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.4
+            }
+        ]
+    };
 
-        // 데이터 배열 정의
-        const data3Months = {
-            labels: ['4월', '5월', '6월'],
-            datasets: [
-                {
-                    label: '방문수 변화량',
-                    data: [30, 80, cnt],
-                    borderWidth: 2,
-                    borderColor: 'rgb(75, 192, 192)',
-                    tension: 0.4
-                }
-            ]
-        };
+    const data1Year = {
+        labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+        datasets: [
+            {
+                label: '방문수 변화량',
+                data: [40, 60, 30, 120, 100, cnt],
+                borderWidth: 2,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.4
+            }
+        ]
+    };
 
-        const data1Year = {
-            labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-            datasets: [
-                {
-                    label: '방문수 변화량',
-                    data: [40, 60, 30, 120, 100, cnt],
-                    borderWidth: 2,
-                    borderColor: 'rgb(75, 192, 192)',
-                    tension: 0.4
-                }
-            ]
-        };
-
-        const dataAll = {
-            labels: ['2019', '2020', '2021', '2022', '2023', '2024'],
-            datasets: [
-                {
-                    label: '방문수 변화량',
-                    data: [300, 400, 500, 100, 700, 800],
-                    borderWidth: 2,
-                    borderColor: 'rgb(75, 192, 192)',
-                    tension: 0.4
-                }
-            ]
-        };
+    const dataAll = {
+        labels: ['2019', '2020', '2021', '2022', '2023', '2024'],
+        datasets: [
+            {
+                label: '방문수 변화량',
+                data: [300, 400, 500, 100, 700, 800],
+                borderWidth: 2,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.4
+            }
+        ]
+    };
 
         function createChart(data) {
             if (chart) {
@@ -172,7 +216,9 @@
         // 초기 차트 생성 (1년 데이터로 초기화)
         createChart(data1Year);
         
-        
+        function goToDashboard() {
+			window.location.href = '/admin/dashBoard';
+		}
     </script>
 </body>
 </html>

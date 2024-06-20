@@ -47,23 +47,31 @@ public class AdminController {
 	}
 	
 	@GetMapping("/admin/helpForm")
-	public void helpForm() {
+	public void helpForm(Model model) {
+		int cnt = list.size();
 		
+		model.addAttribute("cnt", cnt);
 	}
 	
 	@GetMapping("/admin/helpUpdate")
-	public void helpUpdate() {
+	public void helpUpdate(Model model) {
+		int cnt = list.size();
 		
+		model.addAttribute("cnt", cnt);
 	}
 	
 	@GetMapping("/admin/helpList")
-	public void helpList() {
+	public void helpList(Model model) {
+		int cnt = list.size();
 		
+		model.addAttribute("cnt", cnt);
 	}
 	
 	@GetMapping("/admin/helpDetail")
 	public void helpDetail(@RequestParam ("hnum") String hnum, Model model) {
+		int cnt = list.size();
 		
+		model.addAttribute("cnt", cnt);
 		model.addAttribute("hnum", hnum);
 		
 	}
