@@ -56,9 +56,11 @@ public class User extends BaseEntity{
 	@Column(name = "thumb_nail")
 	private String thumbNail;
     
+	/*
     public String getGenderString() {
         return gender.equals("0") ? "남성" : "여성";
     }
+    */
 
     public int getAge() {
         LocalDate currentDate = LocalDate.now(); // 현재 날짜
