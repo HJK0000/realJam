@@ -93,9 +93,9 @@ public class LoginController {
             // Check if role matches
             if (role.equals("ROLE_ADMIN")) {
                 return new LoginResponse("ADMIN", role);
-            } else if(role.equals("ROLE_COMPANY")){
+            } else if(role.equals("ROLE_MEMBER")){
                 // Username exists but role does not match
-                return new LoginResponse("COMPANY", role);
+                return new LoginResponse("MEMBER", role);
             } else {
             	return new LoginResponse("fail", role);
             }

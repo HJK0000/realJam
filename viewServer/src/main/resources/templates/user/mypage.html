@@ -69,10 +69,12 @@
 				$('#uname').text('name: ' + response.uname);
 				$('#birth_date').text('생년월일: ' + response.birthDate);
 				$('#email').text('이메일: ' + response.email);
-				$('#gender').text('성별: ' + (response.gender === 0 ? '여자' : '남자'));
+				$('#gender').text('성별: ' + (response.gender === '1' ? '여자' : '남자'));
 				$('#tel').text('전화번호: ' + response.tel);
 				$('#uaddr').text('주소: ' + response.uaddr);
 				$('input[name="password"]').val(response.password);
+				
+				console.log(response.gender);
 			},
 			error: function(error){
 				console.error("Error: ", error);
