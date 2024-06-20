@@ -1,0 +1,116 @@
+@charset "UTF-8";
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="number"],
+        .form-group input[type="date"],
+        .form-group select,
+        .form-group textarea {
+            width: calc(100% - 10px);
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .form-group input[type="checkbox"],
+        .form-group input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+        }
+
+        .form-group button[type="button"] {
+            margin-top: 5px;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .form-group button[type="button"]:hover {
+            background-color: #0056b3;
+        }
+
+        input[type="submit"],
+        button[type="button"] {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover,
+        button[type="button"]:hover {
+            background-color: #218838;
+        }
+
+        button[value="뒤로가기"] {
+            background-color: #dc3545;
+        }
+
+        button[value="뒤로가기"]:hover {
+            background-color: #c82333;
+        }
+
+        .radio-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group.salary {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-group.salary input[type="number"] {
+            width: 80%;
+        }
+
+        .form-group.salary span {
+            margin-left: 5px;
+        }

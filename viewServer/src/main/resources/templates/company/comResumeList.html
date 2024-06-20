@@ -1,35 +1,130 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
 <head>
+<link rel="stylesheet" th:href="@{/css/header.css}">
+<link rel="stylesheet" th:href="@{/css/sidebar.css}">
 <meta charset="UTF-8">
 <title>포지션 매칭 페이지</title>
 <script src="https://code.jquery.com/jquery-3.7.1.js"
 	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
 	crossorigin="anonymous"></script>
+<style>
+.container {
+    width: 95%; /* 예시로 너비를 95%로 설정 */
+    max-width: 1400px; /* 최대 너비 설정 (선택사항) */
+    margin: 0 auto; /* 가운데 정렬을 위한 마진 설정 */
+}
+
+.content {
+    padding: 20px;
+    background-color: #ffffff;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+body {
+	font-family: Arial, sans-serif;
+	line-height: 1.6;
+	background-color: #f0f0f0;
+	margin: 0;
+	padding: 0;
+}
+
+h1 {
+	margin-bottom: 20px;
+}
+
+hr {
+	border: none;
+	border-top: 1px solid #ccc;
+	margin: 10px 0;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+table th, table td {
+	padding: 12px;
+	text-align: center;
+	border: 1px solid #ddd;
+}
+
+table th {
+	background-color: #f2f2f2;
+}
+
+table tbody tr:nth-child(even) {
+	background-color: #f9f9f9;
+}
+
+table tbody tr:hover {
+	background-color: #e6f7ff;
+}
+
+button {
+	background-color: #2962FF;
+	color: white;
+	border: none;
+	padding: 8px 16px;
+	cursor: pointer;
+	border-radius: 4px;
+}
+
+button:hover {
+	background-color: white;
+	color: #2962FF;
+	border: 1px solid #2962FF;
+}
+/* Adjusted style for 불합격 button */
+	button.red {
+		background-color: red; /* Light blue color */
+		color: white;
+		border: none;
+		padding: 8px 16px;
+		cursor: pointer;
+		border-radius: 4px;
+	}
+
+	/* Hover effect for 불합격 button */
+	button.red:hover {
+		background-color: white; 
+		color: red;
+		border: 1px solid red;
+	}
+</style>
 </head>
 <body>
+	<header>
+		<div th:replace="~{/fragments/comHeader.html}"></div>
+	</header>
+	<div id="container" class="container">
+		<div id="sidebar">
+			<div th:include="~{/fragments/comsidebar.html}"></div>
+		</div>
+		<div class="content">
+			<h1>지원받은 이력서 조회</h1>
+			<hr>
 
-	<h1>지원받은 이력서 조회</h1>
-	<hr>
-
-	<table border="1">
-		<thead>
-			<tr>
-				<th>채용공고 제목</th>
-				<th>지원자 이름</th>
-				<th>이력서 제목</th>
-				<th>합격/불합격 버튼</th>
-				<th>최종 합격 여부</th>
-			</tr>
-		</thead>
-		<tbody id="resumeList">
-		</tbody>
-	</table>
+			<table border="1">
+				<thead>
+					<tr>
+						<th>채용공고 제목</th>
+						<th>지원자 이름</th>
+						<th>이력서 제목</th>
+						<th>합격/불합격 버튼</th>
+						<th>최종 합격 여부</th>
+					</tr>
+				</thead>
+				<tbody id="resumeList">
+				</tbody>
+			</table>
+		</div>
 
 
 
-
-	<script>
+		<script>
 		document.addEventListener('DOMContentLoaded', (event) => {
 			
 			 // localstorage에서 username 가져오기 (지금은 세션에 없으니까 주석처리) 나중에 세션에서 가져오는 걸로 수정하기
@@ -79,6 +174,7 @@
 						button1.on('click', function(){
 							goToPutApplyList(applyList.ano);
 						});
+						button2.addClass('red'); // Add 'red' class to button2
 						button2.on('click', function(){
 							goToDeleteApplyList(applyList.ano);
 						});
