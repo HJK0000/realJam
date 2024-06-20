@@ -1,134 +1,149 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
 <head>
-    <link rel="stylesheet" th:href="@{/css/header.css}">
-    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
-    <meta charset="UTF-8">
-    <title>기업 마이 페이지(기업 정보 조회페이지)</title>
-    <script src="https://code.jquery.com/jquery-3.7.1.js"
-            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-            crossorigin="anonymous"></script>
-    <style>
-    	
-    	body {
-    		margin: 0;
-			padding: 0;
-    	}
-        .content {
-            padding: 20px;
-        }
+<link rel="stylesheet" th:href="@{/css/header.css}">
+<link rel="stylesheet" th:href="@{/css/sidebar.css}">
+<meta charset="UTF-8">
+<title>기업 마이 페이지(기업 정보 조회페이지)</title>
+<script src="https://code.jquery.com/jquery-3.7.1.js"
+	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+	crossorigin="anonymous"></script>
+<style>
+body {
+	margin: 0;
+	padding: 0;
+}
 
-        .company-info {
-            margin-bottom: 20px;
-        }
+.content {
+	padding: 20px;
+}
 
-        .company-logo img {
-            width: 400px;
-            height: 200px;
-        }
+.company-info {
+	margin-bottom: 20px;
+}
 
-        .company-details {
-            display: flex;
-            justify-content: space-between;
-            gap: 10px; /* 간격 줄이기 */
-            margin-top: 20px;
-        }
+.company-logo img {
+	max-width: 100%; /* 이미지의 최대 너비를 부모 요소의 너비에 맞게 설정 */
+	height: auto; /* 높이를 자동으로 조정하여 원본 비율 유지 */
+}
 
-        .details-left {
-            width: 48%; /* 간격을 줄이기 위해 너비를 조정 */
-           
-        }
+.company-details {
+	display: flex;
+	justify-content: space-between;
+	gap: 10px; /* 간격 줄이기 */
+	margin-top: 20px;
+}
 
-        .details-right {
-            width: 48%;
-        }
+.details-left {
+	width: 48%; /* 간격을 줄이기 위해 너비를 조정 */
+}
 
-        .details-left p, .details-right p {
-            margin: 10px 0;
-        }
-         input[type="submit"] {
-            background-color:  #2962FF; /* 배경색 */
-            border: none; /* 테두리 없음 */
-            color: white; /* 글자 색상 */
-            padding: 15px 32px; /* 패딩 */
-            text-align: center; /* 텍스트 정렬 */
-            text-decoration: none; /* 텍스트 장식 없음 */
-            display: inline-block; /* 인라인 블록 */
-            font-size: 16px; /* 글꼴 크기 */
-            margin: 4px 2px; /* 마진 */
-            cursor: pointer; /* 커서 */
-            border-radius: 12px; /* 둥근 모서리 */
-            transition-duration: 0.4s; /* 트랜지션 지속 시간 */
-        }
+.details-right {
+	width: 48%;
+}
 
-        input[type="submit"]:hover {
-            background-color: white; /* 배경색 변경 */
-            color: black; /* 글자 색상 변경 */
-            border: 2px solid #2962FF; /* 테두리 추가 */
-        }
-    </style>
+.details-left p, .details-right p {
+	margin: 10px 0;
+}
+
+input[type="submit"] {
+	background-color: #2962FF; /* 배경색 */
+	border: none; /* 테두리 없음 */
+	color: white; /* 글자 색상 */
+	padding: 15px 32px; /* 패딩 */
+	text-align: center; /* 텍스트 정렬 */
+	text-decoration: none; /* 텍스트 장식 없음 */
+	display: inline-block; /* 인라인 블록 */
+	font-size: 16px; /* 글꼴 크기 */
+	margin: 4px 2px; /* 마진 */
+	cursor: pointer; /* 커서 */
+	border-radius: 12px; /* 둥근 모서리 */
+	transition-duration: 0.4s; /* 트랜지션 지속 시간 */
+}
+
+input[type="submit"]:hover {
+	background-color: white; /* 배경색 변경 */
+	color: black; /* 글자 색상 변경 */
+	border: 2px solid #2962FF; /* 테두리 추가 */
+}
+</style>
 </head>
 <body>
-<header>
-    <div th:replace="~{/fragments/comHeader.html}"></div>
-</header>
-<div id="container">
-    <div id="sidebar">
-        <div th:include="~{/fragments/comsidebar.html}"></div>
-    </div>
-    <div class="content">
-        <h3>기업 정보조회</h3>
-        <div class="company-info">
-            <h4>하이브(주)</h4><input type="submit" value="기업 정보 수정하기" onclick="updateComp(event)">
-            <div class="company-logo">
-                <img id="companyLogo" src="" alt="기업로고">
-            </div>
-            <p>| 기업정보</p>
-            <div class="company-details">
-                <div class="details-left">
-                    <p>사원수 : <span id="employees"></span>명</p>
-                    <p>위치 : <span id="caddr"></span></p>
-                    <p>매출액 : <span id="yrSales"></span>억</p>
-                </div>
-                <div class="details-right">
-                    <p>업종 : <span id="sector"></span></p>
-                    <p>대표자 : <span id="ceo"></span></p>
-                    <p>홈페이지 : <span id="homepage"></span></p>
-                </div>
-            </div>
-        </div>
-   
-    </div>
-</div>
-<script>
-    $(document).ready(function () {
-        const username = localStorage.getItem('username');
-        console.log(username);
+	<header>
+		<div th:replace="~{/fragments/comHeader.html}"></div>
+	</header>
+	<div id="container">
+		<div id="sidebar">
+			<div th:include="~{/fragments/comsidebar.html}"></div>
+		</div>
+		<div class="content">
+			<h3>기업 정보조회</h3>
+			<div class="company-info">
+				<input type="submit" value="기업 정보 수정하기" onclick="updateComp(event)">
+				<div class="company-logo">
+					<img id="companyLogo" src="" alt="기업로고">
+				</div>
+				<p>
+					| <strong><span id="cname"></span></strong> 기업정보
+				</p>
+				<div class="company-details">
+					<div class="details-left">
+						<p>
+							사원수 : <span id="employees"></span>명
+						</p>
+						<p>
+							위치 : <span id="caddr"></span>
+						</p>
+						<p>
+							매출액 : <span id="yrSales"></span>억
+						</p>
+					</div>
+					<div class="details-right">
+						<p>
+							업종 : <span id="sector"></span>
+						</p>
+						<p>
+							대표자 : <span id="ceo"></span>
+						</p>
+						<p>
+							홈페이지 : <span id="homepage"></span>
+						</p>
+					</div>
+				</div>
+			</div>
 
-        $.ajax({
-            url: 'http://localhost:9002/com/getCompanyInfo/' + username,
-            method: 'GET',
-            success: function (response) {
-                $('#employees').text(response.employees);
-                $('#caddr').text(response.caddr);
-                $('#yrSales').text(response.yrSales);
-                $('#sector').text(response.sector);
-                $('#ceo').text(response.ceo);
-                $('#homepage').text(response.url);
-                $('#companyLogo').attr('src', '/images/' + response.logo); // 로고 이미지 src 업데이트
-            },
-            error: function (error) {
-                console.log("Error: " + error);
-            }
-        });
-    });
+		</div>
+	</div>
+	<script>
+		$(document).ready(function() {
+			const username = localStorage.getItem('username');
+			console.log(username);
 
-    function updateComp(event) {
-        event.preventDefault();
-        alert("기업 정보 수정페이지로 이동합니다");
+			$.ajax({
+				url : 'http://localhost:9002/com/getCompanyInfo/' + username,
+				method : 'GET',
+				success : function(response) {
+					$('#cname').text(response.cname);
+					$('#employees').text(response.employees);
+					$('#caddr').text(response.caddr);
+					$('#yrSales').text(response.yrSales);
+					$('#sector').text(response.sector);
+					$('#ceo').text(response.ceo);
+					$('#homepage').text(response.url);
+					$('#companyLogo').attr('src', '/images/' + response.logo); // 로고 이미지 src 업데이트
+				},
+				error : function(error) {
+					console.log("Error: " + error);
+				}
+			});
+		});
 
-        window.location.href = 'http://localhost:8094/com/toCompanyUpdate';
-    }
-</script>
+		function updateComp(event) {
+			event.preventDefault();
+			alert("기업 정보 수정페이지로 이동합니다");
+
+			window.location.href = 'http://localhost:8094/com/toCompanyUpdate';
+		}
+	</script>
 </body>
 </html>
