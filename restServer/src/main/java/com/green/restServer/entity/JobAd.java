@@ -75,7 +75,7 @@ public class JobAd extends BaseEntity{
 	private String sale;
 	
 	//학력조건
-	@Column(name = "Educondition", nullable = false, length = 10)
+	@Column(name = "Educondition", nullable = false, length = 100)
 	private String Educondition;
 	
 	//병역특례채용희망

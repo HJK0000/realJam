@@ -44,10 +44,10 @@
 </body>
 <script>
 	$(document).ready(function(){
-		const username = localStorage.getItem("username");
+		const user_username = localStorage.getItem("username");
 		
 		$.ajax({
-			url: "http://localhost:9002/user/resumeList/" + username,
+			url: "http://localhost:9002/user/resumeList/" + user_username,
 			method: "GET",
 			success: function(response){
 				const rlist = $("#rlist");

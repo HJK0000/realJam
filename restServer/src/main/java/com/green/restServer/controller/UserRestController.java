@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -133,6 +136,7 @@ public class UserRestController {
 	@GetMapping("/resumeList/{user_username}")
 	public List<Resume2> getResumes(@PathVariable("user_username") String username) {
 		List<Resume2> list = resume2Repo.findAllByUsername(username);
+		System.out.println(list);
 		
 		return list;
 	}
@@ -257,6 +261,18 @@ public class UserRestController {
 		
 		return list;
 	}
+	
+	/*
+	@GetMapping("/user/jobad")
+	public Page<JobAd> getJobAds(@RequestParam(name = "page", defaultValue = "1") int pageNumber,
+								@RequestParam(name = "size", defaultValue = "5") int pageSize){
+		 Pageable pageable = PageRequest.of(pageNumber - 1, pageSize);
+		 
+		 Page<JobAd> jobAdsPage = jobadRepo.findAll(pageable);
+		 
+		 return jobAdsPage;
+	}
+	*/
 	
 	@Autowired
 	ApplyListRepository applyListRepo;
