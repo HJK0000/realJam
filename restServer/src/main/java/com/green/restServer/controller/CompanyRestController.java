@@ -180,12 +180,21 @@ public class CompanyRestController {
 			jobAd.setCollectPsncnt(jobAdDto.getCollectPsncnt());
 			jobAd.setSale(jobAdDto.getSale());
 			jobAd.setEducondition(jobAdDto.getEducondition());
-			jobAd.setMltsvcExcHope(jobAdDto.getMltsvcExcHope());
+			
+			if(jobAdDto.getMltsvcExcHope() == null) {
+				jobAd.setMltsvcExcHope("off");
+			}
+			
 			jobAd.setNeedskill(jobAdDto.getNeedskill());
 			jobAd.setRcptMthd(jobAdDto.getRcptMthd());
 			jobAd.setRegion(jobAdDto.getRegion());
 			jobAd.setWkdWkhCnt(jobAdDto.getWkdWkhCnt());
 			jobAd.setRetirepay(jobAdDto.getRetirepay());
+			
+			if(jobAdDto.getRetirepay() == null) {
+				jobAd.setRetirepay("off");
+			}
+			
 			jobAd.setEtcWelfare(jobAdDto.getEtcWelfare());
 			jobAd.setAttachFileUrl(jobAdDto.getAttachFileUrl());
 			jobAd.setAttachFileUrl2(jobAdDto.getAttachFileUrl2());
