@@ -249,7 +249,7 @@
 	let hasAddedRow = false;
 	let certificateCount = 1;
 	
-	const username = "aaaa";
+	const username = localStorage.getItem("username");
 	
 	$(document).ready(function(){
 		$.ajax({
@@ -259,7 +259,7 @@
 				$('#uname').text("이름: " + response.uname);
 				$('#birth_date').text('생년월일: ' + response.birthDate);
 				$('#email').text('이메일: ' + response.email);
-				$('#gender').text('성별: ' + (response.gender === 0 ? '여자' : '남자'));
+				$('#gender').text('성별: ' + (response.gender === 1 ? '여자' : '남자'));
 				$('#tel').text('전화번호: ' + response.tel);
 				$('#uaddr').text('주소: ' + response.uaddr);
 			},
@@ -404,7 +404,7 @@
 	
 	//이력서 등록메서드 
 	function regResume(){
-		const username = "aaaa";
+		const username = localStorage.getItem("username");
 		const uname = document.getElementById("uname") ? document.getElementById("uname").value : null;
 		const gender = document.getElementById("gender") ? document.getElementById("gender").value : null;
 		const birthDate = document.getElementById("birth_date") ? document.getElementById("birth_date").value : null;
@@ -563,6 +563,7 @@
 			data: JSON.stringify(resumeData),
 			success: function(response){
 				console.log("success: ", response);
+				window.location.href="/user/resumeList";
 			},
 			error: function(error){
 				console.log("Error: ", error);

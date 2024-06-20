@@ -23,8 +23,8 @@
 				<input type="button" name="dup-check" value="중복체크" onclick="loadDoc1()"><br>
 				<input type="text" name="password" placeholder=" 비밀번호*"><br>
 				<input type="text" name="uname" placeholder=" 이름*"><br>
-				<input type="radio" name="gender" value="0">남성
-				<input type="radio" name="gender" value="1">여성<br>
+				<input type="radio" name="gender" value=0>남성
+				<input type="radio" name="gender" value=1>여성<br>
 				<input type="date" name="birthDate"><br>
 				<input type="text" name="email" placeholder=" 이메일*"><br>
 				<input type="text" name="tel" placeholder=" 전화번호*"><br>
@@ -51,7 +51,7 @@
 				document.querySelector("input[name='username']").value = response.username;
 				document.querySelector("input[name='password']").value = response.password;
 				document.querySelector("input[name='uname']").value = response.uname;
-				$("#gender").text(response.gender === 0 ? '여자' : '남자');
+				$("#gender").text(response.gender === 0 ? '남자' : '여자');
 				$("input[name='tel']").val(response.tel);
 				$("input[name='birthDate']").val(response.birthDate);
 				$("input[name='email']").val(response.email);

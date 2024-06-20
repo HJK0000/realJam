@@ -53,12 +53,17 @@ public class UserRestController {
 	SchoolRepository schoolRepo;
 	
 	@GetMapping("/mypage/{username}")
-	public User getMyPage(@PathVariable("username")String username) {
+	public ResponseEntity<User> getMyPage(@PathVariable("username")String username) {
 		Optional<User> result= userRepo.findById(username);
 		
-		User u = result.get();
-		
-		return u;
+		if(result.isPresent()) {
+			User u = result.get();
+			u.setGender(String.valueOf(u.getGender()));
+			System.out.println("유저 정보.............: " + u);
+			return ResponseEntity.ok(u);
+		}else {
+			return ResponseEntity.notFound().build();
+		}
 	}
 	
 	@PutMapping("/info/{username}")
