@@ -557,7 +557,7 @@
 		};
 		
 		$.ajax({
-			url:"http://localhost:9002/user/resume",
+			url:"http://localhost:9002/user/resume/" + username,
 			method: "POST",
 			contentType: "application/json",
 			data: JSON.stringify(resumeData),
