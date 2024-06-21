@@ -158,7 +158,6 @@
             success: function(data, status, xhr){
                 
                 console.log(data);
-//              $("#demo").html(data);
                 let username = xhr.getResponseHeader("username");
                 localStorage.setItem("username", username);
                 let role = xhr.getResponseHeader("role");
@@ -167,7 +166,7 @@
                 if(role == 'ROLE_ADMIN'){
                     location.href = "/admin/dashBoard";
                 }else if(role == 'ROLE_MEMBER'){
-                    location.href = "/user/usermain";
+                    location.href = "/";
                 }else if(role == 'ROLE_COMPANY'){
                     location.href = "/com/myPage";
                 }
@@ -203,7 +202,7 @@
                 if(role == 'ROLE_ADMIN'){
                     location.href = "/admin/dashBoard";
                 }else if(role == 'ROLE_MEMBER'){
-                    location.href = "/user/usermain";
+                    location.href = "/";
                 }else if(role == 'ROLE_COMPANY'){
                     location.href = "/com/myPage";
                 }
