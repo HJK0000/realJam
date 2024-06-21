@@ -18,7 +18,7 @@ public abstract class BaseEntity {
 	@Column(name = "regdate", updatable = false,  nullable = false)
     private Date regdate;
 
-    @Column(name = "moddate", nullable = false)
+    @Column(name = "moddate")
     private Date moddate;
     
     @PrePersist
