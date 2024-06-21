@@ -15,10 +15,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public abstract class BaseEntity {
-	@Column(name = "regdate")
+	@Column(name = "regdate", updatable = false,  nullable = false)
     private Date regdate;
 
-    @Column(name = "moddate")
+    @Column(name = "moddate", nullable = false)
     private Date moddate;
     
     @PrePersist
