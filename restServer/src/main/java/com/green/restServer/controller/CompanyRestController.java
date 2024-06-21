@@ -95,7 +95,9 @@ public class CompanyRestController {
 		System.out.println("헤더의 username : " + username);
 
 		System.out.println("comUpdate...........");
-
+		
+		String role = "ROLE_COMPANY";
+		
 		Company company = new Company();
 
 		company.setUsername(companyDto.getUsername());
@@ -104,6 +106,7 @@ public class CompanyRestController {
 		company.setLogo(companyDto.getLogo());
 		company.setCeo(companyDto.getCeo());
 		company.setCnum(companyDto.getCnum());
+		company.setCRole(role);
 		company.setCaddr(companyDto.getCaddr());
 		company.setEmployees(companyDto.getEmployees());
 		company.setUrl(companyDto.getUrl());
