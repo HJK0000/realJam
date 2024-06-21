@@ -12,54 +12,68 @@
 <body>
 	<div th:replace="~{fragments/user_nav :: fragment-nav}"></div>
 
-    <!-- 슬라이드 바 추가 -->
-    <div class="swiper-container">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide"><img src="https://apple.contentsfeed.com/RealMedia/ads/Creatives/jobkorea/240603_woorifisa_mb/240604_FIS_752_110.png"></div>
-            <div class="swiper-slide"><img src="https://apple.contentsfeed.com/RealMedia/ads/Creatives/jobkorea/240618_wepkocca_mb/240618_wepkocca_752110.jpg"></div>
-            <div class="swiper-slide"><img src="https://apple.contentsfeed.com/RealMedia/ads/Creatives/jobkorea/240521_intel_mb/240516_intel_752_110.png"></div>
-            <div class="swiper-slide"><img src="https://apple.contentsfeed.com/RealMedia/ads/Creatives/jobkorea/240603_mpva_mb/240603_mpva_1504x220_b9ddff_1.png"></div>
-        </div>
-        <!-- Add Pagination -->
-        <div class="swiper-pagination"></div>
-    </div>
+	<!-- 슬라이드 바 추가 -->
+	<div class="swiper-container">
+		<div class="swiper-wrapper">
+			<div class="swiper-slide">
+				<img
+					src="https://apple.contentsfeed.com/RealMedia/ads/Creatives/jobkorea/240603_woorifisa_mb/240604_FIS_752_110.png">
+			</div>
+			<div class="swiper-slide">
+				<img
+					src="https://apple.contentsfeed.com/RealMedia/ads/Creatives/jobkorea/240618_wepkocca_mb/240618_wepkocca_752110.jpg">
+			</div>
+			<div class="swiper-slide">
+				<img
+					src="https://apple.contentsfeed.com/RealMedia/ads/Creatives/jobkorea/240521_intel_mb/240516_intel_752_110.png">
+			</div>
+			<div class="swiper-slide">
+				<img
+					src="https://apple.contentsfeed.com/RealMedia/ads/Creatives/jobkorea/240603_mpva_mb/240603_mpva_1504x220_b9ddff_1.png">
+			</div>
+		</div>
+
+		<div class="swiper-pagination"></div>
+	</div>
 
 	<div id="count" th:text="${count}" style="display: none;"></div>
 
 
 	<script src="/js/user_nav.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/6.7.5/swiper-bundle.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/6.7.5/swiper-bundle.min.js"></script>
 	<script>
-    $(document).ready(function() {
-        var cnt = $('#count').text();
-        console.log("현재 카운트 값: " + cnt);
+		$(document).ready(function() {
+			var cnt = $('#count').text();
+			console.log("현재 카운트 값: " + cnt);
 
-        $.ajax({
-            type: "POST",
-            url: "http://localhost:9002/visitor",
-            success: function(data) {
+			$.ajax({
+				type : "POST",
+				url : "http://localhost:9002/visitor",
+				success : function(data) {
 
-            },
-            error: function() {
-                console.log("에러 발생.....");
-            }
-        });
+				},
+				error : function() {
+					console.log("에러 발생.....");
+				}
+			});
 
-        // Swiper 초기화 및 설정
-        var swiper = new Swiper('.swiper-container', {
-            slidesPerView: 1,
-            spaceBetween: 2,
-            loop: true,
-            autoplay: {
-                delay: 2000, // 자동 넘김 시간 설정 (ms)
-                disableOnInteraction: false // 유저 상호작용 후 자동 넘김 여부
-            },
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
-            },
-        });
-    });
-</script>
+			// Swiper 초기화 및 설정	
+			var swiper = new Swiper('.swiper-container', {
+				slidesPerView : 1,
+				spaceBetween : 2,
+				loop : true,
+				autoplay : {
+					delay : 1500, // 자동 넘김 시간 설정 (ms)
+					disableOnInteraction : false
+				// 유저 상호작용 후 자동 넘김 여부
+				},
+				pagination : {
+					el : '.swiper-pagination',
+					clickable : true,
+				},
+			});
+		});
+	</script>
 </body>
 </html>
